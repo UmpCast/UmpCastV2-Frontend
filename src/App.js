@@ -1,19 +1,23 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 
+import {Provider} from 'react-redux'
+import store from "./store";
+
+
+
 import {Login} from './components/accounts/Login'
 import {Register} from './components/accounts/Register'
 
 import {NoMatch} from './components/status/NoMatch'
 
-import {Layout} from "./components/Layout"
-
+import 'bootswatch/dist/cosmo/bootstrap.min.css';
 import './App.css';
 
 function App() {
     return (
-        <Fragment>
-            <Layout>
+        <Provider store={store}>
+            <Fragment>
                 <Router>
                     <Switch>
                         <Route exact path="/login" component={Login}/>
@@ -21,8 +25,8 @@ function App() {
                         <Route component={NoMatch}/>
                     </Switch>
                 </Router>
-            </Layout>
-        </Fragment>
+            </Fragment>
+        </Provider>
     );
 }
 

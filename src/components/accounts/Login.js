@@ -1,7 +1,8 @@
 import React from "react"
+import {Layout} from "../Layout";
 
 export const Login = () => (
-    <div className="align-self-center">
-        <p>Centered</p>
-    </div>
+    <Layout>
+        
+    </Layout>
 )
