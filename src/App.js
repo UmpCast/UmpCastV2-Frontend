@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import {HashRouter as Router, Route, Switch} from "react-router-dom"
 
 import {Provider} from 'react-redux'
 import store from "./store";
@@ -7,6 +7,8 @@ import store from "./store";
 import {loadUser} from "./actions/auth";
 
 import PrivateRoute from "./components/common/PrivateRoute";
+
+import Header from "./components/Header";
 
 import Login from './components/accounts/Login'
 import Register from './components/accounts/Register'
@@ -17,6 +19,7 @@ import NoMatch from './components/status/NoMatch'
 
 import 'bootswatch/dist/cosmo/bootstrap.min.css';
 import './App.css';
+import {Container} from "react-bootstrap";
 
 class App extends Component {
 
@@ -29,12 +32,15 @@ class App extends Component {
             <Provider store={store}>
                 <Fragment>
                     <Router>
-                        <Switch>
-                            <PrivateRoute exact path="/" component = {Dashboard}/>
-                            <Route exact path="/login" component={Login}/>
-                            <Route path="/register" component={Register}/>
-                            <Route component={NoMatch}/>
-                        </Switch>
+                        <Header/>
+                        <Container fluid>
+                            <Switch>
+                                <PrivateRoute exact path="/" component={Dashboard}/>
+                                <Route path="/login" component={Login}/>
+                                <Route path="/register" component={Register}/>
+                                <Route component={NoMatch}/>
+                            </Switch>
+                        </Container>
                     </Router>
                 </Fragment>
             </Provider>

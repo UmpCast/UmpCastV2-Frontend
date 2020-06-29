@@ -1,6 +1,6 @@
 import React from "react"
 
-export const Dashboard = () => (
+const Dashboard = () => (
     <div>
         <h2>Dashboard</h2>
         <p>Only VIPs allowed</p>
