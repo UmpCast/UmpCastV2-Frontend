@@ -6,3 +6,5 @@ export const NoMatch = () => (
         <p>URL not found</p>
     </div>
 )
+
+export default NoMatch

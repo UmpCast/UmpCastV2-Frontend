@@ -6,3 +6,5 @@ export const Register = () => (
         <p>I have a big brain</p>
     </div>
 )
+
+export default Register
