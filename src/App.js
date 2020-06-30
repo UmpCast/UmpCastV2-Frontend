@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import {HashRouter as Router, Route, Switch} from "react-router-dom"
+import { HashRouter as Router, Route, Switch} from "react-router-dom"
 
 import {Provider} from 'react-redux'
 import store from "./store";
@@ -12,6 +12,7 @@ import Header from "./components/Header";
 
 import Login from './components/accounts/Login'
 import Register from './components/accounts/Register'
+import Configure from "./components/accounts/Configure";
 
 import Dashboard from './components/home/Dashboard'
 
@@ -35,8 +36,9 @@ class App extends Component {
                         <Header/>
                         <Container fluid>
                             <Switch>
-                                <PrivateRoute exact path="/" component={Dashboard}/>
-                                <Route path="/login" component={Login}/>
+                                <PrivateRoute exact path="/" component = {Dashboard}/>
+                                <Route path="/login" component = {Login}/>
+                                <Route path="/register/configure" component={Configure}/>
                                 <Route path="/register" component={Register}/>
                                 <Route component={NoMatch}/>
                             </Switch>

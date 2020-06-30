@@ -6,12 +6,14 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    CONFIGURE_SUCCESS
 } from '../actions/types'
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
+    isConfigured: false,
     isLoading: false,
     user: null
 }
@@ -38,6 +40,11 @@ export default function (state = initialState, action) {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false
+            }
+        case CONFIGURE_SUCCESS:
+            return {
+                ...state,
+                isConfigured: true
             }
         case AUTH_ERROR:
         case LOGIN_FAIL:

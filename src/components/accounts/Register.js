@@ -3,15 +3,18 @@ import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 
+import PhoneInput from 'react-phone-number-input/input'
+
 import {register} from "../../actions/auth";
 
-class Register extends Component {
+import {Form} from "react-bootstrap";
+import {Layout} from "../Layout";
+import Input from "./Input";
+import './accounts.css'
 
+class Register extends Component {
     state = {
-        username: '',
-        email: '',
-        password: '',
-        password2: ''
+        phone_number: ''
     }
 
     static propTypes = {
@@ -19,89 +22,90 @@ class Register extends Component {
         isAuthenticated: PropTypes.bool
     }
 
-    onSubmit = e => {
+    handleSubmit = (e) => {
+        const {first_name, last_name, email, phone, password, password2} = this.state
         e.preventDefault();
-        const {username, email, password, password2} = this.state
-        if (password !== password2) {
-            this.props.createMessage(
-                {passwordNotMatch: "Passwords do not match"})
-        } else {
-            const newUser = {
-                username,
-                password,
-                email
-            }
-            this.props.register(newUser)
-        }
-    }
+        this.props.register(first_name, last_name, email, phone, password, password2)
+    };
 
-    onChange = e => this.setState({
-        [e.target.name]:
-        e.target.value
-    })
+    onChange = (e, controlId) => {
+        this.setState({[controlId]: e.target.value})
+    }
 
     render() {
         if (this.props.isAuthenticated) {
-            return <Redirect to='/'/>
+            return <Redirect to='/register/configure'/>
         }
-        const {username, email, password, password2} = this.state
+
+        const phone_control = <PhoneInput
+            inputComponent={Form.Control}
+            isValid={true}
+            value={this.state.phone_number}
+            onChange={phone_number => this.setState({phone_number})}
+            style={{"width": "100%"}}
+        />
+
+        const phone_label = <div>
+            Phone Number
+            <small className="text-muted ml-1">
+                (Optional, used for notifications)
+            </small>
+        </div>
+
         return (
-            <div className="col-md-6 m-auto">
-                <div className="card card-body mt-5">
-                    <h2 className="text-center">Register</h2>
-                    <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                            <label>Username</label>
-                            <input
-                                className="form-control"
-                                type="text"
-                                name="username"
-                                onChange={this.onChange}
-                                value={username}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input
-                                className="form-control"
-                                type="email"
-                                name="email"
-                                onChange={this.onChange}
-                                value={email}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input
-                                className="form-control"
-                                type="password"
-                                name="password"
-                                onChange={this.onChange}
-                                value={password}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Confirm Password</label>
-                            <input
-                                className="form-control"
-                                type="password"
-                                name="password2"
-                                onChange={this.onChange}
-                                value={password2}/>
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary">
-                                Register
-                            </button>
-                        </div>
+            <Layout>
+                <div style={{"width": "500px"}}>
+                    <div className="card card-body mt-5">
+                        <h2 className="text-center">Register</h2>
+                        <Form noValidate onSubmit={this.handleSubmit}>
+                            <div className="row">
+                                <div className="col-sm-12 col-md-6">
+                                    <Input
+                                        label="First name"
+                                        controlId="first_name"
+                                        type="text"
+                                        from="register" handle={this.onChange} required/>
+                                </div>
+                                <div className="col-sm-12 col-md-6">
+                                    <Input
+                                        label="Last name"
+                                        controlId="last_name"
+                                        type="text"
+                                        from="register" handle={this.onChange} required/>
+                                </div>
+                            </div>
+                            <Input label="Email"
+                                   controlId="email"
+                                   type="email"
+                                   from="register" handle={this.onChange} required/>
+                            <Input label={phone_label}
+                                   from="register"
+                                   controlId="phone_number"
+                                   control={phone_control}/>
+                            <Input label="Password"
+                                   controlId="password"
+                                   type="password"
+                                   from="register" handle={this.onChange} required/>
+                            <Input label="Confirm Password"
+                                   controlId="password2"
+                                   type="password"
+                                   from="register" handle={this.onChange} required/>
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary">
+                                    Register
+                                </button>
+                            </div>
+                        </Form>
                         <p>
-                            Already have an account?
+                            Have an account?
                             <Link to="/login"> Login</Link>
                         </p>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </Layout>
         );
     }
 }
-
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated

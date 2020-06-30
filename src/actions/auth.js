@@ -8,39 +8,13 @@ import {
     LOGIN_FAIL,
     REGISTER_FAIL,
     REGISTER_SUCCESS,
-    LOGOUT_SUCCESS,
+    LOGOUT_SUCCESS, CREATE_ERRORS,
 } from "./types";
 
 import {returnErrors} from './errors'
 
 // LOGIN USER
 export const login = (username, password) => dispatch => {
-
-    // // Headers
-    // const config = {
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // }
-    //
-    // // Request Body
-    // const body = JSON.stringify({username, password})
-    // axios
-    //     .post('/api/auth/login', body, config)
-    //     .then(res => {
-    //         dispatch({
-    //             type: LOGIN_SUCCESS,
-    //             payload: res.data
-    //         })
-    //     })
-    //     .catch(err => {
-    //         dispatch(returnErrors(err.response.data,
-    //             err.response.status))
-    //         dispatch({
-    //             type: LOGIN_FAIL
-    //         })
-    //     })
-
     // Success
     dispatch({
         type: LOGIN_SUCCESS,
@@ -64,21 +38,7 @@ export const login = (username, password) => dispatch => {
 }
 
 // LOGOUT USER
-export const logout = () => (dispatch, getState) => {
-
-    // axios
-    //     .post('/api/auth/logout', null, tokenConfig(getState))
-    //     .then(res => {
-    //         dispatch({
-    //             type: LOGOUT_SUCCESS,
-    //             payload: res.data
-    //         })
-    //     })
-    //     .catch(err => {
-    //         dispatch(returnErrors(err.response.data,
-    //             err.response.status))
-    //     })
-
+export const logout = () => (dispatch) => {
     // Success
     dispatch({
         type: LOGOUT_SUCCESS,
@@ -98,43 +58,29 @@ export const logout = () => (dispatch, getState) => {
 }
 
 // REGISTER USER
-export const register = ({ username, password, email }) => dispatch => {
+export const register = (first_name, last_name, email, phone_number, password, password2) => dispatch => {
+    // const err = {
+    //     form: 'register',
+    //     msg: {
+    //         first_name: 'First name is required',
+    //         email: 'Provide a valid email',
+    //         password2: 'Passwords must match',
+    //         phone_number: 'International Numbers not supported'
+    //     }
+    // }
+    // dispatch({
+    //     type: CREATE_ERRORS,
+    //     payload: err
+    // })
 
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // Request Body
-    const body = JSON.stringify({username, email, password})
-    // axios
-    //     .post('/api/auth/register', body, config)
-    //     .then(res => {
-    //         dispatch({
-    //             type: REGISTER_SUCCESS,
-    //             payload: res.data
-    //         })
-    //     })
-    //     .catch(err => {
-    //         dispatch(returnErrors(err.response.data,
-    //             err.response.status))
-    //         dispatch({
-    //             type: REGISTER_FAIL
-    //         })
-    //     })
-
-    //Success
     dispatch({
         type: REGISTER_SUCCESS,
         payload: {
-            user: {
-                username: username,
-                email: email,
-                password: password
+            'user': {
+                'username': 'Bob',
+                'email': 'Bob@gmail.com'
             },
-            token: 'Qw3rty11'
+            'token': 'Qw3rty11'
         }
     })
 }
@@ -143,28 +89,6 @@ export const register = ({ username, password, email }) => dispatch => {
 export const loadUser = () => (dispatch, getState) => {
     // User Loading
     dispatch({type: USER_LOADING});
-
-    // axios
-    //     .get('/api/auth/user', tokenConfig(getState))
-    //     .then(res => {
-    //         dispatch({
-    //             type: USER_LOADED,
-    //             payload: res.data
-    //         })
-    //     })
-    //     .catch(err => {
-    //         dispatch(returnErrors(err.response.data,
-    //             err.response.status))
-    //         dispatch({
-    //             type: AUTH_ERROR
-    //         })
-    //     })
-
-    // Success
-    // dispatch({
-    //     type: USER_LOADED,
-    //     payload: {}
-    // })
 
     // Error
     const err = {
