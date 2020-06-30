@@ -9,7 +9,10 @@ import Input from "./Input";
 import {Form} from "react-bootstrap";
 
 class Login extends Component {
-    state = {}
+    state = {
+        phone_number: '',
+        form: {validated: false, errors: {}}
+    }
 
     static propTypes = {
         login: PropTypes.func.isRequired,
@@ -18,7 +21,7 @@ class Login extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.login(this.state.username, this.state.password)
+        this.props.login(this.state.username, this.state.password, this)
     }
 
     onChange = (e, controlId) => {
@@ -26,9 +29,12 @@ class Login extends Component {
     }
 
     render() {
+
         if (this.props.isAuthenticated) {
             return <Redirect to='/'/>
         }
+
+        let form = this.state.form
 
         return (
             <Layout>
@@ -39,11 +45,13 @@ class Login extends Component {
                             <Input label="Email"
                                    controlId="email"
                                    type="email"
-                                   from="register" handle={this.onChange} required/>
+                                   form={form}
+                                   handle={this.onChange} required/>
                             <Input label="Password"
                                    controlId="password"
                                    type="password"
-                                   from="register" handle={this.onChange} required/>
+                                   form={form}
+                                   handle={this.onChange} required/>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-primary">
                                     Login
@@ -62,7 +70,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    form: state.form
 })
 
 export default connect(mapStateToProps, {login})(Login);

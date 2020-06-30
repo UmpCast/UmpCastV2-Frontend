@@ -10,11 +10,11 @@ import {register} from "../../actions/auth";
 import {Form} from "react-bootstrap";
 import {Layout} from "../Layout";
 import Input from "./Input";
-import './accounts.css'
 
 class Register extends Component {
     state = {
-        phone_number: ''
+        phone_number: '',
+        form: {validated: false, errors: {}}
     }
 
     static propTypes = {
@@ -25,7 +25,7 @@ class Register extends Component {
     handleSubmit = (e) => {
         const {first_name, last_name, email, phone, password, password2} = this.state
         e.preventDefault();
-        this.props.register(first_name, last_name, email, phone, password, password2)
+        this.props.register(first_name, last_name, email, phone, password, password2, this)
     };
 
     onChange = (e, controlId) => {
@@ -37,9 +37,10 @@ class Register extends Component {
             return <Redirect to='/register/configure'/>
         }
 
+        let form = this.state.form
+
         const phone_control = <PhoneInput
             inputComponent={Form.Control}
-            isValid={true}
             value={this.state.phone_number}
             onChange={phone_number => this.setState({phone_number})}
             style={{"width": "100%"}}
@@ -64,32 +65,41 @@ class Register extends Component {
                                         label="First name"
                                         controlId="first_name"
                                         type="text"
-                                        from="register" handle={this.onChange} required/>
+                                        form={form}
+                                        handle={this.onChange} required/>
                                 </div>
                                 <div className="col-sm-12 col-md-6">
                                     <Input
                                         label="Last name"
                                         controlId="last_name"
                                         type="text"
-                                        from="register" handle={this.onChange} required/>
+                                        from="register"
+                                        form={form}
+                                        handle={this.onChange} required/>
                                 </div>
                             </div>
                             <Input label="Email"
                                    controlId="email"
                                    type="email"
-                                   from="register" handle={this.onChange} required/>
-                            <Input label={phone_label}
                                    from="register"
+                                   form={form}
+                                   handle={this.onChange} required/>
+                            <Input label={phone_label}
                                    controlId="phone_number"
+                                   form={form}
                                    control={phone_control}/>
                             <Input label="Password"
                                    controlId="password"
                                    type="password"
-                                   from="register" handle={this.onChange} required/>
+                                   from="register"
+                                   form={form}
+                                   handle={this.onChange} required/>
                             <Input label="Confirm Password"
                                    controlId="password2"
                                    type="password"
-                                   from="register" handle={this.onChange} required/>
+                                   from="register"
+                                   form={form}
+                                   handle={this.onChange} required/>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-primary">
                                     Register
@@ -108,7 +118,8 @@ class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    form: state.form
 })
 
 export default connect(mapStateToProps, {register})(Register);

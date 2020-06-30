@@ -1,40 +1,36 @@
-import axios from 'axios'
-
 import {
-    USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
-    LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS,
-    LOGOUT_SUCCESS, CREATE_ERRORS,
 } from "./types";
 
-import {returnErrors} from './errors'
-
 // LOGIN USER
-export const login = (username, password) => dispatch => {
+export const login = (username, password, formComponent) => dispatch => {
     // Success
-    dispatch({
-        type: LOGIN_SUCCESS,
-        payload: {
-            'user': {
-                'username': 'Bob',
-                'email': 'Bob@gmail.com'
-            },
-            'token': 'Qw3rty11'
-        }
-    })
-
-    // Error
-    //
-    // dispatch(returnErrors(err.response.data,
-    //     err.response.status))
     // dispatch({
-    //     type: LOGIN_FAIL
+    //     type: LOGIN_SUCCESS,
+    //     payload: {
+    //         'user': {
+    //             'username': 'Bob',
+    //             'email': 'Bob@gmail.com'
+    //         },
+    //         'token': 'Qw3rty11'
+    //     }
     // })
 
+    formComponent.setState( {form: {
+            validated: true,
+            errors: {
+                email: 'Provide a valid email',
+            }
+        }}
+    )
+    dispatch({
+        type: LOGIN_FAIL
+    })
 }
 
 // LOGOUT USER
@@ -44,44 +40,35 @@ export const logout = () => (dispatch) => {
         type: LOGOUT_SUCCESS,
         payload: {}
     })
-
-    // Error
-    // const err = {
-    //     response: {
-    //         data: {},
-    //         status: {}
-    //     }
-    // }
-    //
-    // dispatch(returnErrors(err.response.data,
-    //     err.response.status))
 }
 
 // REGISTER USER
-export const register = (first_name, last_name, email, phone_number, password, password2) => dispatch => {
-    // const err = {
-    //     form: 'register',
-    //     msg: {
-    //         first_name: 'First name is required',
-    //         email: 'Provide a valid email',
-    //         password2: 'Passwords must match',
-    //         phone_number: 'International Numbers not supported'
-    //     }
-    // }
+export const register = (first_name, last_name, email, phone_number, password, password2, formComponent) => dispatch => {
+    // Success
     // dispatch({
-    //     type: CREATE_ERRORS,
-    //     payload: err
+    //     type: REGISTER_SUCCESS,
+    //     payload: {
+    //         'user': {
+    //             'username': 'Bob',
+    //             'email': 'Bob@gmail.com'
+    //         },
+    //         'token': 'Qw3rty11'
+    //     }
     // })
 
+    //Error
+    formComponent.setState( {form: {
+            validated: true,
+            errors: {
+                first_name: 'First name is required',
+                email: 'Provide a valid email',
+                password2: 'Passwords must match',
+                phone_number: 'International Numbers not supported'
+            }
+        }}
+    )
     dispatch({
-        type: REGISTER_SUCCESS,
-        payload: {
-            'user': {
-                'username': 'Bob',
-                'email': 'Bob@gmail.com'
-            },
-            'token': 'Qw3rty11'
-        }
+        type: REGISTER_FAIL
     })
 }
 
@@ -98,30 +85,9 @@ export const loadUser = () => (dispatch, getState) => {
         }
     }
 
-    dispatch(returnErrors(err.response.data,
-        err.response.status))
     dispatch({
-        type: AUTH_ERROR
+        type: AUTH_ERROR,
+        payload: err
     })
 
-}
-
-// Setup config with token - helper function
-export const tokenConfig = getState => {
-    // Get token from state
-    const token = getState().auth.token
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`
-    }
-
-    return config
 }

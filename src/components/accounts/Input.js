@@ -1,12 +1,10 @@
 import React, {Component, cloneElement} from 'react';
 import {Form, InputGroup} from "react-bootstrap";
-import {connect} from "react-redux";
 
 export class Input extends Component {
     render() {
         const {controlId, label, control, text, form} = this.props
-
-        let error = form.errors[controlId] ? form.errors[controlId] : ''
+        let error = controlId in form.errors ? form.errors[controlId] : ''
         return (
             <Form.Group controlId={controlId}>
                 <Form.Label>
@@ -40,19 +38,14 @@ export class Input extends Component {
     }
 
     errorStatus() {
-        const {form, from, controlId} = this.props
-        const myForm = form.form === from
+        const {form, controlId} = this.props
         const hasError = controlId in form.errors
 
         return {
-            isValid: myForm && !hasError,
-            isInvalid: myForm && hasError
+            isValid: form.validated && !hasError,
+            isInvalid: form.validated && hasError
         }
     }
 }
 
-const mapStateToProps = state => ({
-    form: state.form
-})
-
-export default connect(mapStateToProps)(Input);
+export default Input;
