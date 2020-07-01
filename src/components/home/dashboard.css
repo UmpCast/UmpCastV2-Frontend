@@ -1,1 +1,3 @@
 .col-pixel-width-100 { flex: 0 0 100px; }
+
+.debug {border: 1px solid blue}

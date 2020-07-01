@@ -1,6 +1,7 @@
 import React from "react"
 import ReactTooltip from "react-tooltip"
 import {Tabs, Tab, Container} from "react-bootstrap"
+import Feed from "./Feed"
 
 const Dashboard = () => (
     <div className="row mt-5 mx-lg-5">
@@ -9,7 +10,7 @@ const Dashboard = () => (
                 <h5 className="card-header border border-bottom-0 rounded-0"><strong>Your Signups</strong></h5>
                 <div className="card-body p-0">
                     <div className="list-group rounded-0">
-                        <div className="list-group-item list-group-item-action flex-column text-center p-0 active">
+                        <div className="list-group-item list-group-item-action flex-column text-center p-0 bg-dark text-white">
                             <p className="mb-0">MAR 04</p>
                         </div>
                         <a href="/"
@@ -37,7 +38,7 @@ const Dashboard = () => (
                                 <small className="bg-danger text-white p-1 text-uppercase" data-tip="Game is canceled" style={{'pointer-events': 'auto'}}>cancel</small>
                             </div>
                         </a>
-                        <div className="list-group-item list-group-item-action flex-column text-center p-0 active">
+                        <div className="list-group-item list-group-item-action flex-column text-center p-0 bg-dark text-white">
                             <p className="mb-0">MAR 07</p>
                         </div>
                         <a href="/"
@@ -72,7 +73,7 @@ const Dashboard = () => (
         <div className="col-12 col-md-8 pl-lg-5 mt-3">
             <Tabs defaultActiveKey="feed" id="uncontrolled-tab-example">
                 <Tab eventKey="feed" title="Feed">
-
+                    <Feed/>
                 </Tab>
                 <Tab eventKey="history" title="History">
 
