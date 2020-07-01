@@ -33,6 +33,7 @@ class Register extends Component {
     }
 
     render() {
+
         if (this.props.isAuthenticated) {
             return <Redirect to='/register/configure'/>
         }
