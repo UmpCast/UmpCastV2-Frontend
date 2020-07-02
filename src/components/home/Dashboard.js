@@ -2,12 +2,13 @@ import React from "react"
 import ReactTooltip from "react-tooltip"
 import {Tabs, Tab, Container} from "react-bootstrap"
 import Feed from "./Feed"
+import History from "./History";
 
 const Dashboard = () => (
-    <div className="row mt-5 mx-lg-5">
-        <div className="col-12 col-md-4 mt-3">
+    <div className="row mt-3 mx-xl-3">
+        <div className="col-12 col-md-4 pr-xl-3 mt-3">
             <div className="card mb-3 border-0">
-                <h5 className="card-header border border-bottom-0 rounded-0"><strong>Your Signups</strong></h5>
+                <h5 className="card-header border border-bottom-0"><strong>Your Signups</strong></h5>
                 <div className="card-body p-0">
                     <div className="list-group rounded-0">
                         <div className="list-group-item list-group-item-action flex-column text-center p-0 bg-dark text-white">
@@ -63,20 +64,19 @@ const Dashboard = () => (
                                 <p className="text-uppercase mb-0">Majors Plate</p>
                                 <small className="bg-success text-white p-1 text-uppercase"
                                        data-tip="Be on-time!">casted</small>
-                                <ReactTooltip place="right" offset={{top: 0, bottom: 0, left: 0, right: 0}}/>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div className="col-12 col-md-8 pl-lg-5 mt-3">
+        <div className="col-12 col-md-8 mt-3">
             <Tabs defaultActiveKey="feed" id="uncontrolled-tab-example">
                 <Tab eventKey="feed" title="Feed">
                     <Feed/>
                 </Tab>
                 <Tab eventKey="history" title="History">
-
+                    <History/>
                 </Tab>
                 <Tab eventKey="visibility" title="Visibility">
 

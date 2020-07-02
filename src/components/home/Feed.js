@@ -11,15 +11,16 @@ import {
     faChevronDown
 } from "@fortawesome/free-solid-svg-icons";
 import './dashboard.css'
+import ReactTooltip from "react-tooltip";
 
 class Feed extends Component {
     render() {
         return (
-            <div className="align-items-center mt-3 px-lg-5">
+            <div className="align-items-center mt-3">
                 <div className="row mx-auto pb-4">
-                    <div className="col-12 px-0">
+                    <div className="col-12">
                         <Accordion>
-                            <Card text="white" bg="dark" className="rounded-0">
+                            <Card text="white" bg="dark">
                                 <Card.Header>
                                     <strong className="text-white">You have a game coming up</strong>
                                     <Accordion.Toggle as={Button} eventKey="0"
@@ -32,9 +33,9 @@ class Feed extends Component {
                                         <div className="d-flex justify-content-between">
                                             <div className="d-flex flex-column card-title">
                                                 <h4 className="mb-auto">
-                                                    Agile vs. Stanford
+                                                    Mar 04 · Agile vs. Stanford
                                                 </h4>
-                                                <div>
+                                                <div className="mt-3">
                                                     <p className="mb-0">
                                                         <strong>Role: </strong><span className="text-uppercase">Majors Base</span>
                                                     </p>
@@ -43,26 +44,50 @@ class Feed extends Component {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <h4 className="text-right card-title">
-                                                <p className="mb-0">Mar 04</p>
-                                                <small>5PM - 7PM</small>
-                                                <div className="row mx-auto mt-2">
-                                                    <div className="col text-right p-0 mr-1">
-                                                        <div className="d-inline-flex flex-wrap bg-primary rounded p-1">
-                                                            <FontAwesomeIcon className="text-white"
-                                                                             transform={{rotate: 30}}
-                                                                             icon={faBaseballBall}/>
+                                            <div className="d-flex flex-column text-right card-title flex-shrink-0">
+                                                <h5 className="mb-auto"><small><strong>5PM - 7PM</strong></small></h5>
+                                                <div>
+                                                    <h5 className="mb-2">
+                                                        <strong>Casted:</strong>
+                                                    </h5>
+                                                    <div className="row mx-auto float-right">
+                                                        <div className="col-auto text-right p-0 mr-1"
+                                                             data-tip="Base: Max C.">
+                                                            <div
+                                                                className="d-inline-flex flex-wrap bg-primary rounded p-1 border border-light">
+                                                                <FontAwesomeIcon className="text-white"
+                                                                                 transform={{rotate: 30}}
+                                                                                 icon={faBaseballBall}/>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="col text-right p-0">
-                                                        <div className="d-inline-flex flex-wrap bg-primary rounded p-1">
-                                                            <FontAwesomeIcon className="text-white"
-                                                                             transform={{rotate: 30}}
-                                                                             icon={faBaseballBall}/>
+                                                        <div className="col-auto text-right p-0 mr-1">
+                                                            <div
+                                                                className="d-inline-flex rounded flex-wrap bg-success p-1 border border-light">
+                                                                <FontAwesomeIcon className="text-white"
+                                                                                 transform={{rotate: 30}}
+                                                                                 icon={faBaseballBall}/>
+                                                            </div>
                                                         </div>
+                                                        <div className="col-auto text-right p-0 mr-1">
+                                                            <div
+                                                                className="d-inline-flex rounded flex-wrap p-1 bg-info border border-light">
+                                                                <FontAwesomeIcon className="text-white"
+                                                                                 transform={{rotate: 30}}
+                                                                                 icon={faBaseballBall}/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-auto text-right p-0">
+                                                            <div
+                                                                className="d-inline-flex rounded flex-wrap p-1 border-custom">
+                                                                <FontAwesomeIcon className="text-white"
+                                                                                 transform={{rotate: 30}}
+                                                                                 icon={faBaseballBall}/>
+                                                            </div>
+                                                        </div>
+                                                        <ReactTooltip place="bottom"/>
                                                     </div>
                                                 </div>
-                                            </h4>
+                                            </div>
                                         </div>
                                     </Card.Body>
                                 </Accordion.Collapse>
@@ -71,8 +96,8 @@ class Feed extends Component {
                     </div>
                 </div>
                 <div className="row mx-auto mb-4">
-                    <div className="col-1 pr-0 pr-lg-3">
-                        <div className="d-inline-flex flex-wrap bg-primary rounded p-2 float-right">
+                    <div className="col-1 px-0 text-center">
+                        <div className="d-inline-flex flex-wrap bg-primary rounded p-2">
                             <FontAwesomeIcon className="text-white fa-2x" transform={{rotate: 30}}
                                              icon={faBaseballBall}/>
                         </div>
@@ -98,8 +123,8 @@ class Feed extends Component {
                     </div>
                 </div>
                 <div className="row mx-auto mb-3">
-                    <div className="col-1 pr-0 pr-lg-3">
-                        <div className="d-inline-flex flex-wrap bg-success rounded p-2 float-right">
+                    <div className="col-1 px-0 text-center">
+                        <div className="d-inline-flex flex-wrap bg-success rounded p-2">
                             <FontAwesomeIcon icon={faUserAlt} className="text-white fa-2x"/>
                         </div>
                     </div>
@@ -117,13 +142,12 @@ class Feed extends Component {
                                 <h4 className="card-title">COVID-19 Response</h4>
                                 <p className="card-text">Due to the escalation of the covid-19 pandemic, PA little
                                     league will be terminating the season early. Any games that umpires have signed
-                                    up for
-                                    will be dropped.</p>
+                                    up for will be dropped.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="row mx-auto">
+                <div className="row mx-auto mb-4">
                     <div className="col-1"></div>
                     <div className="col-11 text-center">
                         <a href="/">View more</a>
