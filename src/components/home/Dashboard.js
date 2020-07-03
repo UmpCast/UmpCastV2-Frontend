@@ -1,7 +1,7 @@
 import React from "react"
 import {Tabs, Tab} from "react-bootstrap"
 import Feed from "./Feed"
-import History from "./History";
+import History from "../games/History";
 import Upcoming from "../games/Upcoming";
 import ReactTooltip from "react-tooltip";
 

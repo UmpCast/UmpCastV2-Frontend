@@ -16,7 +16,7 @@ import Configure from "./components/accounts/Configure";
 
 import Dashboard from './components/home/Dashboard'
 
-import Game from "./components/games/Game";
+import Game from "./components/game/Game";
 
 import NoMatch from './components/status/NoMatch'
 
