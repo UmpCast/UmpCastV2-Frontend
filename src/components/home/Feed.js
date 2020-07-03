@@ -11,11 +11,31 @@ import {
     faChevronDown
 } from "@fortawesome/free-solid-svg-icons";
 import './dashboard.css'
-import ReactTooltip from "react-tooltip";
+
 import FullGame from "../games/FullGame";
 import Message from "./Message";
+import ProfileIcon from "../images/ProfileIcon";
+import MessageIcon from "../images/MessageIcon";
 
 class Feed extends Component {
+    cast = [
+        {
+            role: "Base",
+            first_name: "Max",
+            last_name: "Campbell"
+        },
+        {
+            role: "Plate",
+            first_name: "Jonathan",
+            last_name: "Kao"
+        },
+        {
+            role: "Water Boy",
+            first_name: null,
+            last_name: null
+        }
+    ]
+
     render() {
         return (
             <div className="align-items-center mt-3">
@@ -32,7 +52,15 @@ class Feed extends Component {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body className="pb-0">
-                                        <FullGame />
+                                        <FullGame
+                                            role="Base"
+                                            date="Mar 4"
+                                            time_start="5PM"
+                                            time_end="7PM"
+                                            title="Agile vs. Stanford"
+                                            division="Majors"
+                                            location="Mitchell Ballpark"
+                                            cast={this.cast}/>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -40,35 +68,28 @@ class Feed extends Component {
                     </div>
                 </div>
                 <div className="mb-4">
-                    <Message/>
+                    <Message
+                        profileIcon={<ProfileIcon icon={faBaseballBall} rotation={30} variant="primary" size="fa-2x"
+                                                  padding="p-2"/>}
+                        messageIcon={<MessageIcon icon={faWrench}/>}
+                        sender="UmpCast"
+                        subject="Update to our Policy"
+                        date="Mar 4, 2020"
+                        body="We have recently updated our privacy policy. Please navigate to the home page and
+                        review the changes."/>
                 </div>
-                <div className="row mx-auto mb-3">
-                    <div className="col-1 px-0 text-center">
-                        <div className="d-inline-flex flex-wrap bg-success rounded p-2">
-                            <FontAwesomeIcon icon={faUserAlt} className="text-white fa-2x"/>
-                        </div>
-                    </div>
-                    <div className="col-11">
-                        <div className="card bg-light">
-                            <div className="card-header">
-                                <strong className="mr-1">Palo Alto Little League</strong>
-                                <span className="text-muted">delivered Mar 1, 2020</span>
-                                <span
-                                    className="d-none d-lg-block float-right secondary rounded border-muted px-1 text-muted">
-                                         <FontAwesomeIcon icon={faExclamationCircle}/>
-                                    </span>
-                            </div>
-                            <div className="card-body">
-                                <h4 className="card-title">COVID-19 Response</h4>
-                                <p className="card-text">Due to the escalation of the covid-19 pandemic, PA little
-                                    league will be terminating the season early. Any games that umpires have signed
-                                    up for will be dropped.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div className="mb-3">
+                    <Message
+                        profileIcon={<ProfileIcon icon={faUserAlt} variant="success" size="fa-2x" padding="p-2"/>}
+                        messageIcon={<MessageIcon icon={faExclamationCircle}/>}
+                        sender="Palo Alto Little League"
+                        subject="COVID-19 Response"
+                        date="Mar 1, 2020"
+                        body="Due to the escalation of the covid-19 pandemic, PA little league will be terminating the
+                        season early. Any games that umpires have signed up for will be dropped."/>
                 </div>
                 <div className="row mx-auto mb-4">
-                    <div className="col-1"></div>
+                    <div className="col-1"/>
                     <div className="col-11 text-center">
                         <a href="/">View more</a>
                     </div>
