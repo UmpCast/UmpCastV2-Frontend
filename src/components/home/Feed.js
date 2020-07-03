@@ -84,7 +84,6 @@ class Feed extends Component {
                                                                                  icon={faBaseballBall}/>
                                                             </div>
                                                         </div>
-                                                        <ReactTooltip place="bottom"/>
                                                     </div>
                                                 </div>
                                             </div>

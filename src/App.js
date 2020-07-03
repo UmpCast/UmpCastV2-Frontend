@@ -16,6 +16,8 @@ import Configure from "./components/accounts/Configure";
 
 import Dashboard from './components/home/Dashboard'
 
+import Game from "./components/games/Game";
+
 import NoMatch from './components/status/NoMatch'
 
 import 'bootswatch/dist/cosmo/bootstrap.min.css';
@@ -40,6 +42,7 @@ class App extends Component {
                                 <Route path="/login" component = {Login}/>
                                 <Route path="/register/configure" component={Configure}/>
                                 <Route path="/register" component={Register}/>
+                                <Route path="/game/:id" component={Game}/>
                                 <Route component={NoMatch}/>
                             </Switch>
                         </Container>
