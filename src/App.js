@@ -39,10 +39,10 @@ class App extends Component {
                         <Container fluid>
                             <Switch>
                                 <PrivateRoute exact path="/" component = {Dashboard}/>
+                                <PrivateRoute path="/game/:id" component={Game}/>
                                 <Route path="/login" component = {Login}/>
                                 <Route path="/register/configure" component={Configure}/>
                                 <Route path="/register" component={Register}/>
-                                <Route path="/game/:id" component={Game}/>
                                 <Route component={NoMatch}/>
                             </Switch>
                         </Container>

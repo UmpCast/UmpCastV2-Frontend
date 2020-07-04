@@ -3,6 +3,7 @@
 .debug {border: 1px solid blue}
 
 .border-2 {border-width: 2px !important}
+
 .border-custom {
     border-width:1px;
     border-style: dashed;

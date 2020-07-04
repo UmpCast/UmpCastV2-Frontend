@@ -1,8 +1,8 @@
 import React from "react";
 
 const UpcomingGame = (props) => (
-    <a href="/"
-       className="list-group-item list-group-item-action">
+    <a href="#"
+       className={`list-group-item list-group-item-action ${props.status === "canceled" && "disabled"}`}>
         <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1 float-left">{props.title}</h5>
             <div className="flex-grow-0 flex-shrink-0">
