@@ -1,112 +1,39 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types';
 
-import PhoneInput from 'react-phone-number-input/input'
-
-import {register} from "../../actions/auth";
-
-import {Form} from "react-bootstrap";
-import {Layout} from "../Layout";
-import Input from "./Input";
+import {Layout} from "../common/Layout";
+import RegisterEmail from "./RegisterEmail";
+import RegisterDetail from "./RegisterDetail";
 
 class Register extends Component {
     state = {
-        phone_number: '',
-        form: {validated: false, errors: {}}
+        values: {},
+        step: 0
     }
 
-    static propTypes = {
-        register: PropTypes.func.isRequired,
-        isAuthenticated: PropTypes.bool
+    updateStep = (values) => {
+        console.log("hi")
+        this.setState({values: {...this.state.values, ...values}, step: this.state.step + 1})
     }
 
-    handleSubmit = (e) => {
-        const {first_name, last_name, email, phone, password, password2} = this.state
-        e.preventDefault();
-        this.props.register(first_name, last_name, email, phone, password, password2, this)
-    };
-
-    onChange = (e, controlId) => {
-        this.setState({[controlId]: e.target.value})
-    }
+    formSteps = (
+        [
+            <RegisterEmail updateStep={this.updateStep}/>,
+            <RegisterDetail updateStep={this.updateStep}/>
+        ]
+    )
 
     render() {
-
         if (this.props.isAuthenticated) {
             return <Redirect to='/register/configure'/>
         }
 
-        let form = this.state.form
-
-        const phone_control = <PhoneInput
-            inputComponent={Form.Control}
-            value={this.state.phone_number}
-            onChange={phone_number => this.setState({phone_number})}
-            style={{"width": "100%"}}
-        />
-
-        const phone_label = <div>
-            Phone Number
-            <small className="text-muted ml-1">
-                (Optional, used for notifications)
-            </small>
-        </div>
-
         return (
             <Layout>
                 <div style={{"width": "500px"}}>
-                    <div className="card card-body mt-5">
-                        <h2 className="text-center">Register</h2>
-                        <Form noValidate onSubmit={this.handleSubmit}>
-                            <div className="row">
-                                <div className="col-sm-12 col-md-6">
-                                    <Input
-                                        label="First name"
-                                        controlId="first_name"
-                                        type="text"
-                                        form={form}
-                                        handle={this.onChange} required/>
-                                </div>
-                                <div className="col-sm-12 col-md-6">
-                                    <Input
-                                        label="Last name"
-                                        controlId="last_name"
-                                        type="text"
-                                        from="register"
-                                        form={form}
-                                        handle={this.onChange} required/>
-                                </div>
-                            </div>
-                            <Input label="Email"
-                                   controlId="email"
-                                   type="email"
-                                   from="register"
-                                   form={form}
-                                   handle={this.onChange} required/>
-                            <Input label={phone_label}
-                                   controlId="phone_number"
-                                   form={form}
-                                   control={phone_control}/>
-                            <Input label="Password"
-                                   controlId="password"
-                                   type="password"
-                                   from="register"
-                                   form={form}
-                                   handle={this.onChange} required/>
-                            <Input label="Confirm Password"
-                                   controlId="password2"
-                                   type="password"
-                                   from="register"
-                                   form={form}
-                                   handle={this.onChange} required/>
-                            <div className="form-group">
-                                <button type="submit" className="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </Form>
+                    <div className="card card-body mt-5 px-4">
+                        <h2 className="text-center mb-3">Register</h2>
+                        {this.formSteps[this.state.step]}
                         <p>
                             Have an account?
                             <Link to="/login"> Login</Link>
@@ -118,9 +45,4 @@ class Register extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    form: state.form
-})
-
-export default connect(mapStateToProps, {register})(Register);
+export default Register

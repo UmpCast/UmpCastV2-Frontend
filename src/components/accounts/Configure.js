@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {Layout} from "../Layout";
-
-import {connect} from "react-redux";
-import {configure} from "../../actions/auth";
+import {Layout} from "../common/Layout";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faBaseballBall, faUser} from '@fortawesome/free-solid-svg-icons'
@@ -62,8 +59,4 @@ class Configure extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    auth: state.auth
-})
-
-export default connect(mapStateToProps, {configure})(Configure);
+export default Configure;

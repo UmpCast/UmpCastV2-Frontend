@@ -1,10 +1,7 @@
 import React, {Component} from "react"
 import {Link, Redirect} from 'react-router-dom'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types';
-import {login} from "../../actions/auth";
 
-import {Layout} from "../Layout";
+import {Layout} from "../common/Layout";
 import Input from "./Input";
 import {Form} from "react-bootstrap";
 
@@ -12,11 +9,6 @@ class Login extends Component {
     state = {
         phone_number: '',
         form: {validated: false, errors: {}}
-    }
-
-    static propTypes = {
-        login: PropTypes.func.isRequired,
-        isAuthenticated: PropTypes.bool
     }
 
     handleSubmit = e => {
@@ -69,9 +61,4 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    form: state.form
-})
-
-export default connect(mapStateToProps, {login})(Login);
+export default Login

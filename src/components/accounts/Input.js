@@ -7,9 +7,7 @@ export class Input extends Component {
         let error = controlId in form.errors ? form.errors[controlId] : ''
         return (
             <Form.Group controlId={controlId}>
-                <Form.Label>
-                    {label}
-                </Form.Label>
+                {label ? <Form.Label>{label}</Form.Label> : null}
                 <InputGroup>
                     {control ? cloneElement(control, this.errorStatus()) : this.formControl(this.props)}
                     <Form.Control.Feedback type="valid">Looks Good!</Form.Control.Feedback>
@@ -27,6 +25,7 @@ export class Input extends Component {
         return (
             cloneElement(
                 <Form.Control
+                    className="rounded"
                     onChange={e => handle(e, controlId)}
                     type={type}
                     placeholder={placeholder}

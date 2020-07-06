@@ -24,7 +24,7 @@ yarn-error.log*
 
 # User-specific stuff
 .idea/*
-
 .idea/workspace.xml
 
-src/components/accounts/Inherit.js
+.history/*
+.vscode/*
