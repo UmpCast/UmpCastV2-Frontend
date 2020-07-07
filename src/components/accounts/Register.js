@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import axios from "axios"
 
 import UserContext from "../../UserContext"
-import {userAPI} from "../../Api"
-import {tokenCreate} from "./Api"
-import {pick} from "./Forms"
+import { myUrl, config } from "../../Api"
+import { tokenCreateBody } from './Api.js'
 
-import {Layout} from "../common/Layout";
+import { Layout } from "../common/Layout";
 import RegisterEmail from "./RegisterEmail";
 import RegisterDetail from "./RegisterDetail";
 
@@ -14,7 +14,7 @@ const Register = () => {
 
     const [User, setUser] = useContext(UserContext)
 
-    const {isAuthenticated, isConfigured} = User
+    const { isAuthenticated, isConfigured } = User
 
     const [step, setStep] = useState(0)
 
@@ -27,22 +27,28 @@ const Register = () => {
         phone_number: ""
     })
 
-    useEffect( () => {
+    useEffect(() => {
+        let userUpdates = {}
         if (step === 2) {
-            userAPI().create(values)
-            .then( res => {
-                setUser({...User, user: res.data, isAuthenticated: true})
-                const [tokenAPI, body] = tokenCreate(pick(values, ["email", "password"]))
-                return tokenAPI(body)
-            })
-            .then( res => {
-                setUser({...User, token: res.data.access_token})
-            })
-            .catch( err => {
-                // TOBE - Create toast or Error page
-            })
+            axios.post(myUrl('api/users/'), values, config())
+                .then(res => {
+                    console.log(res)
+                    userUpdates = {user: res.data, isAuthenticated: true }
+
+                    return axios.post(myUrl('auth/token/'), tokenCreateBody(values), config())
+                })
+                .then(res => {
+                    let token = res.data.access_token
+                    localStorage.setItem('token', token)
+                    userUpdates = { ...userUpdates, token: token }
+                    setUser({...User, ...userUpdates})
+                })
+                .catch(err => {
+                    setUser({...User, ...userUpdates})
+                    // TOBE - Create toast or Error page
+                })
         }
-    })
+    }, [step, User, setUser, values])
 
     if (isConfigured) {
         return <Redirect to='/' />
@@ -67,7 +73,7 @@ const Register = () => {
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5 px-4">
                     <h2 className="text-center mb-3">Register</h2>
-                    {formSteps[step]}
+                    {formSteps[Math.min(step,1)]}
                     <p>
                         Have an account?
                             <Link to="/login"> Login</Link>

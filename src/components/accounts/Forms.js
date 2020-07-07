@@ -40,12 +40,14 @@ export const useFormStep = (fields, props) => {
     })
 
     useEffect(() => {
+        const {updateStep} = props
+
         const myErrors = pick(form.errors, Object.keys(values))
 
         if (form.validated && Object.keys(myErrors).length === 0) {
-            props.updateStep(values)
+            updateStep(values)
         }
-    }, [form])
+    }, [form, props, values])
 
     return [[values, setValue], [form, setForm]]
 }

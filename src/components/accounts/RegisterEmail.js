@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
+import axios from "axios";
 
 import SocialButton from "./SocialLogin";
 import Input from "./Input";
-import {userAPI} from "../../Api"
-import {useFormStep} from "./Forms"
+import { myUrl, config } from "../../Api"
+import { useFormStep } from "./Forms"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -11,7 +12,7 @@ import { Button } from "react-bootstrap";
 
 const RegisterEmail = (props) => {
 
-    const [[values, setValue],[form, setForm]] = useFormStep(["email"], props)
+    const [[values, setValue], [form, setForm]] = useFormStep(["email"], props)
 
     const handleSocialLogin = (user) => {
         console.log(user)
@@ -26,10 +27,10 @@ const RegisterEmail = (props) => {
     }
 
     const onNext = () => {
-        userAPI().create(values)
+        axios.post(myUrl('api/users/'), values, config())
             .then()
-            .catch( err => {
-                setForm({validated: true, errors: err.response.data})
+            .catch(err => {
+                setForm({ validated: true, errors: err.response.data })
             })
     }
 
@@ -67,8 +68,9 @@ const RegisterEmail = (props) => {
                 <hr className="flex-grow-1" />
             </div>
             <Input
+                label="Email"
                 controlId="email"
-                type="email"
+                type="text"
                 placeholder="Email address"
                 form={form}
                 handle={onChange} required

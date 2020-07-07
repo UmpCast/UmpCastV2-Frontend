@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react"
 import { Link, Redirect } from 'react-router-dom'
+import axios from "axios"
 
-import { userAPI } from '../../Api'
+import { myUrl, config } from '../../Api'
 import UserContext from "../../UserContext"
 
 
-import { tokenCreate } from './Api'
+import { tokenCreateBody } from './Api'
 import { getMissing } from "./Forms"
 import { Layout } from "../common/Layout";
 import Input from "./Input";
@@ -46,23 +47,28 @@ const Login = () => {
             })
             return
         }
+        
+        let userUpdate = {}
 
-        const [tokenAPI, body] = tokenCreate(values)
-        let token
-        tokenAPI.create(body)
+        axios.post(myUrl('auth/token/'), tokenCreateBody(values), config())
             .then(res => {
-                token = res.data.access_token
-                return userAPI(token).getOne(14)
+                let token = res.data.access_token
+                
+                userUpdate = {token: token}
+                localStorage.setItem('token', token)
+                return axios.get(myUrl('api/users/34'), config(token))
             })
             .then(res => {
-                setUser({
+                userUpdate = {
+                    ...userUpdate,
                     isAuthenticated: true,
                     isConfigured: res.data.account_type !== "inactive",
-                    user: res.data,
-                    token: token
-                })
+                    user: res.data
+                }
+                setUser({...User, ...userUpdate})
             })
             .catch(() => {
+                setUser({...User, ...userUpdate})
                 setForm({
                     validated: true,
                     errors: {
@@ -78,7 +84,7 @@ const Login = () => {
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
-                    <Form noValidate onSubmit={onSubmit}>
+                    <Form noValidate onSubmit={() => onSubmit()}>
                         <Input label="Username (Email)"
                             controlId="username"
                             type="text"

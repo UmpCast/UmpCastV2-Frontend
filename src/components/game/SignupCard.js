@@ -15,7 +15,7 @@ const SignupCard = () => (
                     </Card.Title>
                     <div
                         className="d-inline-flex flex-wrap p-4 my-4 rounded-circle text-white fa-4x"
-                        style={{"background-color": "#E8EAED"}}>
+                        style={{"backgroundColor": "#E8EAED"}}>
                         <FontAwesomeIcon className="text-white"
                                          icon={faUserAlt}/>
                     </div>

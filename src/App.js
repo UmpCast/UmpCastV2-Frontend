@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HashRouter as Router, Route, Switch } from "react-router-dom"
+import axios from "axios"
 
 import UserContext from './UserContext'
 import PrivateRoute from "./components/common/PrivateRoute";
+import { myUrl, config } from "./Api"
 
 import Header from "./components/common/Header";
 
@@ -21,16 +23,36 @@ import './App.css';
 import { Container } from "react-bootstrap";
 
 const App = () => {
-
-    const userState = {
+    let userState = {
         user: {},
         isAuthenticated: false,
         isConfigured: false,
         token: null
     }
 
+    let myUser = useState(userState)
+    const setUser = myUser[1]
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            axios.get(myUrl('api/users/34/'), config(token))
+                .then(res => {
+                    setUser({
+                        token: token,
+                        isAuthenticated: true,
+                        isConfigured: res.data.account_type !== "inactive",
+                        user: res.data
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+    }, [setUser])
+
     return (
-        <UserContext.Provider value={useState(userState)}>
+        <UserContext.Provider value={myUser}>
             <Router>
                 <Header />
                 <Container fluid>

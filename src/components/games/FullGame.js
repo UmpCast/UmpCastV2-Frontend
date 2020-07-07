@@ -11,8 +11,9 @@ class FullGame extends Component {
         if (role.first_name != null) {
             let tip = `${role.role}: ${role.first_name} ${role.last_name[0]}.`
             return (
-                <div className="col-auto text-right p-0 mr-1"
-                     data-tip={tip}>
+                <div className="col-auto text-right p-0 ml-1"
+                     data-tip={tip}
+                     key = {role.role}>
                     <ProfileIcon
                         icon={faBaseballBall}
                         rotation={30}
@@ -25,8 +26,9 @@ class FullGame extends Component {
         } else {
             let tip = `${role.role}: Open`
             return (
-                <div className="col-auto text-right p-0"
-                    data-tip={tip}>
+                <div className="col-auto text-right p-0 ml-1"
+                    data-tip={tip}
+                    key = {role.role}>
                     <ProfileIcon
                         icon={faBaseballBall}
                         rotation={30}

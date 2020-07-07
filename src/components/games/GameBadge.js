@@ -9,7 +9,7 @@ const GameBadge = (props) => (
             `my-auto px-2 py-0 noselect
             badge badge-pill badge-${props.variant}`
         }
-        style={{"line-height": "1.7"}}
+        style={{"lineHeight": "1.7"}}
         data-tip={props.data_tip}>
         <FontAwesomeIcon className="mr-2" icon={props.icon}/>{props.title}
     </p>

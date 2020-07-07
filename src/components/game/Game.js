@@ -9,7 +9,7 @@ import GameBanner from "./GameBanner";
 class Game extends Component {
     render() {
         return (
-            <div className="m-3 m-xl-5">
+            <div className="m-3 mx-xl-5 mt-xl-5 mb-xl-0">
                 <GameBanner
                     title="Agile vs. Stanford"
                     date="March 04"

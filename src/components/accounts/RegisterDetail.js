@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 import PhoneInput from "react-phone-number-input/input"
+import axios from "axios";
 
 import Input from "./Input"
 import PhoneFormControl from "./PhoneFormControl"
-import { userAPI } from "../../Api"
+import { myUrl, config } from "../../Api"
 import { useFormStep } from "./Forms"
 
-import { Form } from "react-bootstrap"
+import { Form, InputGroup } from "react-bootstrap"
 
 const RegisterDetail = (props) => {
 
@@ -23,8 +24,8 @@ const RegisterDetail = (props) => {
     }
 
     const handleSubmit = () => {
-        userAPI().create(values)
-            .then()
+        axios.post(myUrl('api/users/'), values, config())
+            .then(res => console.log(res))
             .catch(err => {
                 setForm({ validated: true, errors: err.response.data })
             })
@@ -46,35 +47,40 @@ const RegisterDetail = (props) => {
                         label="Last name"
                         controlId="last_name"
                         type="text"
-                        from="register"
                         form={form}
                         handle={onChange} required />
                 </div>
             </div>
             <Input
-                label="Phone Number"
+                label={
+                    <div>
+                        Phone Number
+                    <small className="text-muted ml-1">
+                            (Optional, used for notifications)
+                    </small>
+                    </div>
+                }
+                controlLabel = "Phone Number"
                 controlId="phone_number"
                 control={
                     <PhoneInput
-                        useNationalFormatForDefaultCountryValue = {false}
+                        useNationalFormatForDefaultCountryValue={false}
                         defaultCountry="US"
                         onChange={onChangePhone}
                         inputComponent={PhoneFormControl}
                     />
                 }
-                from="register"
+                prepend={<InputGroup.Text>+1</InputGroup.Text>}
                 form={form}
                 handle={onChange} required />
             <Input label="Password"
                 controlId="password"
                 type="password"
-                from="register"
                 form={form}
                 handle={onChange} required />
             <Input label="Confirm Password"
                 controlId="password2"
                 type="password"
-                from="register"
                 form={form}
                 handle={onChange} required />
             <div className="form-group">

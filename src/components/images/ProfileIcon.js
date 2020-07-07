@@ -9,7 +9,7 @@ const ProfileIcon = (props) => (
                     ${props.custom && props.custom}`}>
         <FontAwesomeIcon
             className={`text-white ${props.size}`}
-            transform={{rotate: props.rotation}}
+            transform={props.rotation && {rotate: props.rotation}}
             icon={props.icon}/>
     </div>
 )

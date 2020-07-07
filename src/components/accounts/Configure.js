@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Layout } from "../common/Layout";
+import axios from "axios"
 
 import UserContext from "../../UserContext"
-import { userAPI } from '../../Api'
+import { Layout } from "../common/Layout";
+import { myUrl, config } from '../../Api'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBaseballBall, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -21,8 +22,8 @@ const Configure = () => {
         return <Redirect to='/login' />
     }
 
-    const onClick = (config) => {
-        userAPI(token).tweak(14, { account_type: config })
+    const onClick = (myConfig) => {
+        axios.patch(myUrl('api/users/34/'), { account_type: myConfig }, config(token))
             .then(res => {
                 setUser({ ...User, user: res.data, isConfigured: true })
             })
@@ -36,8 +37,8 @@ const Configure = () => {
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5 mb-5 p-4">
                     <h2 className="text-center">How will you use UmpCast?</h2>
-                    <div className="row mt-3">
-                        <div className="col-sm-12 col-md-6">
+                    <div className="row mt-1">
+                        <div className="col-sm-12 col-md-6 p-3">
                             <Button
                                 onClick={() => onClick("umpire")}
                                 variant="primary"
@@ -51,7 +52,7 @@ const Configure = () => {
                                 </h5>
                             </Button>
                         </div>
-                        <div className="col-sm-12 col-md-6">
+                        <div className="col-sm-12 col-md-6 p-3">
                             <Button
                                 onClick={() => onClick("manager")}
                                 variant="success"

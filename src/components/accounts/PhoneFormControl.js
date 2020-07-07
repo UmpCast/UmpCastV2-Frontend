@@ -6,7 +6,7 @@ const PhoneFormControl = (props, ref) => {
         <Form.Control
             {...props}
             ref={ref}
-            className="rounded"
+            className="rounded-right"
         />)
 }
 

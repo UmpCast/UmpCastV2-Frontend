@@ -26,7 +26,7 @@ const statusTip = (status) => {
                           data-tip="You're a backup">backup</small>
         case 'canceled':
             return <small className="bg-danger text-white p-1 text-uppercase"
-                          data-tip="Game is canceled" style={{'pointer-events': 'auto'}}>cancel</small>
+                          data-tip="Game is canceled" style={{'pointerEvents': 'auto'}}>cancel</small>
         default:
             return 'foo';
     }
