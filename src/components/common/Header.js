@@ -4,14 +4,13 @@ import UserContext from "../../UserContext"
 
 import { Navbar, Nav, Button } from "react-bootstrap";
 
-
 const Header = () => {
     const [{user, isAuthenticated}, setUser] = useContext(UserContext)
 
     const toggleAuthenticated = () =>{
         setUser({isAuthenticated: !isAuthenticated})
     }
-
+    
     const authLinks = (
         <Nav>
             <Navbar.Text className="mr-3">
@@ -24,7 +23,7 @@ const Header = () => {
                 </Button>
         </Nav>
     )
-
+    
     const guestLinks = (
         <Nav>
             <Link to="/register" className="nav-link">
@@ -38,7 +37,7 @@ const Header = () => {
                 </Button>
         </Nav>
     )
-
+    
     return (
         <Fragment>
             <Navbar expand="sm" variant="light" bg="light">

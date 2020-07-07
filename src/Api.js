@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-class API {
-    constructor({ url, token = null }) {
+export class API {
+    constructor( url, token = null )  {
         this.url = url
         this.token = token
         this.endpoints = {}
@@ -24,37 +24,42 @@ class API {
         }
     }
 
-    createBasicCRUDEndpoints({ name }) {
+    createEndpoints( name ) {
         var endpoints = {}
 
-        const resourceURL = `${this.url}/${name}/`
+        const resourceURL = `${this.url}${name}`
 
         const config = this.config()
 
-        endpoints.getAll = ({ query } = {}) => axios.get(resourceURL, { ...config, params: query })
+        endpoints.getAll = (query = {}) => axios.get(resourceURL, { ...config, params: query })
 
-        endpoints.getOne = ({ pk }) => axios.get(`${resourceURL}${pk}/`, config)
+        endpoints.getOne = (pk) => axios.get(`${resourceURL}${pk}/`, config)
 
         endpoints.create = (toCreate) => axios.post(resourceURL, toCreate, config)
 
-        endpoints.tweak = (toTweak) => axios.patch(`${resourceURL}${toTweak.pk}/`, toTweak, config)
+        endpoints.tweak = (pk, toTweak) => axios.patch(`${resourceURL}${pk}/`, toTweak, config)
 
-        endpoints.update = (toUpdate) => axios.put(`${resourceURL}${toUpdate.pk}/`, toUpdate, config)
+        endpoints.update = (pk, toUpdate) => axios.put(`${resourceURL}${pk}/`, toUpdate, config)
 
-        endpoints.delete = ({ pk }) => axios.delete(`${resourceURL}${pk}/`, config)
+        endpoints.delete = (pk) => axios.delete(`${resourceURL}${pk}/`, config)
 
         return endpoints
     }
 }
 
-const reducePromise = res => {
-    return {
+export const reducePromise = res => (
+    {
         status: res.status,
         statusText: res.statusText,
         data: res.data
     }
+)
+
+export const basicAPI = (token = null) => {
+    return new API("http://127.0.0.1:3000/", token)
 }
 
-// const test = new API({ url: "http://127.0.0.1:3000" , token: "adminToken"})
-
-// const userAPI = test.createBasicCRUDEndpoints({name: "api/users"})
+export const userAPI = (token = null) => {
+    const authAPI = basicAPI(token)
+    return authAPI.createEndpoints('api/users/')
+}
