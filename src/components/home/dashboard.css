@@ -1,0 +1,20 @@
+.col-pixel-width-100 { flex: 0 0 100px; }
+
+.debug {border: 1px solid blue}
+
+.border-2 {border-width: 2px !important}
+
+.border-custom {
+    border-width:1px;
+    border-style: dashed;
+    border-color: #F8F9FA;
+    border-radius: 3px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.cursor-pointer:hover {
+    color: #383A3C;
+}
