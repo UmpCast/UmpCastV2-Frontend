@@ -10,7 +10,6 @@ import { tokenCreateBody } from './Api'
 import { getMissing } from "./Forms"
 import { Layout } from "../common/Layout";
 import Input from "./Input";
-import { Form } from "react-bootstrap";
 
 const Login = () => {
 
@@ -47,14 +46,14 @@ const Login = () => {
             })
             return
         }
-        
+
         let userUpdate = {}
 
         axios.post(myUrl('auth/token/'), tokenCreateBody(values), config())
             .then(res => {
                 let token = res.data.access_token
-                
-                userUpdate = {token: token}
+
+                userUpdate = { token: token }
                 localStorage.setItem('token', token)
                 return axios.get(myUrl('api/users/34'), config(token))
             })
@@ -65,10 +64,10 @@ const Login = () => {
                     isConfigured: res.data.account_type !== "inactive",
                     user: res.data
                 }
-                setUser({...User, ...userUpdate})
+                setUser({ ...User, ...userUpdate })
             })
             .catch(() => {
-                setUser({...User, ...userUpdate})
+                setUser({ ...User, ...userUpdate })
                 setForm({
                     validated: true,
                     errors: {
@@ -84,26 +83,24 @@ const Login = () => {
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
-                    <Form noValidate onSubmit={() => onSubmit()}>
-                        <Input label="Username (Email)"
-                            controlId="username"
-                            type="text"
-                            form={form}
-                            handle={onChange} required />
-                        <Input label="Password"
-                            controlId="password"
-                            type="password"
-                            form={form}
-                            handle={onChange} required />
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary">
-                                Login
-                                </button>
-                        </div>
-                    </Form>
+                    <Input label="Username (Email)"
+                        controlId="username"
+                        type="text"
+                        form={form}
+                        handle={onChange} />
+                    <Input label="Password"
+                        controlId="password"
+                        type="password"
+                        form={form}
+                        handle={onChange} />
+                    <div className="form-group">
+                        <button onClick={() => onSubmit()} className="btn btn-primary">
+                            Login
+                        </button>
+                    </div>
                     <p>
                         Don't have an account?
-                            <Link to="/register"> Register</Link>
+                        <Link to="/register"> Register</Link>
                     </p>
                 </div>
             </div>

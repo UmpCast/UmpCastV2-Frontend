@@ -58,10 +58,10 @@ const App = () => {
                 <Container fluid>
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
-                        <Route path="/game/:id" component={Game} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/register/configure" component={Configure} />
-                        <Route path="/register" component={Register} />
+                        <Route path="/game/:id/" component={Game} />
+                        <Route path="/login/" component={Login} />
+                        <Route path="/register/configure/" component={Configure} />
+                        <Route path="/register/" component={Register} />
                         <Route component={NoMatch} />
                     </Switch>
                 </Container>

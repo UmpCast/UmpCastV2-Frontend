@@ -75,7 +75,7 @@ const RegisterEmail = (props) => {
                 form={form}
                 handle={onChange} required
             />
-            <Button onClick={onNext} className="btn-block btn-primary rounded my-3">
+            <Button onClick={() => onNext()} className="btn-block btn-primary rounded my-3">
                 Next
             </Button>
         </Fragment>

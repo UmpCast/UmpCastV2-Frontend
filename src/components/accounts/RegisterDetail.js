@@ -7,7 +7,7 @@ import PhoneFormControl from "./PhoneFormControl"
 import { myUrl, config } from "../../Api"
 import { useFormStep } from "./Forms"
 
-import { Form, InputGroup } from "react-bootstrap"
+import { InputGroup } from "react-bootstrap"
 
 const RegisterDetail = (props) => {
 
@@ -24,6 +24,7 @@ const RegisterDetail = (props) => {
     }
 
     const handleSubmit = () => {
+
         axios.post(myUrl('api/users/'), values, config())
             .then(res => console.log(res))
             .catch(err => {
@@ -32,7 +33,7 @@ const RegisterDetail = (props) => {
     }
 
     return (
-        <Form noValidate onSubmit={handleSubmit} className="mt-2">
+        <div className="mt-2">
             <div className="row">
                 <div className="col-sm-12 col-md-6">
                     <Input
@@ -60,7 +61,7 @@ const RegisterDetail = (props) => {
                     </small>
                     </div>
                 }
-                controlLabel = "Phone Number"
+                controlLabel="Phone Number"
                 controlId="phone_number"
                 control={
                     <PhoneInput
@@ -84,11 +85,11 @@ const RegisterDetail = (props) => {
                 form={form}
                 handle={onChange} required />
             <div className="form-group">
-                <button type="submit" className="btn btn-primary">
+                <button onClick={() => handleSubmit()} className="btn btn-primary">
                     Register
                     </button>
             </div>
-        </Form>
+        </div>
     )
 }
 

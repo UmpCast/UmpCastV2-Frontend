@@ -5,25 +5,33 @@ import UserContext from "../../UserContext"
 import { Navbar, Nav, Button } from "react-bootstrap";
 
 const Header = () => {
-    const [{user, isAuthenticated}, setUser] = useContext(UserContext)
+    const [{ user, isAuthenticated }, setUser] = useContext(UserContext)
 
-    const toggleAuthenticated = () =>{
-        setUser({isAuthenticated: !isAuthenticated})
+    const logout = () => {
+        localStorage.removeItem('token')
+        setUser({
+            isAuthenticated: false,
+            isConfigured: false,
+            user: {},
+            token: null
+        })
     }
-    
+
     const authLinks = (
         <Nav>
             <Navbar.Text className="mr-3">
                 <strong>
-                    {user ? `Welcome ${user.username}` : ''}
+                    {user ? `Hey ${user.first_name}!` : ''}
                 </strong>
             </Navbar.Text>
-            <Button onClick={toggleAuthenticated} className="nav-link btn btn-sm btn-info text-light">
-                Logout
-                </Button>
+            <Nav.Link onClick={() => logout()} className="mr-3">
+                <strong>
+                    Logout
+                </strong>
+            </Nav.Link>
         </Nav>
     )
-    
+
     const guestLinks = (
         <Nav>
             <Link to="/register" className="nav-link">
@@ -34,7 +42,7 @@ const Header = () => {
                 </Link>
         </Nav>
     )
-    
+
     return (
         <Fragment>
             <Navbar expand="sm" variant="light" bg="light">
