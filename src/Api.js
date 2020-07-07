@@ -63,3 +63,7 @@ export const userAPI = (token = null) => {
     const authAPI = basicAPI(token)
     return authAPI.createEndpoints('api/users/')
 }
+
+// userAPI().create({email: "joe@gmail.com"})
+// .then(res => console.log(res.data))
+// .catch(err => console.log(err.response.data))

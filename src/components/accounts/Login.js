@@ -18,7 +18,7 @@ const Login = () => {
     const { isAuthenticated } = User
 
     const [values, setValue] = useState({
-        username: "", 
+        username: "",
         password: ""
     })
 
@@ -31,42 +31,46 @@ const Login = () => {
         return <Redirect to='/register/configure' />
     }
 
+    const onChange = (e, controlId) => {
+        setValue({ ...values, [controlId]: e.target.value })
+    }
+
     const onSubmit = () => {
-        
+
         const missingErrors = getMissing(values)
 
-        if ( missingErrors != {}) {
+        if (Object.keys(missingErrors).length !== 0) {
             setForm({
-                validated: true, 
+                validated: true,
                 errors: missingErrors
             })
             return
         }
 
-        const [ tokenAPI, body] = tokenCreate(values)
+        const [tokenAPI, body] = tokenCreate(values)
         let token
         tokenAPI.create(body)
             .then(res => {
                 token = res.data.access_token
                 return userAPI(token).getOne(14)
             })
-            .then( res => {
-                setUser({...User, 
-                    isAuthenticated: true, 
-                    isConfigured: res.data.account_type !== "inactive", 
-                    user: res.data, 
-                    token: token})
-            })
-            .catch(err => {
-                setForm({
-                    validated: true, 
-                    errors: err.response.data
+            .then(res => {
+                setUser({
+                    isAuthenticated: true,
+                    isConfigured: res.data.account_type !== "inactive",
+                    user: res.data,
+                    token: token
                 })
             })
-    }
-
-    const onChange = (e, controlId) => {
-        setValue({ ...values, [controlId]: e.target.value })
+            .catch(() => {
+                setForm({
+                    validated: true,
+                    errors: {
+                        username: "Invalid Credentials given",
+                        password: "Invalid Credentials given",
+                    }
+                })
+            })
     }
 
     return (
@@ -75,7 +79,7 @@ const Login = () => {
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
                     <Form noValidate onSubmit={onSubmit}>
-                        <Input label="Username"
+                        <Input label="Username (Email)"
                             controlId="username"
                             type="text"
                             form={form}

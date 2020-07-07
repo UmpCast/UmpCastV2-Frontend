@@ -39,7 +39,6 @@ const Configure = () => {
                     <div className="row mt-3">
                         <div className="col-sm-12 col-md-6">
                             <Button
-                                configuration="umpire"
                                 onClick={() => onClick("umpire")}
                                 variant="primary"
                                 className="pt-3 pb-2" 
@@ -54,7 +53,6 @@ const Configure = () => {
                         </div>
                         <div className="col-sm-12 col-md-6">
                             <Button
-                                configuration="manager"
                                 onClick={() => onClick("manager")}
                                 variant="success"
                                 className="pt-3 pb-2" 

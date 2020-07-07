@@ -35,7 +35,7 @@ const Input = (props) => {
             {label ? <Form.Label>{label}</Form.Label> : null}
             <InputGroup>
                 {control ? cloneElement(control, errorStatus(props)) : formControl(props)}
-                <Form.Control.Feedback type="valid">Looks Good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="valid">Valid {label}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
             </InputGroup>
             <Form.Text className="text-muted mt-0">

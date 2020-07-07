@@ -32,9 +32,6 @@ const Header = () => {
             <Link to="/login" className="nav-link">
                 Login
                 </Link>
-                <Button onClick={toggleAuthenticated} className="nav-link btn btn-sm btn-info text-light">
-                Logout
-                </Button>
         </Nav>
     )
     
