@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 import DateBar from "./DateBar";
-import UpcomingGame from "../main/UpcomingGame";
+import UpcomingGame from "./UpcomingGame";
 
 class Upcoming extends Component {
     render() {

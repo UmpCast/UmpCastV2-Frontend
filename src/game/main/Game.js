@@ -1,77 +1,70 @@
-import { faBaseballBall } from "@fortawesome/free-solid-svg-icons";
 import React, { Component } from "react";
 
-import ProfileIcon from "../images/ProfileIcon";
-import "./games.css"
+import Post from "./Post";
 
-export default function Game(props) {
+import "./styles/game.css"
+import { Tab, Tabs } from "react-bootstrap";
+import GameBanner from "./GameBanner";
 
-    const colors = ["primary", "success", "info"]
-    const color_cnt = -1
+export default function Game(){
+    const casts = [
+        {
+            post: "Base",
+            cast: [
+                {
+                    title: "Casted",
+                    name:"Victor Lin"
+                },
+                {
+                    title:"Backup",
+                    name:"Jonathan Kao"
+                }
+            ]
+        },
+        {
+            post: "Plate",
+            cast: [
+                {
+                    title: "Casted",
+                    name: "Ingrid Lee"
+                }
+            ]
+        },
+        {
+            post: "Scorekeeper",
+            cast: [
+                {
+                    title:"Casted",
+                    name:"Max Campbell"
+                }
+            ]
+        }
+    ]
 
-    const { date, time_start, time_end, title, division, role, location, cast } = props
-    const formattedCast = cast.map(formatRole)
+    const posts = casts.map(post =>
+        <Tab eventKey={post.role} title={post.role}>
+            <Post cast={post.cast}/>
+        </Tab>
+    )
 
     return (
-        <div className="d-flex justify-content-between">
-            <div className="d-flex flex-column card-title">
-                <h4 className="mb-auto">
-                    {date} · {title}
-                </h4>
-                <div className="mt-3">
-                    <p className="mb-0">
-                        <strong>Role: </strong><span className="text-uppercase">{division} {role}</span>
-                    </p>
-                    <p className="mb-0">
-                        <strong>Location:</strong> {location}
-                    </p>
-                </div>
-            </div>
-            <div className="d-flex flex-column text-right card-title flex-shrink-0">
-                <h5 className="mb-auto"><small><strong>{time_start} - {time_end}</strong></small></h5>
-                <div>
-                    <h5 className="mb-2">
-                        <strong>Casted:</strong>
-                    </h5>
-                    <div className="row mx-auto float-right">
-                        {formattedCast}
-                    </div>
+        <div className="m-3 mx-xl-5 mt-xl-5 mb-xl-0">
+            <GameBanner
+                title="Morgan-Gault vs. Agile"
+                date="August 10"
+                start_time="3:30 PM"
+                end_time="5:30 PM"
+                division="Majors"
+                location="Middlefield Ballpark"
+                comments={null}
+            />
+            <div className="row">
+                <div className="col">
+                    <Tabs defaultActiveKey="Base" id="uncontrolled-tab-example">
+                        {posts}
+                    </Tabs>
                 </div>
             </div>
         </div>
     )
-}
-
-const formatRole = (role) => {
-    if (role.first_name != null) {
-        let tip = `${role.role}: ${role.first_name} ${role.last_name[0]}.`
-        return (
-            <div className="col-auto text-right p-0 ml-1"
-                data-tip={tip}
-                key={role.role}>
-                <ProfileIcon
-                    icon={faBaseballBall}
-                    rotation={30}
-                    padding="p-1"
-                    border="light"
-                    variant="primary"
-                />
-            </div>
-        )
-    } else {
-        let tip = `${role.role}: Open`
-        return (
-            <div className="col-auto text-right p-0 ml-1"
-                data-tip={tip}
-                key={role.role}>
-                <ProfileIcon
-                    icon={faBaseballBall}
-                    rotation={30}
-                    padding="p-1"
-                    custom="border-custom"
-                    variant="secondary"
-                />
-            </div>
-        )
-    }
 }

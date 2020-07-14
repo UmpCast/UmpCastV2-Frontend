@@ -3,17 +3,17 @@ import axios from "axios"
 import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
 import UserContext from "./UserContext"
-import { myUrl, config } from "./Api"
+import { myUrl, config } from "./tools/Api"
 
-import Header from "./common/layout/Header"
-import PrivateRoute from "./common/router/PrivateRoute"
+import Header from "./Header"
+import PrivateRoute from "./router/PrivateRoute"
 
 import Game from "./game/main/Game"
 
-import Login from "./user/login/Login"
-import Register from "./user/login/Register"
-import Configure from "./user/login/Configure"
-import Dashboard from "./user/home/Dashboard"
+import Login from "./account/login/Login"
+import Register from "./account/login/Register"
+import Configure from "./account/login/Configure"
+import Dashboard from "./account/home/Dashboard"
 
 import League from "./league/main/League"
 import Calendar from "./league/calendar/Calendar"

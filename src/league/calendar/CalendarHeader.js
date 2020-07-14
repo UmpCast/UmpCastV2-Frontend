@@ -1,13 +1,13 @@
 import React from "react"
 
-import { CustomToggle } from "../../game/history/Header"
+import { CustomToggle } from "../../game/history/HistoryHeader"
 
 import { Button, Dropdown, Pagination } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./style/header.css"
 
-export default function Header() {
+export default function CalendarHeader() {
     return (
         <div className="row bg-light border-bottom">
             <div className="mt-3 mb-2 mx-3 d-inline-flex w-100">

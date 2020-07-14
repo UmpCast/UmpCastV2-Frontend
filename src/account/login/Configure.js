@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios"
 
 import UserContext from "../../UserContext"
 import { myUrl, config } from "../../tools/Api"
-import { Layout } from "../common/layout/Layout";
+
+import { Layout } from "./styles/Layout"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBaseballBall, faUser } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 
 const Configure = () => {
 
@@ -46,7 +46,7 @@ const Configure = () => {
                                 block>
                                 <h5>
                                     <strong>
-                                        <FontAwesomeIcon icon={faBaseballBall} className="mr-3" />
+                                        <FontAwesomeIcon icon={['fas', 'baseball-ball']} className="mr-3" />
                                             As an Umpire
                                         </strong>
                                 </h5>
@@ -60,7 +60,7 @@ const Configure = () => {
                                 block>
                                 <h5>
                                     <strong>
-                                        <FontAwesomeIcon icon={faUser} className="mr-3" />
+                                        <FontAwesomeIcon icon={['fas', 'user']} className="mr-3" />
                                             As a Manager
                                         </strong>
                                 </h5>

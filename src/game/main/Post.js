@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
 import SignupCard from "./SignupCard";
 import UmpireCard from "./UmpireCard";
 
-import "./game.css"
+import "./styles/game.css"
 
-const Cast = (props) => {
+export default function Post(props) {
 
-    const castedCards = props.cast.map(casted =>
+    const postCards = props.cast.map(casted =>
         <div className="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
             <UmpireCard
                 title={casted.title}
@@ -28,10 +28,8 @@ const Cast = (props) => {
                 <div className="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
                     <SignupCard />
                 </div>
-                {castedCards}
+                {postCards}
             </div>
         </div>
     );
 }
-
-export default Cast;

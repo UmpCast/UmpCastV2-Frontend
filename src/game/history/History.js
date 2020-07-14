@@ -2,10 +2,8 @@ import React, { Component } from "react";
 
 import { Card } from "react-bootstrap";
 
-import "../home/dashboard.css"
-import PastGame from "./Game";
-import HistoryHeader from "./Header";
-
+import PastGame from "./PastGame";
+import HistoryHeader from "./HistoryHeader";
 
 class History extends Component {
 

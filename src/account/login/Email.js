@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 
-import { myUrl, config } from "../../../Api"
-import { useFormStep } from "../accounts/Forms"
-import Input from "../accounts/Input";
+import { myUrl, config } from "../../tools/Api"
+import Input from "../../tools/Input";
 
-import RegisterSocial from "./Social"
+import Social from "./Social"
+import useFormStep from "./useFormStep"
 
 import { Button } from "react-bootstrap";
 
@@ -28,7 +28,7 @@ export default function Email(props) {
     return (
         <Fragment>
             <div className="row mb-2 px-2">
-                <RegisterSocial />
+                <Social />
             </div>
             <div className="d-inline-flex align-items-center mb-2">
                 <hr className="flex-grow-1" />

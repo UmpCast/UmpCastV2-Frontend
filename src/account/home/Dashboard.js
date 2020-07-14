@@ -1,8 +1,10 @@
 import React from "react"
-import {Tabs, Tab} from "react-bootstrap"
+
 import Feed from "./Feed"
-import History from "../games/History";
-import Upcoming from "../games/Upcoming";
+import Upcoming from "../../game/upcoming/Upcoming"
+import History from "../../game/history/History"
+
+import {Tabs, Tab} from "react-bootstrap"
 import ReactTooltip from "react-tooltip";
 
 const Dashboard = () => (

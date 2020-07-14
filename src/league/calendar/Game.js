@@ -1,6 +1,6 @@
 import React from "react"
 
-import ProfileIcon from "../images/ProfileIcon"
+import ProfileIcon from "../../account/icon/ProfileIcon"
 
 import { Card } from "react-bootstrap"
 

@@ -2,14 +2,12 @@ import React, { useState } from "react"
 import { Link, Redirect } from "react-router-dom"
 import axios from "axios"
 
-import { myUrl, config } from "../../tools/Api"
-import { useLogin } from "./Forms"
+import { myUrl, config, tokenCreateBody } from "../../tools/Api"
+import Input from "../../tools/Input"
+import { getMissing } from "../../tools/Form"
 
-
-import { tokenCreateBody } from "./Api"
-import { getMissing } from "./Forms"
-import { Layout } from "../common/Layout";
-import Input from "./Input";
+import { Layout } from "./styles/Layout";
+import useLogin from "./useLogin"
 
 const Login = () => {
 

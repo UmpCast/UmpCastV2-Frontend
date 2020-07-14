@@ -1,7 +1,7 @@
 import React from "react";
 
 import CalendarDay from "./Day"
-import weekGames from "../league/temp"
+import weekGames from "./temp"
 
 export default function Week() {
 

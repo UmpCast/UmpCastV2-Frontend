@@ -2,8 +2,8 @@ import React, { forwardRef } from "react"
 import axios from "axios"
 import PhoneInput from "react-phone-number-input/input"
 
-import { myUrl, config } from "../../Api"
-import Input from "../../Input"
+import { myUrl, config } from "../../tools/Api"
+import Input from "../../tools/Input"
 
 import useFormStep from "./useFormStep"
 

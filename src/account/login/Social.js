@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import axios from "axios";
 import SocialLogin from "react-social-login"
 
-import { myUrl, config, accessCreateBody } from "../../Api"
+import { myUrl, config, accessCreateBody } from "../../tools/Api"
 import useLogin from "./useLogin"
 
 import { Button } from "react-bootstrap"

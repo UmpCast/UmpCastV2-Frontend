@@ -3,9 +3,9 @@ import { Link, Redirect } from "react-router-dom"
 import axios from "axios"
 
 import UserContext from "../../UserContext"
-import { myUrl, config, tokenCreateBody } from "../../Api"
+import { myUrl, config, tokenCreateBody } from "../../tools/Api"
 
-import { Layout } from "../common/layout/Layout";
+import { Layout } from "./styles/Layout";
 import RegisterEmail from "./Email";
 import RegisterDetail from "./Detail";
 

@@ -1,12 +1,10 @@
 import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom"
-import UserContext from "../../UserContext"
+import UserContext from "./UserContext"
 
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import ProfileIcon from "../../user/icon/ProfileIcon"
+import ProfileIcon from "./account/icon/ProfileIcon"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-import "./common.css"
 
 const Header = () => {
     const [{ User, isAuthenticated }, setUser] = useContext(UserContext)

@@ -1,8 +1,9 @@
 import React from "react";
 
-import GameBadge from "../history/GameBadge";
+import GameStatus from "./Completion";
 
 import {faCheckCircle, faBan, faMedal} from "@fortawesome/free-solid-svg-icons";
+import { ExitStatus } from "typescript";
 
 const PastGame = (props) => (
     <div className="list-group-item border-top-0 pb-0">
@@ -32,7 +33,7 @@ const statusBadge = (status) => {
     switch (status) {
         case "completed":
             return (
-                <GameBadge
+                <GameStatus
                     variant="success"
                     icon={faCheckCircle}
                     title="Completed"
@@ -41,7 +42,7 @@ const statusBadge = (status) => {
             )
         case "canceled":
             return (
-                <GameBadge
+                <GameStatus
                     variant="danger"
                     icon={faBan}
                     title="Canceled"
@@ -50,7 +51,7 @@ const statusBadge = (status) => {
             )
         case "short_notice":
             return (
-                <GameBadge
+                <GameStatus
                     variant="info"
                     icon={faMedal}
                     title="Short Notice"
