@@ -4,16 +4,16 @@ import axios from "axios"
 
 import UserContext from "./UserContext"
 import PrivateRoute from "./components/common/PrivateRoute";
-import { myUrl, config } from "./Api"
+import { myUrl, config } from "./tools/Api"
 
 import Header from "./components/common/Header";
 
 import Login from "./components/accounts/Login"
-import Register from "./components/accounts/Register"
+import Register from "./components/register/Register"
 import Configure from "./components/accounts/Configure";
 
 import Dashboard from "./components/home/Dashboard"
-import Calendar from "./components/league/Calendar"
+import Calendar from "./components/calendar/Calendar"
 
 import Game from "./components/game/Game";
 import League from "./components/league/League"
