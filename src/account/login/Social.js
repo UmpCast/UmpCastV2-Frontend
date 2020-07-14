@@ -8,28 +8,9 @@ import useLogin from "./useLogin"
 import { Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SocialButton = (props) => {
+export default function RegisterSocial(props) {
 
-    const { triggerLogin, color, ...rest } = props
-
-    return (
-        SocialLogin(
-            <Button
-                onClick={triggerLogin} {...rest}
-                style={{ "backgroundColor": color }}>
-                {this.props.children}
-            </Button>
-        )
-    )
-}
-
-export default function Social(props) {
-
-    const [[values, setValue], [User, setUser]] = useLogin(onCatch)
-
-    const onCatch = (err) => {
-        console.log(err.response.data)
-    }
+    const [[, setValue], [User,]] = useLogin(err => console.log(err))
 
     const handleSocialLogin = (user) => {
         const code = user._token.accessToken
@@ -78,5 +59,20 @@ export default function Social(props) {
                 </SocialButton>
             </div>
         </Fragment>
+    )
+}
+
+const SocialButton = (props) => {
+
+    const { triggerLogin, color, ...rest } = props
+
+    return (
+        SocialLogin(
+            <Button
+                onClick={triggerLogin} {...rest}
+                style={{ "backgroundColor": color }}>
+                {this.props.children}
+            </Button>
+        )
     )
 }

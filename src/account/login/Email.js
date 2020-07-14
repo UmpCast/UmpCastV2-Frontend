@@ -9,7 +9,7 @@ import useFormStep from "./useFormStep"
 
 import { Button } from "react-bootstrap";
 
-export default function Email(props) {
+export default function RegisterEmail(props) {
 
     const [[values, setValue], [form, setForm]] = useFormStep(["email"], props)
 

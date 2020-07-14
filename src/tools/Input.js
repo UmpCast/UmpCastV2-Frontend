@@ -27,7 +27,7 @@ const errorStatus = (props) => {
 }
 
 const Input = (props) => {
-    const { controlId, controlLabel, label, prepend, control, text, form } = props
+    const { controlId, validLabel, label, prepend, control, text, form } = props
     let error = controlId in form.errors ? form.errors[controlId] : ""
 
     return (
@@ -38,7 +38,7 @@ const Input = (props) => {
                     {prepend}
                 </InputGroup.Prepend>
                 {control ? cloneElement(control, errorStatus(props)) : formControl(props)}
-                <Form.Control.Feedback type="valid">Valid {controlLabel ? controlLabel : label}</Form.Control.Feedback>
+                <Form.Control.Feedback type="valid">Valid {validLabel ? validLabel : label}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
             </InputGroup>
             <Form.Text className="text-muted mt-0">

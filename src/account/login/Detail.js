@@ -15,7 +15,7 @@ const PhoneFormControl = (props, ref) => {
     )
 }
 
-export default function Detail(props) {
+export default function RegisterDetail(props) {
 
     const fields = ["first_name", "last_name", "password", "password2", "phone_number"]
 

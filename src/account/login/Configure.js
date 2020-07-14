@@ -6,6 +6,7 @@ import UserContext from "../../UserContext"
 import { myUrl, config } from "../../tools/Api"
 
 import { Layout } from "./styles/Layout"
+import { configure } from "../promises"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button } from "react-bootstrap";
@@ -23,13 +24,9 @@ const Configure = () => {
     }
 
     const onClick = (myConfig) => {
-        axios.patch(myUrl("api/users/36/"), { account_type: myConfig }, config(token))
-            .then(res => {
-                setUser({ ...User, user: res.data, isConfigured: true })
-            })
-            .catch(
-                err => { console.log(err) }
-            )
+        configure({myConfig: myConfig, token: token})
+        .then( payload => setUser(payload.user))
+        .catch(err => console.log(err.response.data))
     }
 
     return (

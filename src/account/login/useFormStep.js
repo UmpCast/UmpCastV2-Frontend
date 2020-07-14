@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 
-import { fill, pick } from "../../tools/Form"
+import { fillEmpty, pickFields } from "../../tools/Form"
 
 export default function useFormStep(fields, props) {
 
-    const [values, setValue] = useState(fill(fields))
+    const [values, setValue] = useState(fillEmpty(fields))
 
     const [form, setForm] = useState({
         validated: false,
@@ -14,7 +14,7 @@ export default function useFormStep(fields, props) {
     useEffect(() => {
         const { updateStep } = props
 
-        const myErrors = pick(form.errors, Object.keys(values))
+        const myErrors = pickFields(form.errors, Object.keys(values))
 
         if (form.validated && Object.keys(myErrors).length === 0) {
             updateStep(values)

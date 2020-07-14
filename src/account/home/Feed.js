@@ -99,7 +99,7 @@ class Feed extends Component {
                 <div className="row mx-auto mb-4">
                     <div className="col-1" />
                     <div className="col-11 text-center">
-                        <a href="/">View more</a>
+                        <a href="/#/">View more</a>
                     </div>
                 </div>
             </div>

@@ -48,11 +48,13 @@ export default function Register() {
         }
     }, [step, User, setUser, values])
 
+    
     if (isConfigured) {
         return <Redirect to="/" />
     } else if (isAuthenticated) {
         return <Redirect to="/login" />
     }
+
 
     const updateStep = (newValues) => {
         setStep(step + 1)
@@ -79,5 +81,5 @@ export default function Register() {
                 </div>
             </div>
         </Layout>
-    );
+    )
 }

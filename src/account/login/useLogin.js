@@ -23,16 +23,6 @@ export default function useLogin(onCatch) {
                 return axios.get(myUrl("api/users/36/"), config(values.token))
 
             } else if (values.username && values.password) {
-
-                axios.post(myUrl("auth/token/"), tokenCreateBody(values), config())
-                    .then(res => {
-                        let token = res.data.access_token
-
-                        userUpdate = { token: token }
-                        localStorage.setItem("token", token)
-                        return axios.get(myUrl("api/users/36/"), config(token))
-                    })
-
             }
             return Promise.reject({response: {data: "Not enough inputs"}})
         })
@@ -44,6 +34,7 @@ export default function useLogin(onCatch) {
                 isConfigured: res.data.account_type !== "inactive",
                 user: res.data
             }
+
             console.log(userUpdate)
 
             setUser({ ...User, ...userUpdate })

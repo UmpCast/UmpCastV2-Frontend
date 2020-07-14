@@ -1,28 +1,32 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link, Redirect } from "react-router-dom"
 import axios from "axios"
 
-import { myUrl, config, tokenCreateBody } from "../../tools/Api"
+import userContext from "../../UserContext"
 import Input from "../../tools/Input"
-import { getMissing } from "../../tools/Form"
+import { getMissingFields, pickFields } from "../../tools/Form"
 
-import { Layout } from "./styles/Layout";
-import useLogin from "./useLogin"
+import { inputLogin } from "../promises"
+import { Layout } from "./styles/Layout"
 
 const Login = () => {
 
-    const [[values, setValue], [User, setUser]] = useLogin( err => console.log(err.response.data) )
+    const [User, setUser] = useContext(userContext)
 
     const { isAuthenticated } = User
+
+    const [values, setValue] = useState({username: "", password: ""})
 
     const [form, setForm] = useState({
         validated: false,
         errors: {}
     })
 
+
     if (isAuthenticated) {
         return <Redirect to="/register/configure" />
     }
+
 
     const onChange = (e, controlId) => {
         setValue({ ...values, [controlId]: e.target.value })
@@ -30,19 +34,20 @@ const Login = () => {
 
     const onSubmit = () => {
 
-        const missingErrors = getMissing(values)
+        const missingFields = getMissingFields(values)
 
-        if (Object.keys(missingErrors).length !== 0) {
+        if (Object.keys(missingFields).length !== 0) {
             setForm({
                 validated: true,
-                errors: missingErrors
+                errors: missingFields
             })
-            return
+        } else {
+            inputLogin({...values, payload: {}})
+            .then( payload => { setUser({...payload.user}) } )
+            .catch( err => { console.log(err.response.data) })
         }
-
-        let userUpdate = {}
-
     }
+
 
     return (
         <Layout>
@@ -50,6 +55,7 @@ const Login = () => {
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
                     <Input label="Username (Email)"
+                        validLabel="Username"
                         controlId="username"
                         type="text"
                         form={form}

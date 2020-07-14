@@ -1,5 +1,5 @@
 
-export const getMissing = values => {
+export const getMissingFields = values => {
     return Object.assign(
         ...Object.entries(values).map(
             pair => pair[1] === ""
@@ -8,7 +8,7 @@ export const getMissing = values => {
         ))
 }
 
-export const pick = function (obj, props) {
+export const pickFields = function (obj, props) {
 
     if (!obj || !props) return;
 
@@ -21,7 +21,7 @@ export const pick = function (obj, props) {
     return picked;
 }
 
-export const fill = (fields) => {
+export const fillEmpty = (fields) => {
     const filled = {}
     fields.map((field) => filled[field] = "")
 

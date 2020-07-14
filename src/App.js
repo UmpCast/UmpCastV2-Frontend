@@ -18,7 +18,9 @@ import Dashboard from "./account/home/Dashboard"
 import League from "./league/main/League"
 import Calendar from "./league/calendar/Calendar"
 
-import NoMatch from "./common/router/NoMatch"
+import NoMatch from "./router/NoMatch"
+
+import { tokenLogin } from "./account/promises"
 
 import { Container } from "react-bootstrap"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -43,20 +45,13 @@ const App = () => {
     const setUser = myUser[1]
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (token) {
-            axios.get(myUrl("api/users/34/"), config(token))
-                .then(res => {
-                    setUser({
-                        token: token,
-                        isAuthenticated: true,
-                        isConfigured: res.data.account_type !== "inactive",
-                        user: res.data
-                    })
-                })
-                .catch(err => console.log(err))
-        }
-    }, [setUser])
+        // const token = localStorage.getItem("token")
+        // if (token) {
+        //     tokenLogin({ token: token })
+        //         .then(payload => setUser(payload.user))
+        //         .catch(err => console.log(err))
+        // }
+    }, [])
 
     return (
         <UserContext.Provider value={myUser}>
