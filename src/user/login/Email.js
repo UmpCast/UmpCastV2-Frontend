@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 
-import { myUrl, config } from "../../tools/Api"
+import { myUrl, config } from "../../../Api"
 import { useFormStep } from "../accounts/Forms"
 import Input from "../accounts/Input";
 

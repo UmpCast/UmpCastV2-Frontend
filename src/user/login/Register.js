@@ -2,11 +2,10 @@ import React, { useState, useContext, useEffect } from "react"
 import { Link, Redirect } from "react-router-dom"
 import axios from "axios"
 
-import UserContext from "../../../UserContext"
-import { myUrl, config } from "../../Api"
-import { tokenCreateBody } from "../../tools/Api.js"
+import UserContext from "../../UserContext"
+import { myUrl, config, tokenCreateBody } from "../../Api"
 
-import { Layout } from "../../common/Layout";
+import { Layout } from "../common/layout/Layout";
 import RegisterEmail from "./Email";
 import RegisterDetail from "./Detail";
 

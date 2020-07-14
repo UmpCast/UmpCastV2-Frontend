@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import UserContext from "../../UserContext"
 
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import ProfileIcon from "../../components/images/ProfileIcon"
+import ProfileIcon from "../../user/icon/ProfileIcon"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import "./common.css"

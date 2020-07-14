@@ -1,22 +1,35 @@
 import React, { Fragment } from "react";
 import axios from "axios";
+import SocialLogin from "react-social-login"
 
-import SocialButton from "./SocialButton";
+import { myUrl, config, accessCreateBody } from "../../Api"
+import useLogin from "./useLogin"
 
-import { myUrl, config } from "../../tools/Api"
-import { accessCreateBody } from "../accounts/Api"
-import { useLogin } from "./Forms"
-
+import { Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
+const SocialButton = (props) => {
+
+    const { triggerLogin, color, ...rest } = props
+
+    return (
+        SocialLogin(
+            <Button
+                onClick={triggerLogin} {...rest}
+                style={{ "backgroundColor": color }}>
+                {this.props.children}
+            </Button>
+        )
+    )
+}
 
 export default function Social(props) {
+
+    const [[values, setValue], [User, setUser]] = useLogin(onCatch)
+
     const onCatch = (err) => {
         console.log(err.response.data)
     }
-
-    const [[values, setValue], [User, setUser]] = useLogin(onCatch)
 
     const handleSocialLogin = (user) => {
         const code = user._token.accessToken
@@ -48,7 +61,7 @@ export default function Social(props) {
                     onLoginSuccess={handleSocialLogin}
                     onLoginFailure={handleSocialLoginFailure}
                     color="#D95140">
-                    <FontAwesomeIcon icon={faGoogle} className="mr-2" />
+                    <FontAwesomeIcon icon={['fab', 'google']} className="mr-2" />
                     <strong>Signup with Google</strong>
                 </SocialButton>
             </div>
@@ -60,7 +73,7 @@ export default function Social(props) {
                     onLoginSuccess={handleSocialLogin}
                     onLoginFailure={handleSocialLoginFailure}
                     color="#4867AD">
-                    <FontAwesomeIcon icon={faFacebookF} className="mr-2" />
+                    <FontAwesomeIcon icon={['fab', 'facebook-f']} className="mr-2" />
                     <strong>Signup with Facebook</strong>
                 </SocialButton>
             </div>

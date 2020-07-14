@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import axios from "axios"
 
 import UserContext from "../../UserContext"
-import { Layout } from "../../components/common/Layout";
 import { myUrl, config } from "../../tools/Api"
+import { Layout } from "../common/layout/Layout";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBaseballBall, faUser } from "@fortawesome/free-solid-svg-icons"

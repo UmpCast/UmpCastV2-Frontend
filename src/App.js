@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from "react"
-import { HashRouter as Router, Route, Switch } from "react-router-dom"
 import axios from "axios"
+import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
 import UserContext from "./UserContext"
-import PrivateRoute from "./components/common/PrivateRoute";
-import { myUrl, config } from "./tools/Api"
+import { myUrl, config } from "./Api"
 
-import Header from "./components/common/Header";
+import Header from "./common/layout/Header"
+import PrivateRoute from "./common/router/PrivateRoute"
 
-import Login from "./components/accounts/Login"
-import Register from "./components/register/Register"
-import Configure from "./components/accounts/Configure";
+import Game from "./game/main/Game"
 
-import Dashboard from "./components/home/Dashboard"
-import Calendar from "./components/calendar/Calendar"
+import Login from "./user/login/Login"
+import Register from "./user/login/Register"
+import Configure from "./user/login/Configure"
+import Dashboard from "./user/home/Dashboard"
 
-import Game from "./components/game/Game";
-import League from "./components/league/League"
-import NoMatch from "./components/status/NoMatch"
+import League from "./league/main/League"
+import Calendar from "./league/calendar/Calendar"
 
-import "bootswatch/dist/cosmo/bootstrap.min.css";
-import "./App.css";
-import { Container } from "react-bootstrap";
+import NoMatch from "./common/router/NoMatch"
 
+import { Container } from "react-bootstrap"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { fab } from "@fortawesome/free-brands-svg-icons"
 import { fas } from "@fortawesome/free-solid-svg-icons"
 import { far } from "@fortawesome/free-regular-svg-icons"
+
+import "bootswatch/dist/cosmo/bootstrap.min.css"
+import "./style/App.css"
+
 library.add(fab, fas, far)
 
 const App = () => {
@@ -39,8 +41,6 @@ const App = () => {
 
     let myUser = useState(userState)
     const setUser = myUser[1]
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const token = localStorage.getItem("token")

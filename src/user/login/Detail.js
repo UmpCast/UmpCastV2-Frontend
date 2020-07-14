@@ -1,13 +1,19 @@
-import React from "react"
+import React, { forwardRef } from "react"
+import axios from "axios"
 import PhoneInput from "react-phone-number-input/input"
-import axios from "axios";
 
-import { myUrl, config } from "../../tools/Api"
-import { useFormStep } from "../accounts/Forms"
-import Input from "../accounts/Input"
-import PhoneFormControl from "../accounts/PhoneFormControl"
+import { myUrl, config } from "../../Api"
+import Input from "../../Input"
 
-import { InputGroup } from "react-bootstrap"
+import useFormStep from "./useFormStep"
+
+import { Form, InputGroup } from "react-bootstrap"
+
+const PhoneFormControl = (props, ref) => {
+    return (
+        forwardRef(<Form.Control {...props} ref={ref} className="rounded-right" />)
+    )
+}
 
 export default function Detail(props) {
 

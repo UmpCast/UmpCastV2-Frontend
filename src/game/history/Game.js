@@ -1,6 +1,6 @@
 import React from "react";
 
-import GameBadge from "./GameBadge";
+import GameBadge from "../history/GameBadge";
 
 import {faCheckCircle, faBan, faMedal} from "@fortawesome/free-solid-svg-icons";
 

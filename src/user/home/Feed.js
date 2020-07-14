@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-import FullGame from "../games/FullGame";
 import Message from "./Message";
-import ProfileIcon from "../../components/images/ProfileIcon";
-import MessageIcon from "../../components/images/MessageIcon";
+import FullGame from "../../game/main/Game";
+import ProfileIcon from "./icon/ProfileIcon";
+import MessageIcon from "./icon/MessageIcon";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Button, Accordion } from "react-bootstrap"

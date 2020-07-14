@@ -1,6 +1,6 @@
 import React from "react"
 
-import { CustomToggle } from "../../events/games/HistoryHeader"
+import { CustomToggle } from "../../game/history/Header"
 
 import { Button, Dropdown, Pagination } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 
 import "../home/dashboard.css"
-import PastGame from "./PastGame";
-import HistoryHeader from "./HistoryHeader";
+import PastGame from "./Game";
+import HistoryHeader from "./Header";
 
 
 class History extends Component {
