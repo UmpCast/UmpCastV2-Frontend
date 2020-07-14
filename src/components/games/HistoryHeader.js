@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBan, faCheckCircle, faSortDown} from "@fortawesome/free-solid-svg-icons";
 import {Dropdown} from "react-bootstrap";
 
-const CustomToggle = React.forwardRef(({children, onClick}, ref) => (
+export const CustomToggle = React.forwardRef(({children, onClick}, ref) => (
     <p ref={ref}
        onClick={(e) => {
            e.preventDefault();

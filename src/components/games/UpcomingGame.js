@@ -1,7 +1,7 @@
 import React from "react";
 
 const UpcomingGame = (props) => (
-    <a href="#"
+    <a href="#/game/1/"
        className={`list-group-item list-group-item-action ${props.status === "canceled" && "disabled"}`}>
         <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1 float-left">{props.title}</h5>
@@ -18,17 +18,17 @@ const UpcomingGame = (props) => (
 
 const statusTip = (status) => {
     switch(status) {
-        case 'casted':
+        case "casted":
             return <small className="bg-success text-white p-1 text-uppercase"
                           data-tip="Be on-time!">casted</small>
-        case 'backup':
+        case "backup":
             return <small className="bg-warning text-white p-1 text-uppercase"
-                          data-tip="You're a backup">backup</small>
-        case 'canceled':
+                          data-tip="You"re a backup">backup</small>
+        case "canceled":
             return <small className="bg-danger text-white p-1 text-uppercase"
-                          data-tip="Game is canceled" style={{'pointerEvents': 'auto'}}>cancel</small>
+                          data-tip="Game is canceled" style={{"pointerEvents": "auto"}}>cancel</small>
         default:
-            return 'foo';
+            return "foo";
     }
 }
 

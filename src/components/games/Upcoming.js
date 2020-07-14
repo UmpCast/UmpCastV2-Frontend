@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
 import DateBar from "./DateBar";
 import UpcomingGame from "./UpcomingGame";
@@ -8,37 +8,38 @@ class Upcoming extends Component {
         return (
             <div className="card-body p-0">
                 <div className="list-group rounded-0">
-                    <DateBar date="mar 04"/>
+                    <DateBar date="Aug 10"/>
                     <UpcomingGame
-                        title="Agile vs. Stanford"
-                        start_time="5PM"
-                        end_time="7PM"
+                        title="Mogan-Gault vs. Agile"
+                        start_time="3:30 PM"
+                        end_time="5:30 PM"
                         division="Majors"
                         role="Base"
                         status="casted"
                     />
                     <UpcomingGame
-                        title="Say Hey Baseball Vs. Carmel Imports"
-                        start_time="9AM"
-                        end_time="11AM"
+                        title="Midtown Veterinary Hospital Vs. Ada"s"
+                        start_time="5:30 PM"
+                        end_time="7:30 PM"
                         division="PCL"
                         role="Base"
                         status="canceled"
                     />
-                    <DateBar date="mar 07"/>
+                    <DateBar date="Aug 12"/>
                     <UpcomingGame
-                        title="Yankees vs. White Sox"
-                        start_time="2PM"
-                        end_time="3PM"
-                        division="AAA"
-                        role="Plate"
+                        title="Alhouse vs. Bevy"
+                        start_time="5:30 PM"
+                        end_time="7:30 PM"
+                        division="Majors"
+                        role="Scorekeeper"
                         status="backup"
                     />
+                    <DateBar date="Aug 14"/>
                     <UpcomingGame
-                        title="Pirates vs. Blue Jays"
-                        start_time="6PM"
-                        end_time="8PM"
-                        division="Majors"
+                        title="Venture Construction vs. Ada"s"
+                        start_time="2 PM"
+                        end_time="4 PM"
+                        division="PCL"
                         role="Plate"
                         status="casted"
                     />

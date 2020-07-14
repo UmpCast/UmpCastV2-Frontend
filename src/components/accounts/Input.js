@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 
 const formControl = (props) => {
@@ -28,7 +28,7 @@ const errorStatus = (props) => {
 
 const Input = (props) => {
     const { controlId, controlLabel, label, prepend, control, text, form } = props
-    let error = controlId in form.errors ? form.errors[controlId] : ''
+    let error = controlId in form.errors ? form.errors[controlId] : ""
 
     return (
         <Form.Group controlId={controlId}>

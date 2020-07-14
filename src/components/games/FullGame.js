@@ -2,10 +2,11 @@ import {faBaseballBall} from "@fortawesome/free-solid-svg-icons";
 import React, {Component} from "react";
 
 import ProfileIcon from "../images/ProfileIcon";
+import "./games.css"
 
 class FullGame extends Component {
     colors = ["primary", "success", "info"]
-    color_cnt = 0
+    color_cnt = -1
 
     formatRole = (role) => {
         if (role.first_name != null) {
@@ -19,7 +20,7 @@ class FullGame extends Component {
                         rotation={30}
                         padding="p-1"
                         border="light"
-                        variant={this.colors[this.color_cnt++]}
+                        variant="primary"
                     />
                 </div>
             )

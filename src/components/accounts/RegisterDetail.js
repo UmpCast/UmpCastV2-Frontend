@@ -25,7 +25,7 @@ const RegisterDetail = (props) => {
 
     const handleSubmit = () => {
 
-        axios.post(myUrl('api/users/'), values, config())
+        axios.post(myUrl("api/users/"), values, config())
             .then(res => console.log(res))
             .catch(err => {
                 setForm({ validated: true, errors: err.response.data })

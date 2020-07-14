@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import React, { useState, useContext, useEffect } from "react"
+import { Link, Redirect } from "react-router-dom"
 import axios from "axios"
 
 import UserContext from "../../UserContext"
 import { myUrl, config } from "../../Api"
-import { tokenCreateBody } from './Api.js'
+import { tokenCreateBody } from "./Api.js"
 
 import { Layout } from "../common/Layout";
 import RegisterEmail from "./RegisterEmail";
@@ -30,16 +30,15 @@ const Register = () => {
     useEffect(() => {
         let userUpdates = {}
         if (step === 2) {
-            axios.post(myUrl('api/users/'), values, config())
+            axios.post(myUrl("api/users/"), values, config())
                 .then(res => {
-                    console.log(res)
                     userUpdates = {user: res.data, isAuthenticated: true }
 
-                    return axios.post(myUrl('auth/token/'), tokenCreateBody(values), config())
+                    return axios.post(myUrl("auth/token/"), tokenCreateBody(values), config())
                 })
                 .then(res => {
                     let token = res.data.access_token
-                    localStorage.setItem('token', token)
+                    localStorage.setItem("token", token)
                     userUpdates = { ...userUpdates, token: token }
                     setUser({...User, ...userUpdates})
                 })
@@ -51,9 +50,9 @@ const Register = () => {
     }, [step, User, setUser, values])
 
     if (isConfigured) {
-        return <Redirect to='/' />
+        return <Redirect to="/" />
     } else if (isAuthenticated) {
-        return <Redirect to='/login' />
+        return <Redirect to="/login" />
     }
 
     const updateStep = (newValues) => {
@@ -63,8 +62,8 @@ const Register = () => {
 
     const formSteps = (
         [
-            <RegisterEmail updateStep={updateStep} />,
-            <RegisterDetail updateStep={updateStep} />
+            <RegisterEmail updateStep={updateStep}/>,
+            <RegisterDetail updateStep={updateStep}/>
         ]
     )
 

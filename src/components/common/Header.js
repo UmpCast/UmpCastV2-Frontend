@@ -1,14 +1,18 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom"
 import UserContext from "../../UserContext"
 
-import { Navbar, Nav, Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import ProfileIcon from "../images/ProfileIcon"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+import "./common.css"
 
 const Header = () => {
-    const [{ user, isAuthenticated }, setUser] = useContext(UserContext)
+    const [{ User, isAuthenticated }, setUser] = useContext(UserContext)
 
     const logout = () => {
-        localStorage.removeItem('token')
+        localStorage.removeItem("token")
         setUser({
             isAuthenticated: false,
             isConfigured: false,
@@ -18,42 +22,52 @@ const Header = () => {
     }
 
     const authLinks = (
-        <Nav>
-            <Navbar.Text className="mr-3">
-                <strong>
-                    {user ? `Hey ${user.first_name}!` : ''}
-                </strong>
-            </Navbar.Text>
-            <Nav.Link onClick={() => logout()} className="mr-3">
-                <strong>
-                    Logout
-                </strong>
-            </Nav.Link>
-        </Nav>
+        <Fragment>
+            <Nav className="mr-auto">
+                <Nav.Link as={Link} to="/">Dashboard</Nav.Link>
+                <Nav.Link  as={Link} to="/calendar">Calendar</Nav.Link>
+                <Nav.Link as={Link} to="/games">Games</Nav.Link>
+                <NavDropdown title="Leagues" id="collasible-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">Palo Alto Little League</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">Saratoga Little League</NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+            <Nav>
+                <ProfileIcon
+                    icon={["fas", "baseball-ball"]}
+                    variant="secondary"
+                    size="fa-lg"
+                    custom="my-auto"
+                />
+                <NavDropdown title="" alignRight id="collasible-nav-dropdown" className="mb-0 pb-0">
+                    <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">Notifications</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3">Settings</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick = {() => logout()}>Logout</NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+        </Fragment>
     )
 
     const guestLinks = (
-        <Nav>
-            <Link to="/register" className="nav-link">
-                Register
-                </Link>
-            <Link to="/login" className="nav-link">
-                Login
-                </Link>
-        </Nav>
+        <Fragment>
+            <Nav className="mr-auto" />
+            <Nav>
+                <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+            </Nav>
+        </Fragment>
     )
 
     return (
-        <Fragment>
-            <Navbar expand="sm" variant="light" bg="light">
-                <Navbar.Brand href="/">UmpCast</Navbar.Brand>
-                <Navbar.Toggle data-toggle="collapse" data-target="#responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto" />
-                    {isAuthenticated ? authLinks : guestLinks}
-                </Navbar.Collapse>
-            </Navbar>
-        </Fragment>
+        <Navbar expand="sm" variant="dark" bg="secondary">
+            <Navbar.Brand href="/"><FontAwesomeIcon icon={["fas", "mountain"]}/> UmpCast</Navbar.Brand>
+            <Navbar.Toggle data-toggle="collapse" data-target="#responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                {isAuthenticated ? authLinks : guestLinks}
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
 

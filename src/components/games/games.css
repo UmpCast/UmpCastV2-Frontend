@@ -7,3 +7,10 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+.border-custom {
+    border-width: 1px !important;
+    border-style: dotted !important;
+    border-color: #DFE2E6 !important;
+    border-radius: 10px !important;
+}

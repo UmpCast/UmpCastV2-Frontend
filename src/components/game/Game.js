@@ -1,40 +1,72 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
 import Cast from "./Cast";
 
-import './game.css'
-import {Tab, Tabs} from "react-bootstrap";
+import "./game.css"
+import { Tab, Tabs } from "react-bootstrap";
 import GameBanner from "./GameBanner";
 
-class Game extends Component {
-    render() {
-        return (
-            <div className="m-3 mx-xl-5 mt-xl-5 mb-xl-0">
-                <GameBanner
-                    title="Agile vs. Stanford"
-                    date="March 04"
-                    start_time="5PM"
-                    end_time="7PM"
-                    division="Majors"
-                    location="Greer Park"
-                    comments={null}
-                />
-                <div className="row">
-                    <div className="col">
-                        <Tabs defaultActiveKey="base" id="uncontrolled-tab-example">
-                            <Tab eventKey="base" title="Base">
-                                <Cast/>
-                            </Tab>
-                            <Tab eventKey="plate" title="Plate">
-                            </Tab>
-                            <Tab eventKey="water_boy" title="Water boy">
-                            </Tab>
-                        </Tabs>
-                    </div>
+const Game = () => {
+    const casts = [
+        {
+            role: "Base",
+            cast: [
+                {
+                    title: "Casted",
+                    name:"Victor Lin"
+                },
+                {
+                    title:"Backup",
+                    name:"Jonathan Kao"
+                }
+            ]
+        },
+        {
+            role: "Plate",
+            cast: [
+                {
+                    title: "Casted",
+                    name: "Ingrid Lee"
+                }
+            ]
+        },
+        {
+            role: "Scorekeeper",
+            cast: [
+                {
+                    title:"Casted",
+                    name:"Max Campbell"
+                }
+            ]
+        }
+    ]
+
+    const roleTabs = casts.map(role =>
+        <Tab eventKey={role.role} title={role.role}>
+            <Cast cast={role.cast}/>
+        </Tab>
+    )
+
+    return (
+        <div className="m-3 mx-xl-5 mt-xl-5 mb-xl-0">
+            <GameBanner
+                title="Morgan-Gault vs. Agile"
+                date="August 10"
+                start_time="3:30 PM"
+                end_time="5:30 PM"
+                division="Majors"
+                location="Middlefield Ballpark"
+                comments={null}
+            />
+            <div className="row">
+                <div className="col">
+                    <Tabs defaultActiveKey="Base" id="uncontrolled-tab-example">
+                        {roleTabs}
+                    </Tabs>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Game;

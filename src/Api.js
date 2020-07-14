@@ -5,10 +5,10 @@ export const myUrl = (endpoint) => {
 export const config = (token = null, params = null) => {
     return {
         headers: {
-            'Content-Type': 'application/json',
-            ...(token && { 'Authorization': `Bearer ${token}` })
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` })
         },
-        ...(params && { 'params': params })
+        ...(params && { "params": params })
     }
 }
 

@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-import {Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 import "../home/dashboard.css"
 import PastGame from "./PastGame";
@@ -15,34 +15,34 @@ class History extends Component {
                 <div className="card border-0 mb-3">
                     <HistoryHeader
                         completed="5"
-                        canceled="1"/>
+                        canceled="1" />
                     <Card.Body className="p-0">
                         <PastGame
-                            date="Mar 04"
-                            start_time="5PM"
-                            end_time="7PM"
-                            title="Agile vs. Stanford"
+                            date="Mar 03"
+                            start_time="5:30 PM"
+                            end_time="7:30 PM"
+                            title="Agile Vs. Stanford Shopping Center"
                             division="Majors"
-                            role="Base"
-                            status="completed"
+                            role="Plate"
+                            status="canceled"
                         />
                         <PastGame
-                            date="Mar 01"
-                            start_time="9AM"
-                            end_time="11AM"
-                            title="Say Hey Baseball Vs. Carmel Imports"
-                            division="PCL"
+                            date="Feb 29"
+                            start_time="1:30 PM"
+                            end_time="3:30 PM"
+                            title="Bevy Vs. The Old Pro"
+                            division="Majors"
                             role="Base"
                             status="short_notice"
                         />
                         <PastGame
-                            date="Feb 25"
-                            start_time="2PM"
-                            end_time="3PM"
-                            title="Yankees Vs. White Sox"
-                            division="AAA"
-                            role="Plate"
-                            status="canceled"
+                            date="Feb 29"
+                            start_time="11 AM"
+                            end_time="1 PM"
+                            title="Alhouse vs. Agile"
+                            division="Majors"
+                            role="Base"
+                            status="completed"
                         />
                     </Card.Body>
                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import SocialLogin from "react-social-login"
 import {Button} from "react-bootstrap";
 

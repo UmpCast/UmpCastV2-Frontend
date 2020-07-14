@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
-import {Card, Button, Accordion} from "react-bootstrap"
+import { Card, Button, Accordion } from "react-bootstrap"
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBaseballBall,
     faUserAlt,
@@ -10,7 +10,7 @@ import {
     faWrench,
     faChevronDown
 } from "@fortawesome/free-solid-svg-icons";
-import './dashboard.css'
+import "./dashboard.css"
 
 import FullGame from "../games/FullGame";
 import Message from "./Message";
@@ -30,7 +30,7 @@ class Feed extends Component {
             last_name: "Kao"
         },
         {
-            role: "Water Boy",
+            role: "Scorekeeper",
             first_name: null,
             last_name: null
         }
@@ -46,21 +46,21 @@ class Feed extends Component {
                                 <Card.Header>
                                     <strong className="text-white">You have a game coming up</strong>
                                     <Accordion.Toggle as={Button} eventKey="0"
-                                                      className="flex-wrap float-right secondary rounded border-muted p-0 bg-dark border-0">
-                                        <FontAwesomeIcon icon={faChevronDown}/>
+                                        className="flex-wrap float-right secondary rounded border-muted p-0 bg-dark border-0">
+                                        <FontAwesomeIcon icon={faChevronDown} />
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body className="pb-0">
                                         <FullGame
                                             role="Base"
-                                            date="Mar 4"
-                                            time_start="5PM"
-                                            time_end="7PM"
-                                            title="Agile vs. Stanford"
+                                            date="Aug 10"
+                                            time_start="3:30 PM"
+                                            time_end="5:30 PM"
+                                            title="Morgan-Gault vs. Agile"
                                             division="Majors"
                                             location="Mitchell Ballpark"
-                                            cast={this.cast}/>
+                                            cast={this.cast} />
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -69,9 +69,16 @@ class Feed extends Component {
                 </div>
                 <div className="mb-4">
                     <Message
-                        profileIcon={<ProfileIcon icon={faBaseballBall} rotation={30} variant="primary" size="fa-2x"
-                                                  padding="p-2"/>}
-                        messageIcon={<MessageIcon icon={faWrench}/>}
+                        profileIcon={
+                            <ProfileIcon
+                                icon={faBaseballBall}
+                                rotation={30}
+                                variant="primary"
+                                size="fa-2x"
+                                padding="p-2"
+                            />
+                        }
+                        messageIcon={<MessageIcon icon={faWrench} />}
                         sender="UmpCast"
                         subject="Update to our Policy"
                         date="Mar 4, 2020"
@@ -80,8 +87,15 @@ class Feed extends Component {
                 </div>
                 <div className="mb-3">
                     <Message
-                        profileIcon={<ProfileIcon icon={faUserAlt} variant="success" size="fa-2x" padding="p-2"/>}
-                        messageIcon={<MessageIcon icon={faExclamationCircle}/>}
+                        profileIcon={
+                            <ProfileIcon
+                                icon={faUserAlt}
+                                variant="success"
+                                size="fa-2x"
+                                padding="p-2"
+                            />
+                        }
+                        messageIcon={<MessageIcon icon={faExclamationCircle} />}
                         sender="Palo Alto Little League"
                         subject="COVID-19 Response"
                         date="Mar 1, 2020"
@@ -89,7 +103,7 @@ class Feed extends Component {
                         season early. Any games that umpires have signed up for will be dropped."/>
                 </div>
                 <div className="row mx-auto mb-4">
-                    <div className="col-1"/>
+                    <div className="col-1" />
                     <div className="col-11 text-center">
                         <a href="/">View more</a>
                     </div>
