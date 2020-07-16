@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/UmpCastV2-Frontend/static/css/main.fb610f6d.chunk.css",
+    "main.js": "/UmpCastV2-Frontend/static/js/main.eda1b7cb.chunk.js",
+    "main.js.map": "/UmpCastV2-Frontend/static/js/main.eda1b7cb.chunk.js.map",
+    "runtime-main.js": "/UmpCastV2-Frontend/static/js/runtime-main.0194c977.js",
+    "runtime-main.js.map": "/UmpCastV2-Frontend/static/js/runtime-main.0194c977.js.map",
+    "static/css/2.a7c91b2e.chunk.css": "/UmpCastV2-Frontend/static/css/2.a7c91b2e.chunk.css",
+    "static/js/2.4393c4da.chunk.js": "/UmpCastV2-Frontend/static/js/2.4393c4da.chunk.js",
+    "static/js/2.4393c4da.chunk.js.map": "/UmpCastV2-Frontend/static/js/2.4393c4da.chunk.js.map",
+    "index.html": "/UmpCastV2-Frontend/index.html",
+    "precache-manifest.9713d40b7ea8451c9fd5f8c773eb358b.js": "/UmpCastV2-Frontend/precache-manifest.9713d40b7ea8451c9fd5f8c773eb358b.js",
+    "service-worker.js": "/UmpCastV2-Frontend/service-worker.js",
+    "static/css/2.a7c91b2e.chunk.css.map": "/UmpCastV2-Frontend/static/css/2.a7c91b2e.chunk.css.map",
+    "static/css/main.fb610f6d.chunk.css.map": "/UmpCastV2-Frontend/static/css/main.fb610f6d.chunk.css.map",
+    "static/js/2.4393c4da.chunk.js.LICENSE.txt": "/UmpCastV2-Frontend/static/js/2.4393c4da.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0194c977.js",
+    "static/css/2.a7c91b2e.chunk.css",
+    "static/js/2.4393c4da.chunk.js",
+    "static/css/main.fb610f6d.chunk.css",
+    "static/js/main.eda1b7cb.chunk.js"
+  ]
+}
