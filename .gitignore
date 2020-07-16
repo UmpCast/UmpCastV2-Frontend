@@ -29,4 +29,6 @@ yarn-error.log*
 .history/*
 .vscode/*
 
-.gitignore
+.firebaserc
+firebase.json
+.firebase/*
