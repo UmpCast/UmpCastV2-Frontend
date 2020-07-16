@@ -4,12 +4,11 @@ import axios from "axios"
 
 import userContext from "../../UserContext"
 import Input from "../../tools/Input"
-import { getMissingFields, pickFields } from "../../tools/Form"
 
 import { inputLogin } from "../promises"
 import { Layout } from "./styles/Layout"
 
-const Login = () => {
+export default function Login() {
 
     const [User, setUser] = useContext(userContext)
 
@@ -44,7 +43,17 @@ const Login = () => {
         } else {
             inputLogin({...values, payload: {}})
             .then( payload => { setUser({...payload.user}) } )
-            .catch( err => { console.log(err.response.data) })
+            .catch( err => {
+                let errors = err.response.data
+                console.log(errors)
+                // TEMP FIX
+                const description = errors["error_description"]
+                if(description) {
+                    errors = {username: "Invalid credentials", password: "Invalid credentials"}
+                }
+                //
+                setForm({validated: true, errors: errors})
+            })
         }
     }
 
@@ -80,4 +89,11 @@ const Login = () => {
     );
 }
 
-export default Login
+export const getMissingFields = values => {
+    return Object.assign(
+        ...Object.entries(values).map(
+            pair => pair[1] === ""
+                ? { [pair[0]]: pair[0] + " is missing" }
+                : {}
+        ))
+}

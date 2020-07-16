@@ -1,17 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import axios from "axios";
 
 import { myUrl, config } from "../../tools/Api"
 import Input from "../../tools/Input";
+import { pickFields, isEmpty } from "../../tools/Form"
 
-import Social from "./Social"
-import useFormStep from "./useFormStep"
+import RegisterSocial from "./Social"
 
 import { Button } from "react-bootstrap";
 
 export default function RegisterEmail(props) {
 
-    const [[values, setValue], [form, setForm]] = useFormStep(["email"], props)
+    const [values, setValue] = useState({ email: "" })
+    const [form, setForm] = useState({ validated: false, errors: {} })
 
     const onChange = (e, controlId) => {
         setValue({ ...values, [controlId]: e.target.value })
@@ -21,14 +22,20 @@ export default function RegisterEmail(props) {
         axios.post(myUrl("api/users/"), values, config())
             .then()
             .catch(err => {
-                setForm({ validated: true, errors: err.response.data })
+                const errors = pickFields(err.response.data, ["email"])
+
+                if (isEmpty(errors)) {
+                    props.updateStep(values)
+                } else {
+                    setForm({ validated: true, errors: errors })
+                }
             })
     }
 
     return (
         <Fragment>
             <div className="row mb-2 px-2">
-                <Social />
+                <RegisterSocial />
             </div>
             <div className="d-inline-flex align-items-center mb-2">
                 <hr className="flex-grow-1" />

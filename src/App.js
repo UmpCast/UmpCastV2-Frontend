@@ -29,7 +29,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons"
 import { far } from "@fortawesome/free-regular-svg-icons"
 
 import "bootswatch/dist/cosmo/bootstrap.min.css"
-import "./style/App.css"
+import "./styles/App.css"
 
 library.add(fab, fas, far)
 

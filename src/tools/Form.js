@@ -1,31 +1,34 @@
 
-export const getMissingFields = values => {
-    return Object.assign(
-        ...Object.entries(values).map(
-            pair => pair[1] === ""
-                ? { [pair[0]]: pair[0] + " is missing" }
-                : {}
-        ))
-}
+export const pickFields = function (obj, props, condition = (obj, prop) => { return obj[prop] }) {
 
-export const pickFields = function (obj, props) {
+    var picked = {}
 
-    if (!obj || !props) return;
-
-    var picked = {};
-
-    props.forEach(function (prop) {
-        obj[prop] && (picked[prop] = obj[prop])
-    });
+    props.forEach(prop => condition(obj, prop) && (picked[prop] = obj[prop]))
 
     return picked;
 }
 
-export const fillEmpty = (fields) => {
+export const fillFields = (fields, fill = "") => {
     const filled = {}
-    fields.map((field) => filled[field] = "")
+    fields.map((field) => filled[field] = fill)
 
     return filled
+}
+
+export const isEmpty = (obj) => {
+    return !obj || Object.keys(obj).length === 0;
+}
+
+export const identifyRequest = (config) => {
+    return { endpoint: new URL(config.url).pathname, method: config.method }
+}
+
+export const equalObj = (obj1, obj2) => {
+    return JSON.stringify(obj1) === JSON.stringify(obj2)
+}
+
+export const isRequest = (err, reqArray) => {
+    return equalObj(identifyRequest(err.response.config), { endpoint: reqArray[0], method: reqArray[1] })
 }
 
 // setUser({ ...User, ...userUpdate })

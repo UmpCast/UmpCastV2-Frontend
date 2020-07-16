@@ -1,5 +1,8 @@
+const client_id = process.env.REACT_APP_CLIENT_ID
+const client_secret = process.env.REACT_APP_CLIENT_SECRET
+
 export const myUrl = (endpoint) => {
-    return "http://127.0.0.1:3000/" + endpoint
+    return "https://127.0.0.1:3000/" + endpoint
 }
 
 export const config = (token = null, params = null) => {
@@ -15,8 +18,8 @@ export const config = (token = null, params = null) => {
 export const tokenCreateBody = (values) => {
     return {
         grant_type: "password",
-        client_id: "xZevnzc91l75WMLaswLxlAl3Avg1XaKSGAAra1dk",
-        client_secret: "8uIJQJFJBBymPX4t2LImIBu6xUyEE8SzOpPFDjZOtT0wD5fDu5faEE8SrGJtKGHdDyUulQkQXoO1G3FUg9WoDtZdaa1rmBBOTszGabDSduTkNbduRCSqm6ccbt2Oe2Cp",
+        client_id: client_id,
+        client_secret: client_secret,
         username: (values.username ? values.username : values.email),
         password: values.password
     }
@@ -25,8 +28,8 @@ export const tokenCreateBody = (values) => {
 export const accessCreateBody = (values) => {
     return {
         grant_type: "convert_token",
-        client_id: "xZevnzc91l75WMLaswLxlAl3Avg1XaKSGAAra1dk",
-        client_secret: "8uIJQJFJBBymPX4t2LImIBu6xUyEE8SzOpPFDjZOtT0wD5fDu5faEE8SrGJtKGHdDyUulQkQXoO1G3FUg9WoDtZdaa1rmBBOTszGabDSduTkNbduRCSqm6ccbt2Oe2Cp",
+        client_id: client_id,
+        client_secret: client_secret,
         backend: values.backend,
         token: values.token
     }

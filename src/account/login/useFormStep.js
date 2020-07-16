@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 
-import { fillEmpty, pickFields } from "../../tools/Form"
+import { fillFields, pickFields } from "../../tools/Form"
 
 export default function useFormStep(fields, props) {
 
-    const [values, setValue] = useState(fillEmpty(fields))
+    const [values, setValue] = useState(fillFields(fields))
 
     const [form, setForm] = useState({
         validated: false,

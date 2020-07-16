@@ -1,36 +1,33 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component, useContext } from "react";
 import axios from "axios";
 import SocialLogin from "react-social-login"
 
-import { myUrl, config, accessCreateBody } from "../../tools/Api"
-import useLogin from "./useLogin"
+import UserContext from "../../UserContext"
+
+import { socialRegister } from "../promises"
 
 import { Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function RegisterSocial(props) {
+export default function RegisterSocial() {
 
-    const [[, setValue], [User,]] = useLogin(err => console.log(err))
+    const [, setUser] = useContext(UserContext)
 
     const handleSocialLogin = (user) => {
+
         const code = user._token.accessToken
-        axios
-            .post(
-                myUrl("auth/convert-token/"),
-                accessCreateBody({ backend: user._provider, token: code }),
-                config())
-            .then(res => {
-                const token = res.data.access_token
-                setValue({ token: token })
-            })
-            .catch(err => {
-                console.log(err.response.data)
-            })
+        const provider = user._provider === "google" ? "google-oauth2" : "facebook"
+
+        socialRegister({provider: provider, code: code})
+        .then(payload => setUser(payload.user))
+        .catch(err => console.log(err.response.data))
     }
 
     const handleSocialLoginFailure = (err) => {
         console.error(err)
     }
+
+    const SocialButton = SocialLogin(LoginButton)
 
     return (
         <Fragment>
@@ -62,17 +59,16 @@ export default function RegisterSocial(props) {
     )
 }
 
-const SocialButton = (props) => {
+class LoginButton extends Component {
+    render() {
+        const { triggerLogin, color, ...rest } = this.props
 
-    const { triggerLogin, color, ...rest } = props
-
-    return (
-        SocialLogin(
+        return (
             <Button
                 onClick={triggerLogin} {...rest}
                 style={{ "backgroundColor": color }}>
                 {this.props.children}
             </Button>
         )
-    )
+    }
 }
