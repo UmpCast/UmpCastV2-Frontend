@@ -1,0 +1,14 @@
+.border-custom {
+    border-width: 2px;
+    border-style: dotted;
+    border-color: #DFE2E6;
+    border-radius: 10px !important;
+}
+
+.border-bottom-primary {
+    border-bottom: 2px solid #3D80DC !important;
+}
+
+.border-bottom-hidden {
+    border-bottom: 2px solid transparent !important;
+}

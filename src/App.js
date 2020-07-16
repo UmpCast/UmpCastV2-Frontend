@@ -1,26 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { HashRouter as Router, Route, Switch } from "react-router-dom"
+import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
-import UserContext from './UserContext'
-import PrivateRoute from "./components/common/PrivateRoute";
-import { myUrl, config } from "./Api"
+import UserContext from "./UserContext"
+import { myUrl, config } from "./tools/Api"
 
-import Header from "./components/common/Header";
+import Header from "./Header"
+import PrivateRoute from "./router/PrivateRoute"
 
-import Login from './components/accounts/Login'
-import Register from './components/accounts/Register'
-import Configure from "./components/accounts/Configure";
+import Game from "./game/main/Game"
 
-import Dashboard from './components/home/Dashboard'
+import Login from "./account/login/Login"
+import Register from "./account/login/Register"
+import Configure from "./account/login/Configure"
+import Dashboard from "./account/home/Dashboard"
 
-import Game from "./components/game/Game";
+import League from "./league/main/League"
+import Calendar from "./league/calendar/Calendar"
 
-import NoMatch from './components/status/NoMatch'
+import NoMatch from "./router/NoMatch"
 
-import 'bootswatch/dist/cosmo/bootstrap.min.css';
-import './App.css';
-import { Container } from "react-bootstrap";
+import { tokenLogin } from "./account/promises"
+
+import { Container } from "react-bootstrap"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { fab } from "@fortawesome/free-brands-svg-icons"
+import { fas } from "@fortawesome/free-solid-svg-icons"
+import { far } from "@fortawesome/free-regular-svg-icons"
+
+import "bootswatch/dist/cosmo/bootstrap.min.css"
+import "./styles/App.css"
+
+library.add(fab, fas, far)
 
 const App = () => {
     let userState = {
@@ -33,35 +44,28 @@ const App = () => {
     let myUser = useState(userState)
     const setUser = myUser[1]
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            axios.get(myUrl('api/users/34/'), config(token))
-                .then(res => {
-                    setUser({
-                        token: token,
-                        isAuthenticated: true,
-                        isConfigured: res.data.account_type !== "inactive",
-                        user: res.data
-                    })
-                })
-                .catch(err => console.log(err))
-        }
-    }, [setUser])
+        // const token = localStorage.getItem("token")
+        // if (token) {
+        //     tokenLogin({ token: token })
+        //         .then(payload => setUser(payload.user))
+        //         .catch(err => console.log(err))
+        // }
+    }, [])
 
     return (
         <UserContext.Provider value={myUser}>
             <Router>
                 <Header />
-                <Container fluid>
+                <Container fluid className="p-0">
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
                         <Route path="/game/:id/" component={Game} />
-                        <Route path="/login/" component={Login} />
+                        <Route path="/league/:id/" component={League} />
                         <Route path="/register/configure/" component={Configure} />
                         <Route path="/register/" component={Register} />
+                        <Route path="/login/" component={Login} />
+                        <Route exact path="/calendar" component={Calendar} />
                         <Route component={NoMatch} />
                     </Switch>
                 </Container>
