@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
+import "bootswatch/dist/cosmo/bootstrap.min.css"
+
 import UserContext from "./UserContext"
 import { myUrl, config } from "./tools/Api"
 
@@ -27,8 +29,6 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { fab } from "@fortawesome/free-brands-svg-icons"
 import { fas } from "@fortawesome/free-solid-svg-icons"
 import { far } from "@fortawesome/free-regular-svg-icons"
-
-import "bootswatch/dist/cosmo/bootstrap.min.css"
 import "./styles/App.css"
 
 library.add(fab, fas, far)
