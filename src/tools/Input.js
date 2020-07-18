@@ -1,51 +1,48 @@
-import React, { cloneElement } from "react";
-import { Form, InputGroup } from "react-bootstrap";
+import React, {forwardRef} from 'react'
+import { useField } from "formik"
 
-const formControl = (props) => {
-    const { handle, controlId, type, placeholder, required } = props
-    return (
-        cloneElement(
-            <Form.Control
-                className="rounded"
-                onChange={e => handle(e, controlId)}
-                type={type}
-                placeholder={placeholder}
-                required={required}
-            />,
-            errorStatus(props)
-        ))
-}
+import PhoneInput from "react-phone-number-input/input"
+import { Form } from "react-bootstrap"
 
-const errorStatus = (props) => {
-    const { form, controlId } = props
-    const hasError = controlId in form.errors
-
-    return {
-        isValid: form.validated && !hasError,
-        isInvalid: form.validated && hasError
-    }
-}
-
-const Input = (props) => {
-    const { controlId, validLabel, label, prepend, control, text, form } = props
-    let error = controlId in form.errors ? form.errors[controlId] : ""
+export const TextInput = ({ label, submitted, ...props }) => {
+    const [field, meta] = useField(props)
 
     return (
-        <Form.Group controlId={controlId}>
-            {label ? <Form.Label>{label}</Form.Label> : null}
-            <InputGroup>
-                <InputGroup.Prepend>
-                    {prepend}
-                </InputGroup.Prepend>
-                {control ? cloneElement(control, errorStatus(props)) : formControl(props)}
-                <Form.Control.Feedback type="valid">Valid {validLabel ? validLabel : label}</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
-            </InputGroup>
-            <Form.Text className="text-muted mt-0">
-                {text}
-            </Form.Text>
+        <Form.Group>
+            <Form.Label>{label}</Form.Label>
+            <Form.Control {...field} {...props}
+                isInvalid={meta.error}
+            />
+            <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>
         </Form.Group>
     )
 }
 
-export default Input;
+export const MyPhoneInput = ({ label, ...props }) => {
+    const [field, meta, helpers] = useField(props)
+
+    return (
+        <Form.Group>
+            <Form.Label>{label}</Form.Label>
+            <PhoneInput
+                        useNationalFormatForDefaultCountryValue={false}
+                        defaultCountry="US"
+                        inputComponent={PhoneRef}
+                        onChange={(number) => helpers.setValue(number.substring(2))}
+                        isInvalid={meta.error}
+                    />
+            <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>
+        </Form.Group>
+    )
+}
+
+const PhoneControl = (props, ref) => {
+    return (
+        <Form.Control
+            {...props}
+            ref={ref}
+            className="rounded-right"
+        />)
+}
+
+const PhoneRef = forwardRef(PhoneControl)

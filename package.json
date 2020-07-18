@@ -15,17 +15,20 @@
     "axios": "^0.19.2",
     "bluebird": "^3.5.1",
     "bootswatch": "^4.5.0",
+    "formik": "^2.1.5",
     "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "react-is": "^16.13.1",
     "react-phone-number-input": "^3.0.24",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-social-login": "^3.4.7",
     "react-tooltip": "^4.2.7",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "HTTPS=true PORT=9000 react-scripts start",

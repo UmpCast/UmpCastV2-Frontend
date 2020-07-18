@@ -11,7 +11,7 @@ import RegisterDetail from "./Detail";
 
 export default function Register() {
 
-    const [User,] = useContext(UserContext)
+    const [User, setUser] = useContext(UserContext)
 
     const { isAuthenticated, isConfigured } = User
 
@@ -28,24 +28,18 @@ export default function Register() {
     const updateStep = (newValues) => {
         const newStep = step + 1
 
-        setMigrated({...migrated, ...newValues})
         setStep(newStep)
+        setMigrated({ ...migrated, ...newValues })
     }
-
-    const formSteps = (
-        [
-            <RegisterEmail updateStep={updateStep} />,
-            <RegisterDetail updateStep={updateStep} />
-        ]
-    )
 
     return (
         <Layout>
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5 px-4">
                     <h2 className="text-center mb-3">Register</h2>
-                    {cloneElement(formSteps[Math.min(step, 1)], {migrated: migrated})}
-                    <p>
+                    {formSteps(Math.min(step, 1))
+                    ({updateStep: updateStep, setUser: setUser, migrated: migrated})}
+                    <p className="mt-2 mb-0">
                         Have an account?
                             <Link to="/login"> Login</Link>
                     </p>
@@ -53,4 +47,15 @@ export default function Register() {
             </div>
         </Layout>
     )
+}
+
+const formSteps = (step) => {
+    switch (step) {
+        case (0):
+            return RegisterEmail
+        case (1):
+            return RegisterDetail
+        default:
+            return RegisterEmail
+    }
 }

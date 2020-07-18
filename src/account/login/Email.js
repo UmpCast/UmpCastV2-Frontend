@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from "react";
-import axios from "axios";
+import React, { Fragment } from "react"
+import { Formik, Form as FormikForm } from "formik"
+import * as Yup from "yup"
+import axios from "axios"
 
 import { myUrl, config } from "../../tools/Api"
-import Input from "../../tools/Input";
-import { pickFields, isEmpty } from "../../tools/Form"
+import { pickFields, isEmpty, formStatus, pickFirst } from "../../tools/Form"
+import { TextInput } from "../../tools/Input"
 
 import RegisterSocial from "./Social"
 
@@ -11,24 +13,31 @@ import { Button } from "react-bootstrap";
 
 export default function RegisterEmail(props) {
 
-    const [values, setValue] = useState({ email: "" })
-    const [form, setForm] = useState({ validated: false, errors: {} })
-
-    const onChange = (e, controlId) => {
-        setValue({ ...values, [controlId]: e.target.value })
+    const initialValues = {
+        email: ""
     }
 
-    const onNext = () => {
+    const validationSchema =
+        Yup.object({
+            email: Yup.string()
+                .email('Invalid email address')
+                .required('Required')
+        })
+
+    const onNext = async (values, { setSubmitting, setErrors, setStatus }) => {
         axios.post(myUrl("api/users/"), values, config())
             .then()
             .catch(err => {
-                const errors = pickFields(err.response.data, ["email"])
+                const errors = pickFields(err.response.data, Object.keys(initialValues))
+                setSubmitting(false)
 
                 if (isEmpty(errors)) {
                     props.updateStep(values)
                 } else {
-                    setForm({ validated: true, errors: errors })
+                    setErrors(errors)
+                    setStatus(errors.non_form_errors)
                 }
+
             })
     }
 
@@ -42,18 +51,31 @@ export default function RegisterEmail(props) {
                 <div className="m-2">Or</div>
                 <hr className="flex-grow-1" />
             </div>
-            <Input
-                label="Email"
-                controlId="email"
-                type="text"
-                placeholder="Email address"
-                form={form}
-                handle={onChange} required
-            />
-            <Button onClick={() => onNext()} className="btn-block btn-primary rounded my-3">
-                Next
-            </Button>
-        </Fragment>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onNext}
+                validateOnChange={false}
+                validateOnBlur={false}>
+                {formik => {
+                    const err = pickFirst(formik.status)
+                    return (
+                        <FormikForm noValidate>
+                            {<p className="text-danger text-center mb-0" key={err}>{err}</p>}
+                            <TextInput
+                                label="Email"
+                                name="email"
+                                type="email"
+                            />
+                            <div className="form-group">
+                                <Button disabled={formik.isSubmitting} type="submit">next</Button>
+                            </div>
+                        
+                        </FormikForm>
+                    )
+                }}
+            </Formik>
+        </Fragment >
     )
 
 }

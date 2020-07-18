@@ -1,3 +1,17 @@
+export const reduceArrays = obj => {
+    const reduced = {}
+    Object.keys(obj).map(key => reduced[key] = obj[key][0])
+
+    return reduced
+}
+
+export const pickFirst = obj => {
+    if (obj) {
+        const err = obj[Object.keys(obj)[0]]
+        return err
+    }
+    return null
+}
 
 export const pickFields = function (obj, props, condition = (obj, prop) => { return obj[prop] }) {
 
@@ -18,25 +32,3 @@ export const fillFields = (fields, fill = "") => {
 export const isEmpty = (obj) => {
     return !obj || Object.keys(obj).length === 0;
 }
-
-export const identifyRequest = (config) => {
-    return { endpoint: new URL(config.url).pathname, method: config.method }
-}
-
-export const equalObj = (obj1, obj2) => {
-    return JSON.stringify(obj1) === JSON.stringify(obj2)
-}
-
-export const isRequest = (err, reqArray) => {
-    return equalObj(identifyRequest(err.response.config), { endpoint: reqArray[0], method: reqArray[1] })
-}
-
-// setUser({ ...User, ...userUpdate })
-
-//             setForm({
-//                 validated: true,
-//                 errors: {
-//                     username: "Invalid Credentials given",
-//                     password: "Invalid Credentials given",
-//                 }
-//             })

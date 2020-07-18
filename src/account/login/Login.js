@@ -1,12 +1,17 @@
 import React, { useState, useContext } from "react"
 import { Link, Redirect } from "react-router-dom"
-import axios from "axios"
+import { Formik, Form as FormikForm } from "formik"
+import * as Yup from "yup"
 
 import userContext from "../../UserContext"
-import Input from "../../tools/Input"
+import { TextInput } from "../../tools/Input"
 
 import { inputLogin } from "../promises"
 import { Layout } from "./styles/Layout"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button } from "react-bootstrap"
+import { faLaptopHouse, faBullseye } from "@fortawesome/free-solid-svg-icons"
 
 export default function Login() {
 
@@ -14,86 +19,72 @@ export default function Login() {
 
     const { isAuthenticated } = User
 
-    const [values, setValue] = useState({username: "", password: ""})
-
-    const [form, setForm] = useState({
-        validated: false,
-        errors: {}
-    })
-
-
     if (isAuthenticated) {
         return <Redirect to="/register/configure" />
     }
 
-
-    const onChange = (e, controlId) => {
-        setValue({ ...values, [controlId]: e.target.value })
+    const initialValues = {
+        username: '',
+        password: '',
     }
 
-    const onSubmit = () => {
+    const validationSchema =
+        Yup.object({
+            username: Yup.string()
+                .email('Username must be an email address')
+                .required('Required'),
+            password: Yup.string()
+                .required('Required'),
+        })
 
-        const missingFields = getMissingFields(values)
-
-        if (Object.keys(missingFields).length !== 0) {
-            setForm({
-                validated: true,
-                errors: missingFields
-            })
-        } else {
-            inputLogin({...values, payload: {}})
-            .then( payload => { setUser({...payload.user}) } )
-            .catch( err => {
+    const onSubmit = (values, { setSubmitting, setErrors }) => {
+        inputLogin({ ...values, payload: {} })
+            .then(payload => { setUser({ ...payload.user }); setSubmitting(false) })
+            .catch(err => {
                 let errors = err.response.data
                 console.log(errors)
+
                 // TEMP FIX
                 const description = errors["error_description"]
-                if(description) {
-                    errors = {username: "Invalid credentials", password: "Invalid credentials"}
+                if (description) {
+                    errors = { username: "Invalid credentials", password: "Invalid credentials" }
                 }
-                //
-                setForm({validated: true, errors: errors})
-            })
-        }
-    }
 
+                setErrors(errors)
+                setSubmitting(false)
+            })
+    }
 
     return (
         <Layout>
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
-                    <Input label="Username (Email)"
-                        validLabel="Username"
-                        controlId="username"
-                        type="text"
-                        form={form}
-                        handle={onChange} />
-                    <Input label="Password"
-                        controlId="password"
-                        type="password"
-                        form={form}
-                        handle={onChange} />
-                    <div className="form-group">
-                        <button onClick={() => onSubmit()} className="btn btn-primary">
-                            Login
-                        </button>
-                    </div>
-                    <p>
-                        Don"t have an account?
-                        <Link to="/register"> Register</Link>
-                    </p>
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}
+                        validateOnChange={false}
+                        validateOnBlur={false}>
+                        {props => (
+                            <FormikForm noValidate>
+                                <TextInput
+                                    label="Username (email)"
+                                    name="username"
+                                    type="email"
+                                />
+                                <TextInput
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                />
+                                <Button disabled={props.isSubmitting} type="submit">Login</Button>
+                            </FormikForm>
+                        )}
+                    </Formik>
+                    <p className="mt-2 mb-0"> Don't have an account? <Link to="/register"> Register</Link></p>
                 </div>
             </div>
         </Layout>
     );
-}
-
-export const getMissingFields = values => {
-    return Object.assign(
-        ...Object.entries(values).map(
-            pair => pair[1] === ""
-                ? { [pair[0]]: pair[0] + " is missing" }
-                : {}
-        ))
 }
