@@ -16,8 +16,17 @@ export {
     faPlus,
     faSquare,
     faEdit,
-    faPenSquare
+    faPenSquare,
+    faCheck,
+    faTimes,
+    faFire,
+    faUserSlash,
+    faLink
 } from "@fortawesome/free-solid-svg-icons"
+
+export {
+    faEnvelope
+} from "@fortawesome/free-regular-svg-icons"
 
 export {
     faGoogle,

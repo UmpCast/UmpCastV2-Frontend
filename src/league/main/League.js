@@ -7,7 +7,7 @@ import {Tab} from "react-bootstrap"
 
 export default function League() {
     return (
-        <Tab.Container defaultActiveKey="umpires">
+        <Tab.Container defaultActiveKey="settings">
             <LeagueBanner />
             <LeagueDetails />
         </Tab.Container>

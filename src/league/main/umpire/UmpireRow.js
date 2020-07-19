@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { CustomToggle } from "../../../tools/Display"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dropdown, Form, ListGroup, Badge } from "react-bootstrap"
 
@@ -8,13 +10,12 @@ export default function UmpireRow() {
         <tr className="border-top">
             <td>
                 <div className="d-inline-flex justify-content-center">
-                    <Badge className="text-white mr-auto mr-2 my-auto" style={{"background-color": "#B793CF"}}><small><strong>Level 3</strong></small></Badge>
-                    <div className="ml-2 my-auto d-flex flex-column">
+                    <div className=" my-auto d-flex flex-column">
                         <div className="my-auto flex-shrink-0">
                             <h5 className="mb-0"><strong>Jonathan K.</strong></h5>
                         </div>
-                        
                     </div>
+                    <Badge className="text-white bg-info mr-auto ml-2 my-auto" style={{"background-color": "#B793CF"}}><small><strong>L3</strong></small></Badge>
                 </div>
             </td>
             <td className="align-middle">
@@ -30,7 +31,7 @@ export default function UmpireRow() {
             </td>
             <td className="align-middle">
                 <Dropdown>
-                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                    <Dropdown.Toggle as={CustomToggle}>
                         <div className="text-center">
                             <FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} />
                             <FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} />
@@ -110,13 +111,3 @@ export default function UmpireRow() {
         </tr>
     )
 }
-
-export const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <div ref={ref}
-        onClick={(e) => {
-            e.preventDefault();
-            onClick(e);
-        }}>
-        {children}
-    </div>
-));

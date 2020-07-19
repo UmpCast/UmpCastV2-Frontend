@@ -16,9 +16,14 @@ export default function FullGame(props) {
                     {date} · {title}
                 </h4>
                 <div className="mt-3">
-                    <p className="mb-0">
-                        <strong>Role: </strong><span className="text-uppercase">{division} {role}</span>
-                    </p>
+                    {role ?
+                        <p className="mb-0">
+                            <strong>Role: </strong><span className="text-uppercase">{division} {role}</span>
+                        </p> :
+                        <p className="mb-0">
+                            <strong>Division: </strong><span className="text-uppercase">{division}</span>
+                        </p>
+                    }
                     <p className="mb-0">
                         <strong>Location:</strong> {location}
                     </p>
@@ -50,7 +55,7 @@ const formatRole = (role) => {
                     icon={faBaseballBall}
                     rotation={30}
                     padding="p-1"
-                    border="light"
+                    border="muted"
                     variant="primary"
                 />
             </div>
@@ -65,8 +70,9 @@ const formatRole = (role) => {
                     icon={faBaseballBall}
                     rotation={30}
                     padding="p-1"
-                    border="light border-custom"
-                    variant="secondary"
+                    color="muted"
+                    border="muted"
+                    variant="light"
                 />
             </div>
         )
