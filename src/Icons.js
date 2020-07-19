@@ -13,7 +13,10 @@ export {
     faMedal,
     faMeteor,
     faMountain,
-    faPlus
+    faPlus,
+    faSquare,
+    faEdit,
+    faPenSquare
 } from "@fortawesome/free-solid-svg-icons"
 
 export {

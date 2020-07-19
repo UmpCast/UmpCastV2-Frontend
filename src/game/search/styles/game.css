@@ -9,8 +9,5 @@
 }
 
 .border-custom {
-    border-width: 1px !important;
     border-style: dotted !important;
-    border-color: #DFE2E6 !important;
-    border-radius: 10px !important;
 }

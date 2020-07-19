@@ -1,8 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import UserContext from "../../UserContext"
 import { fillFields, reduceArrays } from "../../tools/Form"
 import { TextInput, MyPhoneInput } from "../../tools/Input"
 
@@ -12,7 +11,7 @@ import { Button } from "react-bootstrap"
 
 export default function RegisterDetail(props) {
 
-    const fields = ["email", "first_name", "last_name", "password", "password2", "phone_number"]
+    const fields = ["first_name", "last_name", "password", "password2", "phone_number"]
 
     const initialValues = fillFields(fields)
 
@@ -34,12 +33,12 @@ export default function RegisterDetail(props) {
             password2: Yup.string()
                 .required('required'),
             phone_number: Yup.string()
-                .length(10, "Must be 10 digit US phone number")
+                .min(10, "Ensure this is a 10-digit number")
+                .max(10, "Ensure this is a 10-digit number")
         })
 
     const handleSubmit = async (values, { setSubmitting, setErrors, setStatus }) => {
         Object.keys(values).map(key => values[key] === "" && delete values[key])
-
         inputRegister({ ...props.migrated, ...values })
             .then(payload => props.setUser(payload.user))
             .catch(err => {

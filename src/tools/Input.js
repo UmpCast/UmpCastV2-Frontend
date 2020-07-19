@@ -28,7 +28,7 @@ export const MyPhoneInput = ({ label, ...props }) => {
                         useNationalFormatForDefaultCountryValue={false}
                         defaultCountry="US"
                         inputComponent={PhoneRef}
-                        onChange={(number) => helpers.setValue(number.substring(2))}
+                        onChange={(number) => {number && helpers.setValue(number.substring(2))}}
                         isInvalid={meta.error}
                     />
             <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>

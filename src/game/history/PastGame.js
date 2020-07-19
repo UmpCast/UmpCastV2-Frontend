@@ -3,7 +3,6 @@ import React from "react";
 import GameStatus from "./Completion";
 
 import {faCheckCircle, faBan, faMedal} from "@fortawesome/free-solid-svg-icons";
-import { ExitStatus } from "typescript";
 
 const PastGame = (props) => (
     <div className="list-group-item border-top-0 pb-0">

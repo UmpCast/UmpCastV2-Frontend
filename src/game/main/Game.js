@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Post from "./Post";
 
@@ -6,7 +6,7 @@ import "./styles/game.css"
 import { Tab, Tabs } from "react-bootstrap";
 import GameBanner from "./GameBanner";
 
-export default function Game(){
+export default function MainGame(){
     const casts = [
         {
             post: "Base",

@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import axios from "axios"
 
 import { myUrl, config } from "../../tools/Api"
-import { pickFields, isEmpty, formStatus, pickFirst } from "../../tools/Form"
+import { pickFields, isEmpty, pickFirst } from "../../tools/Form"
 import { TextInput } from "../../tools/Input"
 
 import RegisterSocial from "./Social"

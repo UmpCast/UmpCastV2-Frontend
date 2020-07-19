@@ -1,13 +1,15 @@
-import React, { Fragment } from "react"
+import React from "react"
 
 import LeagueBanner from "./LeagueBanner"
-import Settings from "./Settings"
+import LeagueDetails from "./LeagueDetails"
+
+import {Tab} from "react-bootstrap"
 
 export default function League() {
     return (
-        <Fragment>
+        <Tab.Container defaultActiveKey="umpires">
             <LeagueBanner />
-            <Settings />
-        </Fragment>
+            <LeagueDetails />
+        </Tab.Container>
     )
 }

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@emotion/core": "^10.0.28",
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/free-brands-svg-icons": "^5.13.1",
     "@fortawesome/free-solid-svg-icons": "^5.13.1",
@@ -26,8 +27,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-social-login": "^3.4.7",
+    "react-table": "^7.3.0",
     "react-tooltip": "^4.2.7",
-    "typescript": "^3.9.5",
+    "typescript": "^3.9.7",
     "yup": "^0.29.1"
   },
   "scripts": {

@@ -1,7 +1,6 @@
 import axios from "axios"
 
 import { myUrl, config, tokenCreateBody, accessCreateBody } from "../tools/Api"
-import { pickFields } from "../tools/Form"
 
 export async function inputRegister(values, payload = {}) {
 

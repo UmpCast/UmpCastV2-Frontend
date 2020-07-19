@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import Message from "./Message";
-import FullGame from "../../game/main/Game";
+import FullGame from "../../game/search/Game";
 
 import ProfileIcon from "../icon/ProfileIcon";
 import MessageIcon from "../icon/MessageIcon";

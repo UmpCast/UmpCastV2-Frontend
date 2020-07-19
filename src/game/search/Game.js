@@ -1,13 +1,10 @@
 import React from "react"
 import { faBaseballBall } from "@fortawesome/free-solid-svg-icons"
 
-import ProfileIcon from "../images/ProfileIcon";
-import "./games.css"
+import ProfileIcon from "../../account/icon/ProfileIcon";
+import "./styles/game.css"
 
 export default function FullGame(props) {
-
-    const colors = ["primary", "success", "info"]
-    const color_cnt = -1
 
     const { date, time_start, time_end, title, division, role, location, cast } = props
     const formattedCast = cast.map(formatRole)
@@ -68,7 +65,7 @@ const formatRole = (role) => {
                     icon={faBaseballBall}
                     rotation={30}
                     padding="p-1"
-                    custom="border-custom"
+                    border="light border-custom"
                     variant="secondary"
                 />
             </div>

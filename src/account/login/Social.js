@@ -1,5 +1,4 @@
 import React, { Fragment, Component, useContext } from "react";
-import axios from "axios";
 import SocialLogin from "react-social-login"
 
 import UserContext from "../../UserContext"

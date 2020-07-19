@@ -1,13 +1,13 @@
 import React, { Fragment } from "react"
 
-import Game from "./Game"
+import CalendarGame from "./Game"
 import NoGame from "./NoGame"
 
 export default function Day(props) {
 
     const games = props.games.map(game =>
         <div className="row px-2">
-            <Game {...game} />
+            <CalendarGame {...game} />
         </div>
     )
 

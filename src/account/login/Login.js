@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useContext } from "react"
 import { Link, Redirect } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
@@ -9,9 +9,7 @@ import { TextInput } from "../../tools/Input"
 import { inputLogin } from "../promises"
 import { Layout } from "./styles/Layout"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button } from "react-bootstrap"
-import { faLaptopHouse, faBullseye } from "@fortawesome/free-solid-svg-icons"
 
 export default function Login() {
 
@@ -39,7 +37,7 @@ export default function Login() {
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
         inputLogin({ ...values, payload: {} })
-            .then(payload => { setUser({ ...payload.user }); setSubmitting(false) })
+            .then(payload => { setSubmitting(false); setUser({ ...payload.user }) })
             .catch(err => {
                 let errors = err.response.data
                 console.log(errors)

@@ -7,7 +7,7 @@ import ProfileIcon from "./account/icon/ProfileIcon"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Header = () => {
-    const [{ User, isAuthenticated }, setUser] = useContext(UserContext)
+    const [{ isAuthenticated }, setUser] = useContext(UserContext)
 
     const logout = () => {
         localStorage.removeItem("token")
@@ -26,7 +26,7 @@ const Header = () => {
                 <Nav.Link  as={Link} to="/calendar">Calendar</Nav.Link>
                 <Nav.Link as={Link} to="/games">Games</Nav.Link>
                 <NavDropdown title="Leagues" id="collasible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Palo Alto Little League</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/league/1">Palo Alto Little League</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Saratoga Little League</NavDropdown.Item>
                 </NavDropdown>
             </Nav>

@@ -8,14 +8,14 @@ import { Card } from "react-bootstrap"
 const statusColor = (props) => {
     if (props.casted === props.roles) {
         return "dark"
-    } else if (props.casted != 0) {
+    } else if (props.casted === 0) {
         return "primary"
     } else {
         return "light"
     }
 }
 
-export default function Game(props){
+export default function CalendarGame(props){
 
     let castPreview = []
 

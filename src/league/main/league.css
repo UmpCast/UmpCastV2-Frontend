@@ -1,14 +1,17 @@
-.border-custom {
-    border-width: 2px;
-    border-style: dotted;
-    border-color: #DFE2E6;
-    border-radius: 10px !important;
+.l-banner a {
+    color: #878E95 !important;
 }
 
-.border-bottom-primary {
+.l-banner a:hover {
+    color:#373A3C !important;
+}
+
+.l-banner a:focus{
+    outline: none !important;
+}
+
+.l-banner .nav-item .active {
     border-bottom: 2px solid #3D80DC !important;
-}
-
-.border-bottom-hidden {
-    border-bottom: 2px solid transparent !important;
+    color: #373A3C !important;
+    font-weight: bold;
 }

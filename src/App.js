@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
 import "bootswatch/dist/cosmo/bootstrap.min.css"
 
 import UserContext from "./UserContext"
-import { myUrl, config } from "./tools/Api"
 
 import Header from "./Header"
 import PrivateRoute from "./router/PrivateRoute"
@@ -44,12 +42,12 @@ const App = () => {
     const setUser = myUser[1]
 
     useEffect(() => {
-        // const token = localStorage.getItem("token")
-        // if (token) {
-        //     tokenLogin({ token: token })
-        //         .then(payload => setUser(payload.user))
-        //         .catch(err => console.log(err))
-        // }
+        const token = localStorage.getItem("token")
+        if (token) {
+            tokenLogin({ token: token })
+                .then(payload => setUser(payload.user))
+                .catch(err => console.log(err))
+        }
     }, [])
 
     return (
