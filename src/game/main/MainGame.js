@@ -2,44 +2,10 @@ import React from "react";
 
 import Post from "./Post";
 
-import "./styles/game.css"
 import { Tab, Tabs } from "react-bootstrap";
 import GameBanner from "./GameBanner";
 
 export default function MainGame(){
-    const casts = [
-        {
-            post: "Base",
-            cast: [
-                {
-                    title: "Casted",
-                    name:"Victor Lin"
-                },
-                {
-                    title:"Backup",
-                    name:"Jonathan Kao"
-                }
-            ]
-        },
-        {
-            post: "Plate",
-            cast: [
-                {
-                    title: "Casted",
-                    name: "Ingrid Lee"
-                }
-            ]
-        },
-        {
-            post: "Scorekeeper",
-            cast: [
-                {
-                    title:"Casted",
-                    name:"Max Campbell"
-                }
-            ]
-        }
-    ]
 
     const posts = casts.map(post =>
         <Tab eventKey={post.role} title={post.role}>
@@ -68,3 +34,37 @@ export default function MainGame(){
         </div>
     )
 }
+
+const casts = [
+    {
+        role: "Base",
+        cast: [
+            {
+                title: "Casted",
+                name:"Victor Lin"
+            },
+            {
+                title:"Backup",
+                name:"Jonathan Kao"
+            }
+        ]
+    },
+    {
+        role: "Plate",
+        cast: [
+            {
+                title: "Casted",
+                name: "Ingrid Lee"
+            }
+        ]
+    },
+    {
+        role: "Scorekeeper",
+        cast: [
+            {
+                title:"Casted",
+                name:"Max Campbell"
+            }
+        ]
+    }
+]

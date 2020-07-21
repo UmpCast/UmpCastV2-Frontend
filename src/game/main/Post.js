@@ -3,8 +3,6 @@ import React from "react";
 import SignupCard from "./SignupCard";
 import UmpireCard from "./UmpireCard";
 
-import "./styles/game.css"
-
 export default function Post(props) {
 
     const postCards = props.cast.map(casted =>
@@ -18,7 +16,7 @@ export default function Post(props) {
     )
 
     return (
-        <div className="px-1 pt-4 noselect">
+        <div className="px-1 pt-4 no-select">
             <div className="row px-2">
                 <div className="col text-center">
                     <h5 className="mx-auto"><span className="badge badge-success">Open for Backups</span></h5>

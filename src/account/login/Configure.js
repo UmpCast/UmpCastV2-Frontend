@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 
 import UserContext from "../../UserContext"
+import { FocusContainer } from "../../tools/Display"
 
-import { Layout } from "./styles/Layout"
 import { configure } from "../promises"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Configure = () => {
 
@@ -28,7 +28,7 @@ const Configure = () => {
     }
 
     return (
-        <Layout>
+        <FocusContainer>
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5 mb-5 p-4">
                     <h2 className="text-center">How will you use UmpCast?</h2>
@@ -64,7 +64,7 @@ const Configure = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </FocusContainer>
     )
 }
 

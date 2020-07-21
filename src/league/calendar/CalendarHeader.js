@@ -5,13 +5,11 @@ import { CustomToggle } from "../../game/history/HistoryHeader"
 import { Button, Dropdown, Pagination } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./style/header.css"
-
 export default function CalendarHeader() {
     return (
-        <div className="row bg-light border-bottom">
+        <div className="row bg-light border-bottom ump-calendar-title">
             <div className="mt-3 mb-2 mx-3 d-inline-flex w-100">
-                <h3 className="absolute ml-3"><strong>League Calendar</strong></h3>
+                <h3 className="ump-absolute-md ml-3"><strong>League Calendar</strong></h3>
                 <div className="mx-auto">
                     <div className="d-inline-flex">
                         <Button className="p-0 bg-light border-0 mb-1">
@@ -23,7 +21,7 @@ export default function CalendarHeader() {
                         </Button>
                     </div>
                 </div>
-                <Pagination size="sm" className="d-none d-xl-block mt-1 mb-0 absolute absolute-right mr-3">
+                <Pagination size="sm" className="d-none d-xl-block mt-1 mb-0 ump-absolute-md ump-absolute-right mr-3">
                     <div className="d-inline-flex">
                         <Pagination.Item active>
                             Palo Alto

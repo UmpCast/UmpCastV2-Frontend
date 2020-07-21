@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 
 import Message from "./Message";
-import FullGame from "../../game/search/Game";
+import FullGame from "../../game/reminder/ReminderGame";
 
 import ProfileIcon from "../icon/ProfileIcon";
 import MessageIcon from "../icon/MessageIcon";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Button, Accordion } from "react-bootstrap"
-
-import "./styles/dashboard.css"
 
 class Feed extends Component {
     cast = [

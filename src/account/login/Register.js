@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react"
 import { Link, Redirect } from "react-router-dom"
 
 import UserContext from "../../UserContext"
+import { FocusContainer } from "../../tools/Display"
 
-import { Layout } from "./styles/Layout";
 import RegisterEmail from "./Email";
 import RegisterDetail from "./Detail";
 
@@ -31,7 +31,7 @@ export default function Register() {
     }
 
     return (
-        <Layout>
+        <FocusContainer>
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5 px-4">
                     <h2 className="text-center mb-3">Register</h2>
@@ -43,7 +43,7 @@ export default function Register() {
                     </p>
                 </div>
             </div>
-        </Layout>
+        </FocusContainer>
     )
 }
 

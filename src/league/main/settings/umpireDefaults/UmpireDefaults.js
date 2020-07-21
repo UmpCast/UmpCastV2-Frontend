@@ -60,12 +60,12 @@ export default function LeagueUmpires() {
                                                 Update current umpires
                                             </small>
                                         }
-                                        />
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col lg="6" className="pl-4">
                                 <Form.Group>
-                                <Form.Label className="w-100">
+                                    <Form.Label className="w-100">
                                         <strong>Max Backups</strong>
                                         <span className="float-right mr-1">3 Games</span>
                                     </Form.Label>
@@ -77,17 +77,15 @@ export default function LeagueUmpires() {
                                                 Update current umpires
                                             </small>
                                         }
-                                        />
+                                    />
                                 </Form.Group>
                             </Col>
-                        </Row>
-                        <Row>
                         </Row>
                         <Button type="submit" className="rounded">Update</Button>
                     </FormikForm>
                 )}
             </Formik>
-            <VisibilityLevels/>
+            <VisibilityLevels />
         </div>
     )
 }

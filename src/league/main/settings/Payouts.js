@@ -5,8 +5,6 @@ import * as Yup from "yup"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, ListGroup, Row, Col, Button, ButtonGroup, InputGroup, Form } from "react-bootstrap"
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
 
 export default function Payouts() {
 

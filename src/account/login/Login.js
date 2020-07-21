@@ -5,9 +5,9 @@ import * as Yup from "yup"
 
 import userContext from "../../UserContext"
 import { TextInput } from "../../tools/Input"
+import { FocusContainer } from "../../tools/Display"
 
 import { inputLogin } from "../promises"
-import { Layout } from "./styles/Layout"
 
 import { Button } from "react-bootstrap"
 
@@ -54,7 +54,7 @@ export default function Login() {
     }
 
     return (
-        <Layout>
+        <FocusContainer>
             <div style={{ "width": "500px" }}>
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Login</h2>
@@ -83,6 +83,6 @@ export default function Login() {
                     <p className="mt-2 mb-0"> Don't have an account? <Link to="/register"> Register</Link></p>
                 </div>
             </div>
-        </Layout>
+        </FocusContainer>
     );
 }

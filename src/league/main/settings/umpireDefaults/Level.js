@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DivisionVisibility from "../../umpire/DivisionVisibility"
+import UmpireVisibility from "../../umpires/UmpireVisibility"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ListGroup, Badge, Button } from "react-bootstrap"
@@ -25,9 +25,7 @@ export default function Level(props) {
                                 5<FontAwesomeIcon icon={'fas', 'user'} className="ml-1" />
                             </Badge>
                             <div className="d-inline-flex">
-                                <DivisionVisibility name="AAA" />
-                                <DivisionVisibility name="PCL" />
-                                <DivisionVisibility name="Majors" />
+                                <UmpireVisibility/>
                             </div>
                             <Button className="p-0 bg-white border-0 my-auto">
                                 <FontAwesomeIcon className="text-muted" icon={'fas', 'times'} />

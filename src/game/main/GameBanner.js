@@ -4,7 +4,7 @@ export default function Banner(props) {
     return (
         <div className="row">
             <div className="col">
-                <div className="jumbotron pb-2 pt-3 pt-lg-4">
+                <div className="jumbotron pb-2 pt-3 pt-lg-4 ump-main-game-banner">
                     <div className="d-flex justify-content-between">
                         <h1 className="pt-2"><strong>{props.title}</strong></h1>
                         <div>

@@ -1,0 +1,27 @@
+.border-custom {
+    border-width:1px;
+    border-style: dashed;
+    border-color: #F8F9FA;
+    border-radius: 1px;
+}
+
+.border-primary-custom {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #3D80DC;
+    border-radius: 5px;
+}
+
+.border-secondary-custom {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #DFE2E6;
+    border-radius: 5px;
+}
+
+.border-secondary-dashed {
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #DFE2E6;
+    border-radius: 5px;
+}

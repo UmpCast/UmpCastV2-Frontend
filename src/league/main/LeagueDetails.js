@@ -1,32 +1,21 @@
-import React from "react"
+import React from 'react'
 
-import Umpires from "./umpire/Umpires"
-import UrgentGames from "./urgent/Urgent"
-import Settings from "./settings/Settings"
-
-import { Container, Tab } from "react-bootstrap"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function LeagueDetails() {
     return (
-        <div className="px-3 pt-3">
-            <Container className="px-5">
-                <Tab.Content>
-                    <Tab.Pane eventKey="announcements">
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="calendar">
-                        <UrgentGames />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="umpires">
-                        <Umpires />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="urgent">
-                        <UrgentGames />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="settings">
-                        <Settings />
-                    </Tab.Pane>
-                </Tab.Content>
-            </Container>
+        <div className="ml-3 d-inline-flex align-items-center">
+            <FontAwesomeIcon icon={["fas", "meteor"]} className="fa-4x rounded text-white bg-dark p-2 mr-3" />
+            <div className="d-flex flex-column">
+                <h3 className="my-0 mr-2"><strong>Palo Alto Little League</strong></h3>
+                <small className="my-0 text-muted">City-wide little league for kids age 8-14</small>
+                <small>
+                    <FontAwesomeIcon className="mt-1 fa-sm mr-1 text-primary" icon={['fas', 'link']} />
+                    <a href="http://pabaseball.org" className="text-secondary mr-2">pabaseball.org</a>
+                    <FontAwesomeIcon className="mt-1 fa-sm mr-1 text-primary" icon={['far', 'envelope']} />
+                    <a className="text-secondary">umpcast@gmail.com</a>
+                </small>
+            </div>
         </div>
     )
 }

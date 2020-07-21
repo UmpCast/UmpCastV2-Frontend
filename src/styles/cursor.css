@@ -1,4 +1,4 @@
-.noselect {
+.no-select {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */
@@ -8,6 +8,22 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.border-custom {
-    border-style: dotted !important;
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.cursor-pointer:hover {
+    color: #383A3C;
+}
+
+.table-header-center th {
+    text-align: center;
+}
+
+.visibility-partial {
+    background-color: #83ADE8 !important;
+}
+
+.visibility-full {
+    background-color: #7E8081 !important;
 }

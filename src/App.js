@@ -17,7 +17,7 @@ import UserSettings from "./account/settings/UserSettings"
 import League from "./league/main/League"
 import Calendar from "./league/calendar/Calendar"
 import Search from "./game/search/Search"
-import Game from "./game/main/Game"
+import MainGame from "./game/main/MainGame"
 
 import NoMatch from "./router/NoMatch"
 
@@ -28,6 +28,13 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import * as icons from "./Icons"
 
 import "./styles/App.css"
+import "./styles/cursor.css"
+import "./styles/borders.css"
+import "./styles/lists.css"
+import "./styles/sizing.css"
+import "./styles/misc.css"
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 
 library.add(...Object.values(icons));
 
@@ -63,7 +70,7 @@ const App = () => {
                         <Route path="/login/" component={Login} />
                         <Route path="/calendar/" component={Calendar} />
                         <Route path="/games/" component={Search} />
-                        <Route path="/game/:id/" component={Game} />
+                        <Route path="/game/:id/" component={MainGame} />
                         <Route path="/league/:id/" component={League} />
                         <Route exact path="/settings" component={UserSettings} />
                         <Route path="/settings/:subject/" component={UserSettings} />
