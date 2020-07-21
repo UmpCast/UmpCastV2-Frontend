@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import CalendarGame from "./Game"
+import CalendarGame from "./CalendarGame"
 import NoGame from "./NoGame"
 
 export default function Day(props) {

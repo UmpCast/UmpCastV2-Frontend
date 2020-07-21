@@ -1,16 +1,16 @@
 import React from "react"
 
 import LeagueDetails from "./LeagueDetails"
-import { Container, Nav } from "react-bootstrap"
+import { Container, Nav, Row } from "react-bootstrap"
 
 export default function LeagueBanner() {
     return (
         <div className="px-3 pt-1 bg-light border-bottom">
             <Container className="px-5">
-                <div className="row my-3">
+                <Row className="my-3">
                     <LeagueDetails />
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <Nav variant="Tabs ump-sub-nav">
                         <Nav.Item variant="light" className="mx-1 px-auto text-muted">
                             <Nav.Link eventKey="announcements">
@@ -38,7 +38,7 @@ export default function LeagueBanner() {
                             </Nav.Link>
                         </Nav.Item>
                     </Nav>
-                </div>
+                </Row>
             </Container>
         </div>
     )

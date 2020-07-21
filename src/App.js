@@ -14,10 +14,10 @@ import Configure from "./account/login/Configure"
 import Dashboard from "./account/home/Dashboard"
 import UserSettings from "./account/settings/UserSettings"
 
-import League from "./league/main/League"
+import LeaguePage from "./league/main/LeaguePage"
 import Calendar from "./league/calendar/Calendar"
 import Search from "./game/search/Search"
-import MainGame from "./game/main/MainGame"
+import GamePage from "./game/main/GamePage"
 
 import NoMatch from "./router/NoMatch"
 
@@ -62,7 +62,7 @@ const App = () => {
         <UserContext.Provider value={myUser}>
             <Router>
                 <Header />
-                <Container fluid className="p-0">
+                <Container fluid className="p-0 no-select">
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
                         <Route path="/register/configure/" component={Configure} />
@@ -70,8 +70,8 @@ const App = () => {
                         <Route path="/login/" component={Login} />
                         <Route path="/calendar/" component={Calendar} />
                         <Route path="/games/" component={Search} />
-                        <Route path="/game/:id/" component={MainGame} />
-                        <Route path="/league/:id/" component={League} />
+                        <Route path="/game/:id/" component={GamePage} />
+                        <Route path="/league/:id/" component={LeaguePage} />
                         <Route exact path="/settings" component={UserSettings} />
                         <Route path="/settings/:subject/" component={UserSettings} />
                         <Route component={NoMatch} />

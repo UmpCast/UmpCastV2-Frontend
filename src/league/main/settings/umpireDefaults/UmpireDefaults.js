@@ -2,7 +2,8 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import SettingsHeader from "../SettingsHeader"
+import { SettingsHeader } from "../../../../tools/Display"
+
 import VisibilityLevels from "./VisibilityLevels"
 
 import { Row, Col, Button, Form } from "react-bootstrap"

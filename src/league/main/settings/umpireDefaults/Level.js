@@ -1,6 +1,6 @@
 import React from 'react'
 
-import UmpireVisibility from "../../umpires/UmpireVisibility"
+import UmpireVisibility from "../../umpires/existing/UmpireVisibility"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ListGroup, Badge, Button } from "react-bootstrap"

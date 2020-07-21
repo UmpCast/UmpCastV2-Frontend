@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {formatSettingsNavs} from "../../../tools/Display"
-import ManageUmpires from "./ManageUmpires"
+import ManageUmpires from "./existing/ExistingUmpires"
 import PendingUmpires from "./PendingUmpires"
 
 import { Tab, Nav, Row, Col } from "react-bootstrap"

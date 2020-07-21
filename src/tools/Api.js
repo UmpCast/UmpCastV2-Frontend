@@ -34,7 +34,3 @@ export const accessCreateBody = (values) => {
         token: values.token
     }
 }
-
-// userAPI().create({email: "joe@gmail.com"})
-// .then(res => console.log(res.data))
-// .catch(err => console.log(err.response.data))

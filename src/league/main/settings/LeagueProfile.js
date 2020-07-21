@@ -3,8 +3,7 @@ import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
 import { TextInput } from "../../../tools/Input"
-
-import SettingsHeader from "./SettingsHeader"
+import { SettingsHeader } from "../../../tools/Display"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Row, Col, Form, Button } from "react-bootstrap"

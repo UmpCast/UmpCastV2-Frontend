@@ -2,7 +2,7 @@ import React from "react"
 
 import Umpires from "./umpires/Umpires"
 import UrgentGames from "./urgent/Urgent"
-import Settings from "./settings/Settings"
+import Settings from "./settings/LeagueSettings"
 
 import { Container, Tab } from "react-bootstrap"
 

@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
-import SettingsHeader from "./SettingsHeader"
+import { SettingsHeader } from "../../../tools/Display"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Row, Col, Card, ListGroup, Badge, Button, Accordion } from "react-bootstrap"

@@ -53,3 +53,12 @@ export const formatSettingsNavs = subjects => {
         )
     })
 }
+
+export const SettingsHeader = props => {
+    return (
+        <div>
+            <h3><strong>{props.title}</strong></h3>
+            <hr class="my-3"/>
+        </div>
+    )
+}
