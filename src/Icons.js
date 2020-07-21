@@ -21,11 +21,21 @@ export {
     faTimes,
     faFire,
     faUserSlash,
-    faLink
+    faLink,
+    faBars,
+    faTrash,
+    faPlusSquare,
+    faFilePdf,
+    faFileCsv,
+    faFileExcel,
+    faTable,
+    faEnvelope,
+    faCommentDots
 } from "@fortawesome/free-solid-svg-icons"
 
 export {
-    faEnvelope
+    faEnvelope as farFaEnvelope,
+    faPlusSquare as farFaPlusSquare,
 } from "@fortawesome/free-regular-svg-icons"
 
 export {

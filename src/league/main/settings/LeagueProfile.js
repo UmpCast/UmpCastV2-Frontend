@@ -49,25 +49,25 @@ export default function LeagueProfile() {
                         {props => (
                             <FormikForm noValidate>
                                 <TextInput
-                                    label={<strong>League Display Name</strong>}
+                                    label="League Display Name"
                                     name="name"
                                     type="text"
                                     className="rounded"
                                 />
                                 <TextInput
-                                    label={<strong>Description</strong>}
+                                    label="Description"
                                     name="description"
                                     type="text"
                                     className="rounded"
                                 />
                                 <TextInput
-                                    label={<strong>Email</strong>}
+                                    label="Email"
                                     name="email"
                                     type="email"
                                     className="rounded"
                                 />
                                 <TextInput
-                                    label={<strong>Website</strong>}
+                                    label="Website"
                                     name="website"
                                     type="text"
                                     className="rounded"

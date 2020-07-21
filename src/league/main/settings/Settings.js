@@ -1,14 +1,16 @@
 import React from 'react'
 
 import LeagueProfile from "./LeagueProfile"
-import LeagueUmpires from "./LeagueUmpires"
+import LeagueUmpires from "./umpireDefaults/UmpireDefaults"
+import Divisions from "./Divisions"
+import Payouts from "./Payouts"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tab, Nav, Row, Col } from "react-bootstrap"
 
 export default function Settings() {
     return (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="umpires">
+        <Tab.Container id="left-tabs-example" defaultActiveKey="payouts">
             <Row>
                 <Col sm={3}>
                     <Nav variant="pills" className="flex-column mng-umps">
@@ -45,8 +47,8 @@ export default function Settings() {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="roles" className="text-muted rounded-0 border-bottom">
-                                Roles
+                            <Nav.Link eventKey="payouts" className="text-muted rounded-0 border-bottom">
+                                Payouts
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
@@ -63,6 +65,12 @@ export default function Settings() {
                         </Tab.Pane>
                         <Tab.Pane eventKey="umpires">
                             <LeagueUmpires />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="divisions">
+                            <Divisions />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="payouts">
+                            <Payouts />
                         </Tab.Pane>
                     </Tab.Content>
                 </Col>

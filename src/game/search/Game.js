@@ -11,9 +11,9 @@ export default function FullGame(props) {
 
     return (
         <div className="d-flex justify-content-between">
-            <div className="d-flex flex-column card-title">
+            <div className="d-flex flex-column card-title mb-0">
                 <h4 className="mb-auto">
-                    {date} · {title}
+                    {title}
                 </h4>
                 <div className="mt-3">
                     {role ?
@@ -29,11 +29,11 @@ export default function FullGame(props) {
                     </p>
                 </div>
             </div>
-            <div className="d-flex flex-column text-right card-title flex-shrink-0">
+            <div className="d-flex flex-column text-right card-title flex-shrink-0 mb-0">
                 <h5 className="mb-auto"><small><strong>{time_start} - {time_end}</strong></small></h5>
                 <div>
                     <h5 className="mb-2">
-                        <strong>Casted:</strong>
+                        <strong>Casted</strong>
                     </h5>
                     <div className="row mx-auto float-right">
                         {formattedCast}

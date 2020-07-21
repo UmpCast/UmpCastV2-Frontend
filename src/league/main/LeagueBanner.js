@@ -17,9 +17,9 @@ export default function LeagueBanner() {
                                 <h3 className="my-0 mr-2"><strong>Palo Alto Little League</strong></h3>
                                 <small className="my-0 text-muted">City-wide little league for kids age 8-14</small>
                                 <small>
-                                    <FontAwesomeIcon className="mt-1 fa-sm mr-1" icon={['fas', 'link']} />
+                                    <FontAwesomeIcon className="mt-1 fa-sm mr-1 text-primary" icon={['fas', 'link']} />
                                     <a href="http://pabaseball.org" className="text-secondary mr-2">pabaseball.org</a>
-                                    <FontAwesomeIcon className="mt-1 fa-sm mr-1" icon={['far', 'envelope']} />
+                                    <FontAwesomeIcon className="mt-1 fa-sm mr-1 text-primary" icon={['far', 'envelope']} />
                                     <a className="text-secondary">umpcast@gmail.com</a>
                                 </small>
                             </div>
