@@ -5,8 +5,8 @@ import UmpireCard from "./UmpireCard";
 
 export default function Post(props) {
 
-    const postCards = props.cast.map(casted =>
-        <div className="col-6 col-md-4 col-lg-3 col-xl-2 p-2">
+    const postCards = props.cast.map((casted,index)=>
+        <div className="col-6 col-md-4 col-lg-3 col-xl-2 p-2" key={index}>
             <UmpireCard
                 title={casted.title}
                 border={casted.title === "Casted" ? "border-primary-custom" : "border-secondary-custom" }

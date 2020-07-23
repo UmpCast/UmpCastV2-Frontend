@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CustomToggle } from "../../../../tools/Display"
+import { CustomToggle } from "tools/Display"
 
 import { Dropdown, Form } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

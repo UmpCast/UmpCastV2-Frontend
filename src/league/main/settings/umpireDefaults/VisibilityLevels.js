@@ -3,7 +3,7 @@ import React from 'react'
 import Level from "./Level"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, Dropdown, Button } from "react-bootstrap"
+import { Card, Dropdown } from "react-bootstrap"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
 export default function UmpireLevels() {
@@ -17,7 +17,7 @@ export default function UmpireLevels() {
                             icon={['fas', 'plus-square']} />
                         <h5 className="mb-0"><strong>Umpire Levels</strong></h5>
                     </div>
-                    <div class="float-right d-inline-flex">
+                    <div className="float-right d-inline-flex">
                         <div className="my-auto mr-2">Default:</div>
                         <Dropdown>
                             <Dropdown.Toggle

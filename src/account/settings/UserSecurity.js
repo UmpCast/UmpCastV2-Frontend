@@ -2,7 +2,9 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { TextInput } from "../../tools/Input"
+import { TextInput } from "tools/Input"
+
+import UserSettingsNav from "./UserSettingsNav"
 
 import { Row, Col, Button } from "react-bootstrap"
 
@@ -39,48 +41,50 @@ export default function UserSecurity() {
     }
 
     return (
-        <div>
-            <h3><strong>Change Password</strong></h3>
-            <hr class="my-2" />
-            <Row>
-                <Col xs={8}>
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={validationSchema}
-                        onSubmit={onSubmit}
-                        validateOnChange={false}
-                        validateOnBlur={false}>
-                        {props => (
-                            <FormikForm noValidate>
-                                <TextInput
-                                    label="Old Password"
-                                    name="password"
-                                    type="password"
-                                    className="rounded"
-                                />
-                                <TextInput
-                                    label="New Password"
-                                    name="new_password"
-                                    type="password"
-                                    className="rounded"
-                                />
-                                <TextInput
-                                    label="Confirm Password"
-                                    name="new_password2"
-                                    type="password"
-                                    className="rounded"
-                                />
-                                <div className="d-inline-flex">
-                                    <Button variant="light" type="submit" className="rounded mr-2" style={{ "border": "1px solid #E2E4E8" }}>
-                                        Update Password
+        <UserSettingsNav active="security">
+            <div>
+                <h3><strong>Change Password</strong></h3>
+                <hr className="my-3" />
+                <Row>
+                    <Col xs={8}>
+                        <Formik
+                            initialValues={initialValues}
+                            validationSchema={validationSchema}
+                            onSubmit={onSubmit}
+                            validateOnChange={false}
+                            validateOnBlur={false}>
+                            {props => (
+                                <FormikForm noValidate>
+                                    <TextInput
+                                        label="Old Password"
+                                        name="password"
+                                        type="password"
+                                        className="rounded"
+                                    />
+                                    <TextInput
+                                        label="New Password"
+                                        name="new_password"
+                                        type="password"
+                                        className="rounded"
+                                    />
+                                    <TextInput
+                                        label="Confirm Password"
+                                        name="new_password2"
+                                        type="password"
+                                        className="rounded"
+                                    />
+                                    <div className="d-inline-flex">
+                                        <Button variant="light" type="submit" className="rounded mr-2" style={{ "border": "1px solid #E2E4E8" }}>
+                                            Update Password
                                     </Button>
-                                    <a href="/" className="my-auto">Forgot your password?</a>
-                                </div>
-                            </FormikForm>
-                        )}
-                    </Formik>
-                </Col>
-            </Row>
-        </div>
+                                        <a href="/" className="my-auto">Forgot your password?</a>
+                                    </div>
+                                </FormikForm>
+                            )}
+                        </Formik>
+                    </Col>
+                </Row>
+            </div>
+        </UserSettingsNav>
     )
 }

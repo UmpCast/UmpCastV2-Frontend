@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react"
 import { Link, Redirect } from "react-router-dom"
 
-import UserContext from "../../UserContext"
-import { FocusContainer } from "../../tools/Display"
+import UserContext from "UserContext"
+import { FocusContainer } from "tools/Display"
 
 import RegisterEmail from "./Email";
 import RegisterDetail from "./Detail";

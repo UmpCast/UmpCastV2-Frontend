@@ -1,6 +1,19 @@
 import axios from "axios"
 
-import { myUrl, config, tokenCreateBody, accessCreateBody } from "../tools/Api"
+import { myUrl, config, tokenCreateBody, accessCreateBody } from "tools/Api"
+
+export async function fetchUserLeagues(values, payload = {}) {
+
+    return axios.get(myUrl("api/leagues/"), config(values.token))
+    .then(res => {
+        const leagues = res.data
+
+        payload.leagues = leagues
+        
+        return Promise.resolve(payload)
+    })
+    .catch(err => { return Promise.reject(err) })
+}
 
 export async function inputRegister(values, payload = {}) {
 
@@ -95,7 +108,8 @@ export async function tokenLogin(values, payload = {}) {
                 ...payload.user,
                 isAuthenticated: true,
                 isConfigured: res.data.account_type !== "inactive",
-                user: res.data
+                user: res.data,
+                token: values.token
             }
             return Promise.resolve(payload)
         })

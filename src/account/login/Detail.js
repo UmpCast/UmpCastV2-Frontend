@@ -2,8 +2,8 @@ import React from "react"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { fillFields, reduceArrays } from "../../tools/Form"
-import { TextInput, MyPhoneInput } from "../../tools/Input"
+import { fillFields, reduceArrays } from "tools/Form"
+import { TextInput, MyPhoneInput } from "tools/Input"
 
 import { inputRegister } from "../promises"
 

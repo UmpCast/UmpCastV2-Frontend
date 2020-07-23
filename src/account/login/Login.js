@@ -3,9 +3,9 @@ import { Link, Redirect } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import userContext from "../../UserContext"
-import { TextInput } from "../../tools/Input"
-import { FocusContainer } from "../../tools/Display"
+import UserContext from "UserContext"
+import { TextInput } from "tools/Input"
+import { FocusContainer } from "tools/Display"
 
 import { inputLogin } from "../promises"
 
@@ -13,7 +13,7 @@ import { Button } from "react-bootstrap"
 
 export default function Login() {
 
-    const [User, setUser] = useContext(userContext)
+    const [User, setUser] = useContext(UserContext)
 
     const { isAuthenticated } = User
 

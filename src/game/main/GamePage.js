@@ -5,10 +5,10 @@ import Post from "./Post";
 import { Tab, Tabs } from "react-bootstrap";
 import GameBanner from "./GameBanner";
 
-export default function MainGame(){
+export default function GamePage(){
 
     const posts = casts.map(post =>
-        <Tab eventKey={post.role} title={post.role}>
+        <Tab key={post.role} eventKey={post.role} title={post.role}>
             <Post cast={post.cast}/>
         </Tab>
     )

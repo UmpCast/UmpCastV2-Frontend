@@ -1,5 +1,5 @@
 .border-custom {
-    border-width:1px;
+    border-width: 1px;
     border-style: dashed;
     border-color: #F8F9FA;
     border-radius: 1px;
@@ -24,4 +24,8 @@
     border-style: dashed;
     border-color: #DFE2E6;
     border-radius: 5px;
+}
+
+.no-border {
+    border: none;
 }

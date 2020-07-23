@@ -15,7 +15,7 @@ export default function UmpireRow() {
                             <h5 className="mb-0"><strong>Jonathan K.</strong></h5>
                         </div>
                     </div>
-                    <Badge className="text-white bg-info mr-auto ml-2 my-auto" style={{ "background-color": "#B793CF" }}><small><strong>L3</strong></small></Badge>
+                    <Badge className="text-white bg-info mr-auto ml-2 my-auto" style={{ "backgroundColor": "#B793CF" }}><small><strong>L3</strong></small></Badge>
                 </div>
             </td>
             <td className="align-middle">

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
+import UserSettingsNav from "./UserSettingsNav"
+
 import { Button, ListGroup } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function UserLeagues() {
     return (
-        <div>
+        <UserSettingsNav active="leagues">
             <div className="d-inline-flex justify-content-between w-100 mb-3">
                 <h3><strong>Leagues</strong></h3>
                 <Button variant="success" className="rounded my-auto py-0 px-2">
@@ -27,6 +29,6 @@ export default function UserLeagues() {
                     </div>
                 </ListGroup.Item>
             </ListGroup>
-        </div>
+        </UserSettingsNav>
     )
 }

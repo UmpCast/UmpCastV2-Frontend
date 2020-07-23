@@ -2,7 +2,9 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { TextInput, MyPhoneInput } from "../../tools/Input"
+import { TextInput, MyPhoneInput } from "tools/Input"
+
+import UserSettingsNav from "./UserSettingsNav"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Row, Col, Button } from "react-bootstrap"
@@ -40,9 +42,9 @@ export default function UserProfile() {
     }
 
     return (
-        <div>
+        <UserSettingsNav active="profile">
             <h3><strong>User Profile</strong></h3>
-            <hr class="my-3" />
+            <hr className="my-3" />
             <Row>
                 <Col lg="8" className="pr-5">
                     <Row className="mb-4">
@@ -95,7 +97,7 @@ export default function UserProfile() {
                     />
                 </Col>
             </Row>
-        </div>
+        </UserSettingsNav>
     )
 }
 

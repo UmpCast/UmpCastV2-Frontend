@@ -3,36 +3,38 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom"
 
 import "bootswatch/dist/cosmo/bootstrap.min.css"
 
-import UserContext from "./UserContext"
+import UserContext from "UserContext"
 
-import Header from "./Header"
-import PrivateRoute from "./router/PrivateRoute"
+import PrivateRoute from "router/PrivateRoute"
+import LeagueRoute from "router/LeagueRoute"
+import LeagueSettingsRoute from "router/LeagueSettingsRoute"
+import LeagueUmpiresRoute from "router/LeagueUmpiresRoute"
+import UserSettingsRoute from "router/UserSettingsRoute"
 
-import Login from "./account/login/Login"
-import Register from "./account/login/Register"
-import Configure from "./account/login/Configure"
-import Dashboard from "./account/home/Dashboard"
-import UserSettings from "./account/settings/UserSettings"
+import Header from "account/header/Header"
+import Login from "account/login/Login"
+import Register from "account/login/Register"
+import Configure from "account/login/Configure"
+import Dashboard from "account/home/Dashboard"
 
-import LeaguePage from "./league/main/LeaguePage"
-import Calendar from "./league/calendar/Calendar"
-import Search from "./game/search/Search"
-import GamePage from "./game/main/GamePage"
+import Calendar from "league/calendar/Calendar"
+import Search from "game/search/Search"
+import GamePage from "game/main/GamePage"
 
-import NoMatch from "./router/NoMatch"
+import NoMatch from "router/NoMatch"
 
-import { tokenLogin } from "./account/promises"
+import { tokenLogin } from "account/promises"
 
 import { Container } from "react-bootstrap"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import * as icons from "./Icons"
+import * as icons from "Icons"
 
-import "./styles/App.css"
-import "./styles/cursor.css"
-import "./styles/borders.css"
-import "./styles/lists.css"
-import "./styles/sizing.css"
-import "./styles/misc.css"
+import "styles/App.css"
+import "styles/cursor.css"
+import "styles/borders.css"
+import "styles/lists.css"
+import "styles/sizing.css"
+import "styles/misc.css"
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
@@ -43,11 +45,13 @@ const App = () => {
         user: {},
         isAuthenticated: false,
         isConfigured: false,
-        token: null
+        token: null,
+        alert: null
     }
 
-    let myUser = useState(userState)
-    const setUser = myUser[1]
+    const myUser = useState(userState)
+
+    const [User, setUser] = myUser
 
     useEffect(() => {
         const token = localStorage.getItem("token")
@@ -62,6 +66,7 @@ const App = () => {
         <UserContext.Provider value={myUser}>
             <Router>
                 <Header />
+                {User.alert}
                 <Container fluid className="p-0 no-select">
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
@@ -71,9 +76,15 @@ const App = () => {
                         <Route path="/calendar/" component={Calendar} />
                         <Route path="/games/" component={Search} />
                         <Route path="/game/:id/" component={GamePage} />
-                        <Route path="/league/:id/" component={LeaguePage} />
-                        <Route exact path="/settings" component={UserSettings} />
-                        <Route path="/settings/:subject/" component={UserSettings} />
+
+                        <LeagueRoute exact path="/league/:pk/" />
+                        <LeagueRoute exact path="/league/:pk/:active/" />
+
+                        <LeagueUmpiresRoute path = "/league/:pk/umpires/:active" />
+                        <LeagueSettingsRoute path="/league/:pk/settings/:active" />
+
+                        <UserSettingsRoute exact path="/settings" />
+                        <UserSettingsRoute path="/settings/:active/" />
                         <Route component={NoMatch} />
                     </Switch>
                 </Container>
