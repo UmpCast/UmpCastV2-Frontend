@@ -29,3 +29,24 @@
 .no-border {
     border: none;
 }
+
+.ump-visibility-empty {
+    background: #F8F9FA;
+    border: 1px solid #E2E4E8 !important;
+    line-height: 1.7;
+    color: #878E95;
+}
+
+.ump-visibility-partial {
+    background: #98BDEB;
+    border: 1px solid #3D80DC !important;
+    line-height: 1.7;
+    color: white;
+}
+
+.ump-visibility-full {
+    background: #3D80DC;
+    border: 1px solid #3D80DC !important;
+    line-height: 1.7;
+    color: white;
+}

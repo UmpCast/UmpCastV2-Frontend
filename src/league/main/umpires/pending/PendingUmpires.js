@@ -1,6 +1,9 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
 
+import useUser, { useApi } from "hooks"
+import basicApi from "promises"
+
 import { CustomToggle } from "tools/Display"
 
 import SubNav from "../../SubNav"
@@ -13,9 +16,27 @@ import { Card, Table, Dropdown } from "react-bootstrap"
 export default function PendingUmpires() {
 
     const { pk } = useParams()
+    const { token } = useUser()[0]
+
+    const league = useApi(() => basicApi("api/leagues/", {pk: pk, token: token}))[0]
+    
+    const myPending = useApi(() =>
+        basicApi("api/user-league-status/",
+            {
+                token: token,
+                params: {
+                    league: pk,
+                    request_status: "pending"
+                }
+            })
+    )
+    const pending = myPending[0]
+
+    const formatted_pending = pending ?
+        pending.map(status => <PendingRow status={status} key={status.pk} myPending={myPending} />) : null
 
     return (
-        <SubNav pk={pk} active="umpires">
+        <SubNav pk={pk} active="umpires" league={league}>
             <UmpiresNav pk={pk} active="pending">
                 <Card>
                     <Table className="mb-0 table-borderless">
@@ -37,9 +58,7 @@ export default function PendingUmpires() {
                             </tr>
                         </thead>
                         <tbody>
-                            <PendingRow />
-                            <PendingRow />
-                            <PendingRow />
+                            {formatted_pending}
                         </tbody>
                     </Table>
                 </Card>

@@ -21,6 +21,7 @@ export default function DivisionSummary(props) {
             key={role.pk}
             pk={role.pk}
             title={role.title}
+            div_title={title}
             num_umpires={role.num_umpires}
             useMyRoles={useMyRoles}
         />

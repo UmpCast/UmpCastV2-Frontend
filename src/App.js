@@ -7,6 +7,7 @@ import UserContext from "UserContext"
 
 import PrivateRoute from "router/PrivateRoute"
 import LeagueRoute from "router/LeagueRoute"
+import LeagueDetailsRoute from "router/LeagueDetailsRoute"
 import LeagueSettingsRoute from "router/LeagueSettingsRoute"
 import LeagueUmpiresRoute from "router/LeagueUmpiresRoute"
 import UserSettingsRoute from "router/UserSettingsRoute"
@@ -27,6 +28,7 @@ import { tokenLogin } from "account/promises"
 
 import { Container } from "react-bootstrap"
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as icons from "Icons"
 
 import "styles/App.css"
@@ -45,11 +47,13 @@ const App = () => {
         user: {},
         isAuthenticated: false,
         isConfigured: false,
+        isLoading: 0,
         token: null,
         alert: null
     }
 
     const myUser = useState(userState)
+    const [fetching, setFetching] = useState(true)
 
     const [User, setUser] = myUser
 
@@ -57,36 +61,48 @@ const App = () => {
         const token = localStorage.getItem("token")
         if (token) {
             tokenLogin({ token: token })
-                .then(payload => setUser(payload.user))
-                .catch(err => console.log(err))
+                .then(payload => {
+                    setUser({ ...User, ...payload.user })
+                })
+                .finally(() => setFetching(false))
+        } else {
+            setFetching(false)
         }
     }, [])
+
+    if (fetching) { return null }
 
     return (
         <UserContext.Provider value={myUser}>
             <Router>
                 <Header />
                 {User.alert}
-                <Container fluid className="p-0 no-select">
+                <Container fluid className={`p-0 no-select ${User.isLoading ? "ump-loading-container" : null}`}>
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard} />
+
                         <Route path="/register/configure/" component={Configure} />
                         <Route path="/register/" component={Register} />
                         <Route path="/login/" component={Login} />
+
                         <Route path="/calendar/" component={Calendar} />
                         <Route path="/games/" component={Search} />
                         <Route path="/game/:id/" component={GamePage} />
 
                         <LeagueRoute exact path="/league/:pk/" />
-                        <LeagueRoute exact path="/league/:pk/:active/" />
+                        <LeagueDetailsRoute exact path="/league/:pk/:active/" />
 
-                        <LeagueUmpiresRoute path = "/league/:pk/umpires/:active" />
+                        <LeagueUmpiresRoute path="/league/:pk/umpires/:active" />
                         <LeagueSettingsRoute path="/league/:pk/settings/:active" />
 
                         <UserSettingsRoute exact path="/settings" />
                         <UserSettingsRoute path="/settings/:active/" />
+
                         <Route component={NoMatch} />
                     </Switch>
+                    {User.isLoading ?
+                        <FontAwesomeIcon icon={'spinner'} className="fa-pulse fa-2x ump-loading-spinner text-secondary" />
+                        : null}
                 </Container>
             </Router>
         </UserContext.Provider>

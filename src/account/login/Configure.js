@@ -22,7 +22,7 @@ const Configure = () => {
     }
 
     const onClick = (myConfig) => {
-        configure({pk: User.user.pk, myConfig: myConfig, token: token})
+        configure({pk: User.user.pk, token: token}, { account_type: myConfig})
         .then( payload => setUser(payload.user))
         .catch(err => console.log(err.response.data))
     }

@@ -1,42 +1,42 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useParams } from "react-router-dom";
 
-import UserContext from "UserContext"
-import { SettingsHeader } from "tools/Display"
-import { useLeague } from "../../../hooks"
+import useUser, { useApi } from "hooks"
+import basicApi from "promises"
 
 import SubNav from "../../SubNav"
 import SettingsNav from "../LeagueSettingsNav"
+
+import TsDivisions from "./TsDivisions"
 import DivisionCard from "./DivisionCard"
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Row, Col, Card, ListGroup, Button, Accordion } from "react-bootstrap"
+import { Row, Col, Button } from "react-bootstrap"
 
 export default function Divisions() {
 
     const { pk } = useParams()
+    const { token } = useUser()[0]
 
-    const { token } = useContext(UserContext)[0]
+    const useLeague = useApi(() => basicApi("api/leagues/", { pk: pk, token: token }))
+    const [league, setLeague] = useLeague
 
-    const [myLeague, ] = useLeague(pk, token)
-
-    let formatted_divisions = null;
-
-    if (myLeague) {
-        formatted_divisions = myLeague.divisions.map(division =>
+    const formatted_divisions = league ?
+        league.divisions.map(division =>
             <DivisionCard
                 key={division.pk}
                 pk={division.pk}
                 title={division.title}
                 roles={division.roles}
             />
-        )
-    }
+        ) : null
+    
+    league && (league.ts_divisions = temp_ts_divisions)
 
     return (
-        <SubNav pk={pk} active="settings">
+        <SubNav pk={pk} active="settings" league={league}>
             <SettingsNav pk={pk} active="divisions">
-                <SettingsHeader title="League Divisions" />
+                <h3><strong>League Divisions</strong></h3>
+                <hr className="my-3" />
                 <Row>
                     <Col xs={6}>
                         <h5 className=""><strong>Sync Divisions & Games</strong></h5>
@@ -44,28 +44,8 @@ export default function Divisions() {
                         <small className="form-text text-muted">
                             Umpcast will be able to transfer all existing divisions and games
                             from your account, while keeping up-to-date with any changes
-                    </small>
-                        <Accordion>
-                            <Card className="mt-4 border-0 rounded">
-                                <Card.Header className="p-2 pr-3 border rounded-top bg-light text-secondary">
-                                    Select Teamsnap Divisions
-                            </Card.Header>
-                                <Card.Body className="border p-0 rounded-bottom">
-                                    <ListGroup.Item action className="border-0 p-1 pr-3 pl-2 text-primary action">
-                                        AAA
-                                    <small className="float-right text-muted">Spring 2020 / Spring 2020 / </small>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item action className="border-0 p-1 pr-2 pl-2 text-white bg-primary action d-flex justify-content-between">
-                                        PCL
-                                    <FontAwesomeIcon icon={'trash'} className="mr-2 fa-sm my-auto" />
-                                    </ListGroup.Item>
-                                    <ListGroup.Item action className="border-0 p-1 pr-3 pl-2 text-primary action">
-                                        Majors
-                                    <small className="float-right text-muted">Spring 2020 / Spring 2020 / </small>
-                                    </ListGroup.Item>
-                                </Card.Body>
-                            </Card>
-                        </Accordion>
+                        </small>
+                        {league && <TsDivisions useLeague={useLeague} />}
                     </Col>
                     <Col xs={6}>
                         {formatted_divisions}
@@ -76,31 +56,23 @@ export default function Divisions() {
     )
 }
 
-const divisions = [
+const temp_ts_divisions = [
     {
-        division: "AAA",
-        roles: [
-            {
-                role: "Base",
-                num_umpires: 5
-            },
-            {
-                role: "Plate",
-                num_umpires: 7
-            },
-            {
-                role: "ScoreKeeper",
-                num_umpires: 3
-            }
-        ]
+        title: 'AAA',
+        path: 'Spring 2020 / Spring 2020 /',
+        ts_id: 100,
+        pk: 14
     },
     {
-        division: "PCL",
-        roles: [
-            {
-                role: "Base",
-                num_umpires: 0
-            },
-        ]
-    }
+        title: 'PCL',
+        path: 'Spring 2020 / Spring 2020 /',
+        ts_id: 200,
+        pk: null
+    },
+    {
+        title: 'Majors',
+        path: 'Spring 2020 / Spring 2020 /',
+        ts_id: 300,
+        pk: null
+    },
 ]

@@ -5,16 +5,24 @@ import { CustomToggle } from "tools/Display"
 import { Dropdown, Form } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-export default function SetMax() {
+export default function SetMax(props) {
+
+    const { max_cast, casted } = props
+
+    const casts_bar = []
+
+    for (var i = 0; i < casted; i++) {
+        casts_bar.push(<FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} key={i} />)
+    }
+    for (var i = casted; i < max_cast; i++) {
+        casts_bar.push(<FontAwesomeIcon className="text-muted mr-1" icon={['fas', 'square']} key={i} />)
+    }
+
     return (
         <Dropdown>
             <Dropdown.Toggle as={CustomToggle}>
                 <div className="text-center">
-                    <FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} />
-                    <FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} />
-                    <FontAwesomeIcon className="text-success mr-1" icon={['fas', 'square']} />
-                    <FontAwesomeIcon className="text-muted mr-1" icon={['fas', 'square']} />
-                    <FontAwesomeIcon className="text-muted mr-1" icon={['fas', 'square']} />
+                    {casts_bar}
                 </div>
             </Dropdown.Toggle>
 

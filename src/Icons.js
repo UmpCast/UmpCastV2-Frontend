@@ -30,12 +30,17 @@ export {
     faFileExcel,
     faTable,
     faEnvelope,
-    faCommentDots
+    faCommentDots,
+    faUsers,
+    faSpinner,
+    faLock,
+    faLayerGroup
 } from "@fortawesome/free-solid-svg-icons"
 
 export {
     faEnvelope as farFaEnvelope,
     faPlusSquare as farFaPlusSquare,
+    faPaperPlane as farFaPaperPlane,
 } from "@fortawesome/free-regular-svg-icons"
 
 export {

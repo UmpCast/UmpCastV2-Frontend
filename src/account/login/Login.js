@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Link, Redirect } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import UserContext from "UserContext"
+import useUser from "hooks"
 import { TextInput } from "tools/Input"
 import { FocusContainer } from "tools/Display"
 
@@ -13,11 +13,13 @@ import { Button } from "react-bootstrap"
 
 export default function Login() {
 
-    const [User, setUser] = useContext(UserContext)
+    const [User, setUser] = useUser()
 
-    const { isAuthenticated } = User
+    const { isConfigured, isAuthenticated } = User
 
-    if (isAuthenticated) {
+    if (isConfigured){
+        return <Redirect to="/" />
+    } else if (isAuthenticated) {
         return <Redirect to="/register/configure" />
     }
 
@@ -36,11 +38,11 @@ export default function Login() {
         })
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
-        inputLogin({ ...values, payload: {} })
+        inputLogin({ ...values})
             .then(payload => { setSubmitting(false); setUser({ ...payload.user }) })
             .catch(err => {
+                console.log(err)
                 let errors = err.response.data
-                console.log(errors)
 
                 // TEMP FIX
                 const description = errors["error_description"]

@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { TextInput } from "tools/Input"
-import { SettingsHeader } from "tools/Display"
+import useUser, { useApi, ApiSubmit } from "hooks"
+import basicApi from "promises"
 
+import { TextInput } from "tools/Input"
 import SubNav from "../SubNav"
 import SettingsNav from "./LeagueSettingsNav"
 
@@ -16,12 +17,18 @@ export default function LeagueProfile() {
 
     const { pk } = useParams()
 
-    const initialValues = {
-        name: '',
-        description: '',
-        website: '',
-        email: ''
-    }
+    const myUser = useUser()
+    const {token} = myUser[0]
+
+    const myLeague = useApi(() => basicApi("api/leagues/", {pk: pk, token: token}))
+    const [league, setLeague] = myLeague
+
+    if (!league) { return null }
+
+    const fields = [ "title", "description", "email", "website_url" ]
+    
+    let initialValues = {}
+    fields.map(field => initialValues[field] = league[field] !== null ? league[field] : "")
 
     const validationSchema =
         Yup.object({
@@ -29,34 +36,42 @@ export default function LeagueProfile() {
                 .max(20, "Maximum of 20 characters"),
             description: Yup.string()
                 .max(75, "Maximum of 75 characters"),
-            website: Yup.string()
+            website_url: Yup.string()
                 .max(30, "Maximum of 30 characters"),
             email: Yup.string()
                 .max(30, "Maximum of 30 characters")
-                .email("Must be a valid email")
         })
 
-    const onSubmit = (values, { setSubmitting, setErrors }) => {
-        console.log(values)
+    const useSubmit = (values, { setSubmitting, setErrors }) => {
+
+        ApiSubmit(myUser, () => basicApi("api/leagues/" , {pk: pk, token: token, data: values}, "patch"))
+            .then(res =>{
+                setLeague(res)
+            })
+            .catch(err => {
+                setErrors(err)
+            })
+            .finally(() => setSubmitting(false))
     }
 
     return (
-        <SubNav pk={pk} active="settings">
+        <SubNav pk={pk} active="settings" league={league}>
             <SettingsNav pk={pk} active="profile">
-                <SettingsHeader title="League Profile" />
+                <h3><strong>League Profile</strong></h3>
+                <hr className="my-3" />
                 <Row>
                     <Col lg="8" className="pr-5">
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={onSubmit}
+                            onSubmit={useSubmit}
                             validateOnChange={false}
                             validateOnBlur={false}>
                             {props => (
                                 <FormikForm noValidate>
                                     <TextInput
                                         label="League Display Name"
-                                        name="name"
+                                        name="title"
                                         type="text"
                                         className="rounded"
                                     />
@@ -74,7 +89,7 @@ export default function LeagueProfile() {
                                     />
                                     <TextInput
                                         label="Website"
-                                        name="website"
+                                        name="website_url"
                                         type="text"
                                         className="rounded"
                                     />

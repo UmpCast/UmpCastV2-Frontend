@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { useParams } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { SettingsHeader } from "tools/Display"
+import useUser, {useApi} from "hooks"
+import basicApi from "promises"
 
 import SubNav from "../../SubNav"
 import SettingsNav from "../LeagueSettingsNav"
@@ -14,6 +15,9 @@ import { Row, Col, Button, Form } from "react-bootstrap"
 export default function LeagueUmpires() {
 
     const { pk } = useParams()
+    const { token } = useUser()[0]
+    const league = useApi(() => basicApi("api/leagues/", {pk: pk, token: token}))[0]
+
 
     const initialValues = {
         name: '',
@@ -40,9 +44,10 @@ export default function LeagueUmpires() {
     }
 
     return (
-        <SubNav pk={pk} active="settings">
+        <SubNav pk={pk} active="settings" league={league}>
             <SettingsNav pk={pk} active="umpires">
-                <SettingsHeader title="Umpire Defaults" />
+                <h3><strong>Umpire Defaults</strong></h3>
+                <hr className="my-3" />
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -92,7 +97,7 @@ export default function LeagueUmpires() {
                         </FormikForm>
                     )}
                 </Formik>
-                <VisibilityLevels />
+                {league ? <VisibilityLevels league={league} /> : null}
             </SettingsNav>
         </SubNav>
     )

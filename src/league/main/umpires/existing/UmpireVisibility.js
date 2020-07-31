@@ -1,58 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-import { Dropdown } from "react-bootstrap"
+import DivisionVisibility from "./DivisionVisibility"
 
 export default function UmpireVisibility(props) {
+
+    const { divisions, status, onChange } = props
+
+    const useStatus = useState(status)
+
+    const division_visibilities = divisions.map(division =>
+        <DivisionVisibility division={division} useStatus={useStatus} onChange={onChange} key={division.pk}/>
+    )
+
     return (
         <div className={`d-inline-flex ${props.className}`}>
-            <Dropdown>
-                <Dropdown.Toggle
-                    variant="light"
-                    className="rounded-pill bg-light text-muted py-0 debug mx-1"
-                    id="dropdown-basic"
-                    style={{ "border": "1px solid #E2E4E8", "lineHeight": 1.7 }}
-                >
-                    AAA
-                    </Dropdown.Toggle>
-
-                <Dropdown.Menu className="mt-2">
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown>
-                <Dropdown.Toggle
-                    variant="light"
-                    className="rounded-pill bg-light text-muted py-0 debug mx-1"
-                    id="dropdown-basic"
-                    style={{ "border": "1px solid #E2E4E8", "lineHeight": 1.7 }}
-                >
-                    AAA
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="mt-2">
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            <Dropdown>
-                <Dropdown.Toggle
-                    variant="light"
-                    className="rounded-pill bg-light text-muted py-0 debug mx-1"
-                    id="dropdown-basic"
-                    style={{ "border": "1px solid #E2E4E8", "lineHeight": 1.7 }}
-                >
-                    AAA
-            </Dropdown.Toggle>
-
-                <Dropdown.Menu className="mt-2">
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            {division_visibilities}
         </div>
     )
 }

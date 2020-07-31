@@ -13,7 +13,7 @@ export const pickFirst = obj => {
     return null
 }
 
-export const pickFields = function (obj, props, condition = (obj, prop) => { return obj[prop] }) {
+export const pickProps = function (obj, props, condition = (obj, prop) => { return obj[prop] }) {
 
     var picked = {}
 
@@ -22,7 +22,15 @@ export const pickFields = function (obj, props, condition = (obj, prop) => { ret
     return picked;
 }
 
-export const fillFields = (fields, fill = "") => {
+export const includeProps = function(obj, condition = (val) => val !== "") {
+    var picked = {}
+
+    Object.keys(obj).map(prop => condition(obj[prop]) && (picked[prop] = obj[prop]))
+
+    return picked
+}
+
+export const createObj = (fields, fill = "") => {
     const filled = {}
     fields.map((field) => filled[field] = fill)
 
@@ -40,3 +48,4 @@ export const intersection = (arr1, arr2) => {
 export const difference = (arr1, arr2) => {
     return arr1.filter(x => !arr2.includes(x))
 }
+

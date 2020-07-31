@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import UserContext from "UserContext"
+import setUser from "hooks"
+import authRedirect from "./authRedirect"
 
 import UserProfile from "account/settings/UserProfile"
 import UserSecurity from "account/settings/UserSecurity"
@@ -10,17 +11,20 @@ import UserLeagues from "account/settings/UserLeagues"
 
 const UserSettingsRoute = (rest) => {
 
-    const { isAuthenticated, isConfigured } = useContext(UserContext)[0]
     const { active } = rest.computedMatch.params
+
+    const User = setUser()[0]
+    const { user } = User
+    const redirect = authRedirect(User)
+
 
     return (
         <Route
+
             {...rest}
             render={props => {
-                if (!isAuthenticated) {
-                    return <Redirect to="/login" />
-                } else if (!isConfigured) {
-                    return <Redirect to="/register/configure" />
+                if (redirect) {
+                    return redirect
                 } else {
                     switch (active) {
                         case ("profile"):
@@ -36,7 +40,7 @@ const UserSettingsRoute = (rest) => {
                     }
                 }
             }}
-        />
+/>
     )
 }
 

@@ -19,19 +19,13 @@ export default function UserSecurity() {
 
     const validationSchema =
         Yup.object({
-            first_name: Yup.string()
-                .max(32, "first name has max of 32 characters")
-                .required('required'),
-            last_name: Yup.string()
-                .max(32, "last name has max of 32 characters")
+            old_password: Yup.string()
                 .required('required'),
             password: Yup.string()
-                .required('required'),
-            email: Yup.string()
                 .max(30, "email has max of 32")
                 .email('Invalid email address')
                 .required('Required'),
-            phone_number: Yup.string()
+            password2: Yup.string()
                 .min(10, "Ensure this is a 10-digit number")
                 .max(10, "Ensure this is a 10-digit number")
         })

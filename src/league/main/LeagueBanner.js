@@ -4,22 +4,24 @@ import { Link } from "react-router-dom"
 import LeagueDetails from "./LeagueDetails"
 import { Container, Nav, Row } from "react-bootstrap"
 
-export default function LeagueBanner(props) {
+export default function LeagueBanner({ noSubNav, ...props }) {
 
-    const {pk, active} = props
+    const { pk, active, league } = props
 
     const subjects = ["announcements", "calendar", "umpires", "urgent", "settings"]
     return (
         <div className="px-3 pt-1 bg-light border-bottom">
             <Container className="px-5">
                 <Row className="my-3">
-                    <LeagueDetails />
+                    <LeagueDetails league={league} />
                 </Row>
-                <Row>
-                    <Nav variant="Tabs ump-sub-nav">
-                        {formatSubNavs(pk, subjects, active)}
-                    </Nav>
-                </Row>
+                {noSubNav ? null :
+                    <Row>
+                        <Nav variant="Tabs ump-sub-nav">
+                            {formatSubNavs(pk, subjects, active)}
+                        </Nav>
+                    </Row>
+                }
             </Container>
         </div>
     )
@@ -40,3 +42,11 @@ export const formatSubNavs = (pk, subjects, active) => {
         )
     })
 }
+
+export const LeagueContainer = (props) => (
+    <div className="px-3 pt-3">
+        <Container className="px-5">
+            {props.children}
+        </Container>
+    </div>
+)

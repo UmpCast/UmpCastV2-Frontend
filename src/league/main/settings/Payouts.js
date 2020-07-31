@@ -1,7 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { useContext } from 'react'
 import { useParams } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
+
+import useUser, { useApi } from "hooks"
+import basicApi from "promises"
 
 import SubNav from "../SubNav"
 import SettingsNav from "./LeagueSettingsNav"
@@ -13,6 +16,8 @@ import { DateRange } from 'react-date-range';
 export default function Payouts() {
 
     const { pk } = useParams()
+    const { token } = useUser()[0]
+    const league = useApi(() => basicApi("api/leagues/", { pk: pk, token: token }))[0]
 
     const selectionRange = {
         startDate: new Date(),
@@ -46,7 +51,7 @@ export default function Payouts() {
     }
 
     return (
-        <SubNav pk={pk} active="settings">
+        <SubNav pk={pk} active="settings" league={league}>
             <SettingsNav pk={pk} active="payouts">
                 <div className="d-inline-flex justify-content-between w-100">
                     <h3><strong>Payout Report</strong></h3>

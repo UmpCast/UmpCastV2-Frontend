@@ -1,36 +1,38 @@
-import React, { useContext } from "react";
+import React from "react";
+
+import useUser from "hooks"
 import { Route, Redirect } from "react-router-dom";
 
-import Urgent from "../league/main/urgent/Urgent"
-
-import UserContext from "UserContext"
+import AuthRedirect from "./authRedirect"
 
 const LeagueRoute = (rest) => {
 
-    const { isAuthenticated, isConfigured } = useContext(UserContext)[0]
-    const {pk, active} = rest.computedMatch.params
+    const { pk } = rest.computedMatch.params
+
+    const User = useUser()[0]
+    const {user} = User
+
+    const redirect = AuthRedirect(User)
 
     return (
         <Route
             {...rest}
-            render={props => {
-                if (!isAuthenticated) {
-                    return <Redirect to="/login" />
-                } else if (!isConfigured) {
-                    return <Redirect to="/register/configure" />
-                } else {
-                    switch (active) {
-                        case ("announcements"):
-                        case ("calendar"):
-                        case ("umpires"):
-                            return <Redirect to={`/league/${pk}/umpires/existing`}/>
-                        case ("urgent"):
-                            return <Urgent {...props} />
-                        case ("settings"):
-                            return <Redirect to={`/league/${pk}/settings/profile`} />
-                        default:
-                            return <Redirect to={`/league/${pk}/umpires`} />
-                    }
+            render={ () => {
+                if (redirect) {
+                    return redirect
+                }
+            
+                switch(user.account_type){
+                    case ("manager"):
+                        return <Redirect to={`/league/${pk}/announcements/`} />
+                    case ("umpire"):
+                        if (user.leagues.includes(parseInt(pk))){
+                            return <Redirect to={`/league/${pk}/announcements/`} />
+                        } else {
+                            return <Redirect to={`/league/${pk}/join`} />
+                        }
+                    default:
+                        return null
                 }
             }}
         />

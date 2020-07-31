@@ -4,16 +4,18 @@ import * as Yup from "yup"
 
 import UserContext from "UserContext"
 import { TextInput } from "tools/Input"
+import { MyAlert } from "tools/Display"
 
-import {createRole} from "../../../promises"
+import { createRole } from "../../../promises"
 
-import {ListGroup, Button} from "react-bootstrap"
+import { ListGroup, Button } from "react-bootstrap"
 
 export default function AddRole(props) {
 
-    const {token} = useContext(UserContext)[0]
+    const [User, setUser] = useContext(UserContext)
+    const { token } = User
 
-    const {division_pk, useVisible, useMyRoles} = props
+    const { division_pk, useVisible, useMyRoles } = props
     const [visible, setVisible] = useVisible
     const [myRoles, setMyRoles] = useMyRoles
 
@@ -28,19 +30,25 @@ export default function AddRole(props) {
                 .required('Required')
         })
 
-    const onSubmit = (values, { setSubmitting, setErrors }) => {
-        createRole({ title: values.title, division: division_pk, token: token })
+    const onSubmit = (values, { setErrors }) => {
+        createRole({ token: token }, { title: values.title, division: division_pk })
             .then(payload => {
-                setMyRoles([...myRoles, payload.role])
-                
+                const { role } = payload
+                setMyRoles([...myRoles, role])
+                setUser({
+                    ...User, alert:
+                        <MyAlert variant="success" className="mb-0">
+                            Role <strong>{role.title}</strong> created
+                    </MyAlert>
+                })
+
                 setVisible(false)
             })
             .catch(err => {
                 let errors = err.response.data
-                console.log(errors)
+
                 setErrors(errors)
             })
-            .finally(() => setSubmitting(false))
     }
 
     if (!visible) { return null }
@@ -66,10 +74,10 @@ export default function AddRole(props) {
                             <Button size="sm" variant="secondary rounded mb-auto mr-2" type="button"
                                 onClick={() => setVisible(false)}
                             >
-                                <small>Cancel</small>
+                                Cancel
                             </Button>
                             <Button size="sm" variant="primary rounded mb-auto" disabled={props.isSubmitting} type="submit">
-                                <small>Create</small>
+                                Create
                             </Button>
                         </div>
                     </FormikForm>

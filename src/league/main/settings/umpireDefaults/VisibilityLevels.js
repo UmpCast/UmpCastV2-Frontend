@@ -1,40 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
+import arrayMove from "array-move"
+
+import useUser from "hooks"
+import basicApi from "promises"
 
 import Level from "./Level"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, Dropdown } from "react-bootstrap"
+import { Card, Dropdown, Button } from "react-bootstrap"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
-export default function UmpireLevels() {
+export default function UmpireLevels(props) {
+
+    const { token } = useUser()[0]
+
+    const { league } = props
+
+    const [levels, setLevels] = useState(league.levels)
+
+    const onChange = new_level => {
+        setLevels(levels.map(level => level.pk === new_level.pk ? new_level : level))
+    }
+
+    const onDragEnd = async result => {
+        const { destination, source } = result
+
+        const start = source.index
+        const end = destination.index
+
+        if (start !== end) {
+            setLevels(arrayMove(levels, start, end))
+        }
+
+        basicApi(`api/levels/${levels[start].pk}/move_level/`, { token: token, data: { order: end } }, "PATCH")
+            .then()
+            .catch()
+    }
+
+    const formatted_levels = levels.map((level, index) =>
+        <Level league={league} level={level} onChange={onChange} index={index} id={level.pk.toString()} key={level.pk} />
+    )
+
     return (
         <div className="mt-4">
-            <Card className="border-0 mb-3">
-                <Card.Header className="border">
-                    <div className="d-inline-flex">
-                        <FontAwesomeIcon
-                            className="text-success my-auto mr-2 fa-lg"
-                            icon={['fas', 'plus-square']} />
-                        <h5 className="mb-0"><strong>Umpire Levels</strong></h5>
-                    </div>
-                    <div className="float-right d-inline-flex">
-                        <div className="my-auto mr-2">Default:</div>
-                        <Dropdown>
-                            <Dropdown.Toggle
-                                variant="secondary"
-                                className="rounded py-0 px-1"
-                                style={{ "lineHeight": 1.7 }}
-                            >
-                                Level 1
-                            </Dropdown.Toggle>
 
-                            <Dropdown.Menu className="mt-2">
-                                <Dropdown.Item href="#/action-1">Level 1</Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">Level 2</Dropdown.Item>
-                                <Dropdown.Item href="#/action-3">Level 3</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
+            <Card className="border-0 mb-3">
+                <Card.Header className="border d-inline-flex w-100 justify-content-between p-2 px-3">
+                    <h5 className="my-auto"><strong>Umpire Levels</strong></h5>
+                    <Button variant="success rounded p-1 px-3">
+                        <FontAwesomeIcon icon="layer-group" className="mr-1" />New
+                    </Button>
                 </Card.Header>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="umpire-levels">
@@ -44,10 +59,7 @@ export default function UmpireLevels() {
                                 {...provided.droppableProps}
                                 className="p-0"
                             >
-                                <Level index={1} id={"1"} />
-                                <Level index={2} id={"2"} />
-                                <Level index={3} id={"3"} />
-                                <Level index={4} id={"4"} />
+                                {formatted_levels}
                                 {provided.placeholder}
                             </Card.Body>
                         )}

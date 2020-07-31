@@ -2,38 +2,25 @@ import axios from "axios"
 
 import { myUrl, config, tokenCreateBody, accessCreateBody } from "tools/Api"
 
-export async function fetchUserLeagues(values, payload = {}) {
+export async function inputRegister(body, payload = {}) {
 
-    return axios.get(myUrl("api/leagues/"), config(values.token))
-    .then(res => {
-        const leagues = res.data
-
-        payload.leagues = leagues
-        
-        return Promise.resolve(payload)
-    })
-    .catch(err => { return Promise.reject(err) })
-}
-
-export async function inputRegister(values, payload = {}) {
-
-    return axios.post(myUrl("api/users/"), values, config())
+    return axios.post(myUrl("api/users/"), body, config())
         .then(res => {
             const user = res.data
 
             payload.user = user
 
-            return Promise.resolve(inputLogin(values, payload))
+            return Promise.resolve(inputLogin(body, payload))
         })
         .catch(err => { return Promise.reject(err) })
 
 }
 
-export async function socialRegister(values, payload = {}) {
+export async function socialRegister(body, payload = {}) {
 
     return axios.post(
-        myUrl("auth/convert-token/"),
-        accessCreateBody({ backend: values.provider, token: values.code }),
+        myUrl("api/auth/convert-token/"),
+        accessCreateBody({ backend: body.provider, token: body.code }),
         config())
         .then(res => {
 
@@ -49,9 +36,9 @@ export async function socialRegister(values, payload = {}) {
         .catch(err => { return Promise.reject(err) })
 }
 
-export async function inputLogin(values, payload = {}) {
+export async function inputLogin(body, payload = {}) {
 
-    return axios.post(myUrl("auth/token/"), tokenCreateBody(values), config())
+    return axios.post(myUrl("api/auth/token/"), tokenCreateBody(body), config())
         .then(res => {
             let token = res.data.access_token
 
@@ -66,9 +53,9 @@ export async function inputLogin(values, payload = {}) {
         .catch(err => { return Promise.reject(err) })
 }
 
-export async function configure(values, payload = {}) {
+export async function configure(headers, body, payload = {}) {
 
-    return axios.patch(myUrl(`api/users/${values.pk}/`), { account_type: values.myConfig }, config(values.token))
+    return axios.patch(myUrl(`api/users/${headers.pk}/`), body, config(headers.token))
         .then(res => {
 
             payload.user = {
@@ -83,13 +70,13 @@ export async function configure(values, payload = {}) {
         .catch(err => { return Promise.reject(err) })
 }
 
-export async function patchUser(values, payload = {}) {
+export async function patchUser(headers, body, payload = {}) {
 
-    return axios.patch(myUrl(`api/users/${values.pk}/`), values, config(values.token))
+    return axios.patch(myUrl(`api/users/${headers.pk}/`), body, config(headers.token))
         .then(res => {
             const user = res.data
 
-            payload.user = {
+            payload.User = {
                 ...payload.user,
                 user: user
             }
@@ -100,16 +87,17 @@ export async function patchUser(values, payload = {}) {
 }
 
 
-export async function tokenLogin(values, payload = {}) {
+export async function tokenLogin(headers, payload = {}) {
 
-    return axios.get(myUrl("api/users/me/"), config(values.token))
+    return axios.get(myUrl("api/users/me/"), config(headers.token))
         .then(res => {
             payload.user = {
                 ...payload.user,
                 isAuthenticated: true,
                 isConfigured: res.data.account_type !== "inactive",
+
                 user: res.data,
-                token: values.token
+                token: headers.token
             }
             return Promise.resolve(payload)
         })

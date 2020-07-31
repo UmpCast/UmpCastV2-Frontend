@@ -1,18 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useApi } from "hooks"
 
-import { fetchLeague } from "./promises"
+import basicApi from "promises"
 
 export const useLeague = (pk, token) => {
-
-    const [myLeague, setMyLeague] = useState(null)
-
-    useEffect(() => {
-        fetchLeague({ pk: pk, token: token })
-            .then(payload => {
-                setMyLeague(payload.league)
-            })
-            .catch()
-    }, [])
-
-    return [myLeague, setMyLeague]
+    const myLeague = useApi(() => basicApi("api/leagues/", {pk: pk, token: token}))
+    return myLeague
 }

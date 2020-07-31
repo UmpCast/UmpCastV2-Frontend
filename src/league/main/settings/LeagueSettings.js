@@ -1,5 +1,8 @@
-import React, {Fragment} from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useParams } from "react-router-dom";
+
+import useUser, { useApi } from "hooks"
+import basicApi from "promises"
 
 import { SettingsNavHeader, formatSettingsNavs } from "tools/Display"
 
@@ -14,15 +17,17 @@ import { Container, Tab, Nav, Row, Col } from "react-bootstrap"
 
 export default function Settings() {
 
+    const { pk } = useParams()
+    const { token } = useUser()[0]
+    const league = useApi(() => basicApi("api/leagues/", { pk: pk, token: token }))[0]
+
     const subjects = ["profile", "umpires", "divisions", "payouts", "billing"]
 
     const subject_navs = formatSettingsNavs(subjects)
 
-    const {pk} = useParams()
-
     return (
         <Fragment>
-            <LeagueBanner pk={pk} active="settings" />
+            <LeagueBanner pk={pk} active="settings" league={league} />
             <div className="px-3 pt-3">
                 <Container className="px-5">
                     <Tab.Container id="left-tabs-example" defaultActiveKey="divisions">

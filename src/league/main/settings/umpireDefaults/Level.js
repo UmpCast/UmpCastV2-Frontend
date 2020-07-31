@@ -1,14 +1,17 @@
 import React from 'react'
 
-import UmpireVisibility from "../../umpires/existing/UmpireVisibility"
+import UmpireVisibility from "league/main/umpires/existing/UmpireVisibility"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { ListGroup, Badge, Button } from "react-bootstrap"
 import { Draggable } from "react-beautiful-dnd"
 
 export default function Level(props) {
+
+    const { league, level, index, id } = props
+
     return (
-        <Draggable draggableId={props.id} index={props.index}>
+        <Draggable draggableId={id} index={index}>
             {provided => (
                 <div>
                     <ListGroup.Item
@@ -19,13 +22,13 @@ export default function Level(props) {
                         <div className="d-inline-flex justify-content-between w-100">
                             <span {...provided.dragHandleProps} className="my-auto">
                                 <FontAwesomeIcon icon={'bars'} className="mr-3" />
-                                Level {props.index}
+                                {props.level.title}
                             </span>
                             <Badge variant="primary my-auto">
                                 5<FontAwesomeIcon icon={'user'} className="ml-1" />
                             </Badge>
                             <div className="d-inline-flex">
-                                <UmpireVisibility/>
+                                <UmpireVisibility divisions={league.divisions} status={{...level, endpoint: "levels"}}/>
                             </div>
                             <Button className="p-0 bg-white border-0 my-auto">
                                 <FontAwesomeIcon className="text-muted" icon={'times'} />

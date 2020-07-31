@@ -1,9 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
+import { Formik, Form as FormikForm } from "formik"
+import * as Yup from "yup"
 
-import UserContext from "UserContext"
+import useUser from "hooks"
+import { TextInput } from "tools/Input"
 
-import { Nav, Alert } from "react-bootstrap"
+import { Nav, Alert, Modal, Button } from "react-bootstrap"
 
 export const FocusContainer = (props) => (
     <div className="d-flex
@@ -61,34 +64,133 @@ export const formatSettingsNavs = (active, subjects, toPath) => {
     })
 }
 
-export const SettingsHeader = props => {
-    return (
-        <div>
-            <h3><strong>{props.title}</strong></h3>
-            <hr className="my-3" />
-        </div>
-    )
-}
-
 export const MyAlert = props => {
-    
-    const [User, setUser] = useContext(UserContext)
+
+    const [User, setUser] = useUser()
 
     const [show, setShow] = useState(true)
 
-    useEffect( () => { 
-        setTimeout( () => setShow(false), props.delay ? props.delay : 3000 )
-    })
+    useEffect(() => {
+        setTimeout(() => setShow(false), props.delay ? props.delay : 3000)
+    }, [props.delay])
 
-    useEffect( () => {
+    useEffect(() => {
         if (!show) {
-            setUser({...User, alert: null})
+            setUser({ ...User, alert: null })
         }
     })
 
     return (
-        <Alert {...props} show={show} onClose={() => setShow(false)} dismissible>
+        <Alert {...props} show={show} onClose={() => setShow(false)} dismissible style={{ "position": "absolute", "width": "100%", "opacity": .8, "zIndex": 1000 }}>
             {props.children}
         </Alert>
+    )
+}
+
+export const setAlert = (useUser, res) => {
+
+    const [User, setUser] = useUser
+
+    setUser({
+        ...User,
+        alert:
+            <MyAlert variant={res.variant} className="mb-0">
+                {res.msg}
+            </MyAlert>
+    })
+}
+
+export const InputConfirm = props => {
+
+    const { action, consequences, action_text, confirm_text, useShow, onConfirm } = props
+
+    const [show, setShow] = useShow
+
+    const initialValues = {
+        title: ""
+    }
+
+    const validationSchema =
+        Yup.object({
+            title: Yup.string()
+                .matches(confirm_text)
+                .required()
+        })
+
+    return (
+        <Modal show={show} onHide={() => setShow(false)}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={() => { }}
+            >
+                {formik => (
+                    <FormikForm noValidate>
+                        <div onClick={e => e.stopPropagation()}>
+                            <Modal.Header closeButton className="py-3">
+                                <p className="my-auto"><strong>{action}</strong></p>
+                            </Modal.Header>
+                        </div>
+                        {consequences ?
+                            <Modal.Body>
+                                {consequences}
+                            </Modal.Body> : null}
+                        <Modal.Footer>
+                            <TextInput
+                                label={<span>Please type <strong>{confirm_text}</strong> to confirm.</span>}
+                                name="title"
+                                type="text"
+                                className="rounded"
+                                groupClass="w-100"
+                                noError
+                            />
+                            <Button
+                                type="button"
+                                disabled={!formik.isValid || !formik.dirty}
+                                onClick={onConfirm}
+                                variant="primary rounded py-1"
+                                block
+                            >
+                                {action_text}
+                            </Button>
+                        </Modal.Footer>
+                    </FormikForm>
+                )}
+            </Formik>
+        </Modal>
+    )
+}
+
+export const BasicConfirm = props => {
+
+    const { action, consequences, action_text, useShow, onConfirm } = props
+
+    const [show, setShow] = useShow
+
+    return (
+        <Modal show={show} size="sm">
+            <Modal.Header className="py-3 no-border">
+                <h5 className="my-auto mx-auto"><strong>{action}</strong></h5>
+            </Modal.Header>
+            {consequences ? <Modal.Body className="text-center no-border py-0">{consequences}</Modal.Body> : null}
+            <Modal.Footer className="no-border">
+                <div className="mx-auto" onClick={e => e.stopPropagation()}>
+                    <Button
+                        type="button"
+                        onClick={() => setShow(false)}
+                        variant="secondary rounded py-1 mr-2"
+                    >
+                        Cancel
+                        </Button>
+                    <Button
+                        type="button"
+                        onClick={onConfirm}
+                        variant="primary rounded py-1"
+                    >
+                        {action_text}
+                    </Button>
+                </div>
+            </Modal.Footer>
+        </Modal>
     )
 }
