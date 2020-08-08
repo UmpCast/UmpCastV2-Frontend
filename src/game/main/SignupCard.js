@@ -3,11 +3,11 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Card} from "react-bootstrap";
 
-const SignupCard = () => (
+const SignupCard = ({onClick}) => (
     <div className="border-secondary-dashed">
         <Card className="text-center border-0 text-muted">
             <Card.Body className="p-0">
-                <div className="list-group-item-action border-0 py-3">
+                <div className="list-group-item-action border-0 py-3" onClick={onClick}>
                     <Card.Title className="mb-0 mt-1">
                         <FontAwesomeIcon className="mr-2 fa-sm" icon={['fas', 'plus']}/>
                         <strong>Click to add</strong>
@@ -18,7 +18,7 @@ const SignupCard = () => (
                         <FontAwesomeIcon className="text-white"
                                          icon={['fas', 'user-alt']}/>
                     </div>
-                    <Card.Text className="mb-1">Yourself</Card.Text>
+                    <Card.Text className="mb-1">You</Card.Text>
                 </div>
             </Card.Body>
         </Card>

@@ -5,7 +5,7 @@ import ProfileIcon from "../../account/icon/ProfileIcon";
 
 export default function SearchGame(props) {
 
-    const { date, time_start, time_end, title, division, role, location, cast } = props
+    const { time_start, time_end, title, division, role, location, cast } = props
     const formattedCast = cast.map(formatRole)
 
     return (

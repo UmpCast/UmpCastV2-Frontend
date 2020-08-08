@@ -1,48 +1,84 @@
-import React, {forwardRef} from 'react'
+import React from 'react'
 import { useField } from "formik"
 
-import PhoneInput from "react-phone-number-input/input"
 import { Form } from "react-bootstrap"
 
-export const TextInput = ({ label, submitted, ...props }) => {
+export const TextInput = ({ label, groupClass, noError, ...props }) => {
     const [field, meta] = useField(props)
 
     return (
-        <Form.Group>
-            <Form.Label>{label}</Form.Label>
+        <Form.Group className={groupClass}>
+            {label ? <Form.Label>{label}</Form.Label> : null}
             <Form.Control {...field} {...props}
-                isInvalid={meta.error}
+                isInvalid={noError ? false : meta.error}
             />
-            <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>
+            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
         </Form.Group>
     )
 }
 
-export const MyPhoneInput = ({ label, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+export const MyPhoneInput = ({ label, groupClass, noError, ...props }) => {
+    const [field, meta] = useField(props)
 
     return (
-        <Form.Group>
-            <Form.Label>{label}</Form.Label>
-            <PhoneInput
-                        useNationalFormatForDefaultCountryValue={false}
-                        defaultCountry="US"
-                        inputComponent={PhoneRef}
-                        onChange={(number) => {number && helpers.setValue(number.substring(2))}}
-                        isInvalid={meta.error}
-                    />
-            <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>
+        <Form.Group className={groupClass}>
+            {label ? <Form.Label>{label}</Form.Label> : null}
+            <Form.Control {...field} {...props}
+                isInvalid={noError ? false : meta.error}
+                onChange={e => {
+                    field.onChange(props.name)(formatPhone(e.target.value))
+                }}
+            />
+            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
         </Form.Group>
     )
 }
 
-const PhoneControl = (props, ref) => {
+export const formatPhone = (number) => {
+    const num = number.replace(/\D/g, '')
+
+    if (num !== "" && !RegExp(/^\d+$/).test(num.slice(-1))) {
+        return num.slice(0, -1)
+    }
+
+    const len = num.length
+
+    return (len > 0 ? num.slice(0, 3) : "")
+        + (len > 3 ? ` ${num.slice(3, 6)}` : "")
+        + (len > 6 ? ` ${num.slice(6, 10)}` : "")
+}
+
+export const RangeInput = (props) => {
+    const [field] = useField(props)
     return (
         <Form.Control
+            type="range"
+            {...field}
             {...props}
-            ref={ref}
-            className="rounded-right"
-        />)
+            custom
+        />
+    )
 }
 
-const PhoneRef = forwardRef(PhoneControl)
+export const CheckboxInput = ({ label, groupClass, noError, ...props }) => {
+    const [field, meta] = useField({ ...props, type: 'checkbox' })
+
+    return (
+        <Form.Group className={groupClass}>
+            <Form.Check {...field} {...props} type="checkbox" label={label}
+                isInvalid={noError ? false : meta.error} />
+            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
+        </Form.Group>
+    )
+}
+
+export const FileInputHidden = ({setRef, ...props}) => {
+    const [field] = useField(props)
+    return (
+        <Form.File
+            {...field}
+            {...props}
+            ref = {setRef}
+        />
+    )
+}

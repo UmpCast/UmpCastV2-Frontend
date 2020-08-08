@@ -1,7 +1,7 @@
 import React, { Fragment, Component, useContext } from "react";
 import SocialLogin from "react-social-login"
 
-import UserContext from "../../UserContext"
+import UserContext from "UserContext"
 
 import { socialRegister } from "../promises"
 

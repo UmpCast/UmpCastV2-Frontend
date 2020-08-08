@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 
-import UserContext from "../../UserContext"
-import { FocusContainer } from "../../tools/Display"
+import UserContext from "UserContext"
+import { FocusContainer } from "tools/Display"
 
 import { configure } from "../promises"
 
@@ -22,7 +22,7 @@ const Configure = () => {
     }
 
     const onClick = (myConfig) => {
-        configure({pk: User.user.pk, myConfig: myConfig, token: token})
+        configure({pk: User.user.pk, token: token}, { account_type: myConfig})
         .then( payload => setUser(payload.user))
         .catch(err => console.log(err.response.data))
     }

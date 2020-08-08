@@ -1,5 +1,5 @@
 .border-custom {
-    border-width:1px;
+    border-width: 1px;
     border-style: dashed;
     border-color: #F8F9FA;
     border-radius: 1px;
@@ -18,10 +18,40 @@
     border-color: #DFE2E6;
     border-radius: 5px;
 }
+.border-secondary-thick {
+    border-width: 5px;
+    border-style: solid;
+    border-color: #383A3C;
+    border-radius: 5px;
+}
+
 
 .border-secondary-dashed {
     border-width: 2px;
     border-style: dashed;
     border-color: #DFE2E6;
     border-radius: 5px;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.ump-visibility-empty {
+    background: #E2E4E8 !important;
+    border: 1px solid #E2E4E8 !important;
+    line-height: 1.7;
+    color: white !important;
+}
+
+.ump-visibility-partial {
+    background: #98BDEB !important;
+    border: 1px solid #98BDEB !important;
+    line-height: 1.7;
+}
+
+.ump-visibility-full {
+    background: #3D80DC !important;
+    border: 1px solid #3D80DC !important;
+    line-height: 1.7;
 }

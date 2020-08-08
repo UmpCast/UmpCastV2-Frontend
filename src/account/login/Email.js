@@ -3,9 +3,9 @@ import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 
-import { myUrl, config } from "../../tools/Api"
-import { pickFields, isEmpty, pickFirst } from "../../tools/Form"
-import { TextInput } from "../../tools/Input"
+import { myUrl, config } from "tools/Api"
+import { pickProps, isEmpty, pickFirst } from "tools/Utils"
+import { TextInput } from "tools/Input"
 
 import RegisterSocial from "./Social"
 
@@ -28,7 +28,7 @@ export default function RegisterEmail(props) {
         axios.post(myUrl("api/users/"), values, config())
             .then()
             .catch(err => {
-                const errors = pickFields(err.response.data, Object.keys(initialValues))
+                const errors = pickProps(err.response.data, Object.keys(initialValues))
                 setSubmitting(false)
 
                 if (isEmpty(errors)) {

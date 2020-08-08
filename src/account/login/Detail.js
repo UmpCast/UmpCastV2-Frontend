@@ -2,8 +2,8 @@ import React from "react"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { fillFields, reduceArrays } from "../../tools/Form"
-import { TextInput, MyPhoneInput } from "../../tools/Input"
+import { createObj, reduceArrays, includeProps } from "tools/Utils"
+import { TextInput, MyPhoneInput } from "tools/Input"
 
 import { inputRegister } from "../promises"
 
@@ -13,7 +13,7 @@ export default function RegisterDetail(props) {
 
     const fields = ["first_name", "last_name", "password", "password2", "phone_number"]
 
-    const initialValues = fillFields(fields)
+    const initialValues = createObj(fields)
 
     const validate = values => {
         const match = (values.password === values.password2) || values.password2 === ""
@@ -33,13 +33,20 @@ export default function RegisterDetail(props) {
             password2: Yup.string()
                 .required('required'),
             phone_number: Yup.string()
-                .min(10, "Ensure this is a 10-digit number")
-                .max(10, "Ensure this is a 10-digit number")
+                .min(12, "Ensure this is a 10-digit number")
+                .max(12, "Ensure this is a 10-digit number")
         })
 
     const handleSubmit = async (values, { setSubmitting, setErrors, setStatus }) => {
-        Object.keys(values).map(key => values[key] === "" && delete values[key])
-        inputRegister({ ...props.migrated, ...values })
+        
+        const myValues = includeProps(values)
+
+        const {phone_number} = myValues
+        if (phone_number) {
+            myValues.phone_number = phone_number.replace(/\D/g,'')
+        }
+
+        inputRegister({ ...props.migrated, ...myValues })
             .then(payload => props.setUser(payload.user))
             .catch(err => {
                 const errors = reduceArrays(err.response.data)
@@ -88,9 +95,10 @@ export default function RegisterDetail(props) {
                             type="password"
                         />
                         <MyPhoneInput
-                            label="Phone Number (optional)"
+                            label="Phone Number"
                             name="phone_number"
                             type="text"
+                            className="rounded"
                         />
                         <div className="form-group">
                             <Button disabled={formik.isSubmitting} type="submit">Register</Button>
