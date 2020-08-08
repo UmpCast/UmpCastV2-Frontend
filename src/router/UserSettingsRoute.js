@@ -14,9 +14,7 @@ const UserSettingsRoute = (rest) => {
     const { active } = rest.computedMatch.params
 
     const User = setUser()[0]
-    const { user } = User
     const redirect = authRedirect(User)
-
 
     return (
         <Route

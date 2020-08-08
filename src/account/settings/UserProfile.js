@@ -1,23 +1,24 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import UserContext from "UserContext"
+import useUser from "hooks"
+import { patchUser } from "account/promises"
+
 import { TextInput, MyPhoneInput, formatPhone } from "tools/Input"
 import { includeProps } from "tools/Utils"
 import { MyAlert } from "tools/Display"
-import { patchUser } from "account/promises"
 
+import ProfilePicture from "./ProfilePicture"
 import UserSettingsNav from "./UserSettingsNav"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Row, Col, Button } from "react-bootstrap"
 
 export default function UserProfile() {
 
-    const [User, setUser] = useContext(UserContext)
+    const [User, setUser] = useUser()
     const { user, token } = User
-    const { pk, first_name, last_name, email, phone_number } = user
+    const { pk, first_name, last_name, email, phone_number, profile_picture } = user
 
     const initialValues = {
         first_name: first_name,
@@ -63,7 +64,6 @@ export default function UserProfile() {
             })
             .catch(err => {
                 let errors = err.response.data
-                console.log(errors)
                 setErrors(errors)
                 setSubmitting(false)
             })
@@ -87,7 +87,6 @@ export default function UserProfile() {
                                 {formik => (
 
                                     <FormikForm noValidate>
-                                        {console.log(formik.values)}
                                         <TextInput
                                             label="First Name"
                                             name="first_name"
@@ -122,11 +121,7 @@ export default function UserProfile() {
                     </Row>
                 </Col>
                 <Col lg="4">
-                    <h5 className="mb-3"><strong>Profile Picture</strong></h5>
-                    <FontAwesomeIcon icon={["fas", "baseball-ball"]} transform={{ rotate: 30 }}
-                        className="rounded-circle text-white bg-dark p-4 mr-3"
-                        style={{ "width": "200px", "height": "200px" }}
-                    />
+                    <ProfilePicture link = {profile_picture}/>
                 </Col>
             </Row>
         </UserSettingsNav>

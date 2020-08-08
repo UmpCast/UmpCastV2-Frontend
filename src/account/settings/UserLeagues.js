@@ -1,6 +1,6 @@
 import React from 'react'
 
-import useUser, { useApi } from "hooks"
+import useUser, { useFetch } from "hooks"
 import basicApi from "promises"
 
 import UserSettingsNav from "./UserSettingsNav"
@@ -13,7 +13,7 @@ export default function UserLeagues() {
     const User = useUser()[0]
     const { user, token } = User
 
-    const myUls = useApi(() => basicApi("api/user-league-status/",
+    const myUls = useFetch(() => basicApi("api/user-league-status/",
         {
             token: token,
             params: {

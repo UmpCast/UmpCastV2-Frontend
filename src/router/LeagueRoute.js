@@ -1,39 +1,33 @@
 import React from "react";
-
-import useUser from "hooks"
 import { Route, Redirect } from "react-router-dom";
 
-import AuthRedirect from "./authRedirect"
+import useUser from "hooks"
+
+import { useLeagueRedirect } from "./authRedirect"
 
 const LeagueRoute = (rest) => {
 
+    const User = useUser()[0]
+
     const { pk } = rest.computedMatch.params
 
-    const User = useUser()[0]
-    const {user} = User
-
-    const redirect = AuthRedirect(User)
+    const redirect = useLeagueRedirect(User, pk)[0]
 
     return (
         <Route
             {...rest}
-            render={ () => {
-                if (redirect) {
-                    return redirect
-                }
-            
-                switch(user.account_type){
-                    case ("manager"):
-                        return <Redirect to={`/league/${pk}/announcements/`} />
-                    case ("umpire"):
-                        if (user.leagues.includes(parseInt(pk))){
-                            return <Redirect to={`/league/${pk}/announcements/`} />
-                        } else {
-                            return <Redirect to={`/league/${pk}/join`} />
-                        }
+            render={() => {
+
+                switch(redirect){
+                    case ("accepted"):
+                        break
+                    case ("not_accepted"):
+                        return <Redirect to={`/league/${pk}/join/`} />
                     default:
-                        return null
+                        return redirect
                 }
+                
+                return <Redirect to={`/league/${pk}/announcements/`} />
             }}
         />
     )

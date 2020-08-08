@@ -1,8 +1,8 @@
-import { useApi } from "hooks"
+import { useFetch } from "hooks"
 
 import basicApi from "promises"
 
 export const useLeague = (pk, token) => {
-    const myLeague = useApi(() => basicApi("api/leagues/", {pk: pk, token: token}))
+    const myLeague = useFetch(() => basicApi("api/leagues/", {pk: pk, token: token}))
     return myLeague
 }

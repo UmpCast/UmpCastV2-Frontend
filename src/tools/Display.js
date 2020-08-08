@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import useUser from "hooks"
+import { useDisplay } from "hooks"
 import { TextInput } from "tools/Input"
 
 import { Nav, Alert, Modal, Button } from "react-bootstrap"
@@ -66,7 +66,7 @@ export const formatSettingsNavs = (active, subjects, toPath) => {
 
 export const MyAlert = props => {
 
-    const [User, setUser] = useUser()
+    const [Display, setDisplay] = useDisplay()
 
     const [show, setShow] = useState(true)
 
@@ -76,7 +76,7 @@ export const MyAlert = props => {
 
     useEffect(() => {
         if (!show) {
-            setUser({ ...User, alert: null })
+            setDisplay({ ...Display, alert: null })
         }
     })
 
@@ -192,5 +192,31 @@ export const BasicConfirm = props => {
                 </div>
             </Modal.Footer>
         </Modal>
+    )
+}
+
+export const TitleInput = ({ setShow, action, confirm, formik, ...props }) => {
+    return (
+        <Fragment>
+            <Modal.Header closeButton className="no-border py-3">
+                <Modal.Title>{action}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="no-border py-0">
+                <TextInput
+                    name="title"
+                    type="text"
+                    className="rounded"
+                    {...props}
+                />
+            </Modal.Body>
+            <Modal.Footer className="no-border pt-0">
+                <Button type="button" variant="secondary rounded py-1" onClick={() => setShow(false)}>
+                    Cancel
+                </Button>
+                <Button disabled={formik.isSubmitting} type="submit" variant="primary rounded py-1">
+                    {confirm}
+                </Button>
+            </Modal.Footer>
+        </Fragment>
     )
 }

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useField } from "formik"
 
 import { Form } from "react-bootstrap"
@@ -34,19 +34,6 @@ export const MyPhoneInput = ({ label, groupClass, noError, ...props }) => {
     )
 }
 
-export const CheckboxInput = ({ label, groupClass, noError, ...props }) => {
-    const [field, meta] = useField({ ...props, type: 'checkbox' })
-
-    return (
-        <Form.Group className={groupClass}>
-            <Form.Check {...field} {...props} type="checkbox" label={label}
-                isInvalid={noError ? false : meta.error} />
-            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
-        </Form.Group>
-    )
-}
-
-
 export const formatPhone = (number) => {
     const num = number.replace(/\D/g, '')
 
@@ -59,4 +46,39 @@ export const formatPhone = (number) => {
     return (len > 0 ? num.slice(0, 3) : "")
         + (len > 3 ? ` ${num.slice(3, 6)}` : "")
         + (len > 6 ? ` ${num.slice(6, 10)}` : "")
+}
+
+export const RangeInput = (props) => {
+    const [field] = useField(props)
+    return (
+        <Form.Control
+            type="range"
+            {...field}
+            {...props}
+            custom
+        />
+    )
+}
+
+export const CheckboxInput = ({ label, groupClass, noError, ...props }) => {
+    const [field, meta] = useField({ ...props, type: 'checkbox' })
+
+    return (
+        <Form.Group className={groupClass}>
+            <Form.Check {...field} {...props} type="checkbox" label={label}
+                isInvalid={noError ? false : meta.error} />
+            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
+        </Form.Group>
+    )
+}
+
+export const FileInputHidden = ({setRef, ...props}) => {
+    const [field] = useField(props)
+    return (
+        <Form.File
+            {...field}
+            {...props}
+            ref = {setRef}
+        />
+    )
 }

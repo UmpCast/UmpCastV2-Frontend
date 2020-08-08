@@ -2,26 +2,31 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useUser from "hooks"
-import authRedirect from "./authRedirect"
+import { useLeagueRedirect } from "./authRedirect"
 
-import Urgent from "league/main/urgent/Urgent"
-
-import UmpireJoin from "league/main/umpireJoin/UmpireJoin"
+import Urgent from "league/urgent/Urgent"
 
 const LeagueDetailsRoute = (rest) => {
 
-    const { pk, active } = rest.computedMatch.params
     const User = useUser()[0]
     const {user} = User
 
-    const redirect = authRedirect(User)
+    const { pk, active } = rest.computedMatch.params
+
+    const redirect = useLeagueRedirect(User, pk)[0]
 
     return (
         <Route
             {...rest}
             render={props => {
-                if (redirect) {
-                    return redirect
+
+                switch(redirect){
+                    case ("accepted"):
+                        break
+                    case ("not_accepted"):
+                        return <Redirect to={`/league/${pk}/join/`} />
+                    default:
+                        return redirect
                 }
 
                 switch (user.account_type) {
@@ -43,10 +48,8 @@ const LeagueDetailsRoute = (rest) => {
                             case ("announcements"):
                                 return null
                             case ("calendar"):
-                            case ("join"):
-                                return <UmpireJoin {...props} />
                             default:
-                                return <Redirect to={`/league/${pk}/join`} />
+                                return <Redirect to={`/league/${pk}/announcements`} />
                         }
                     default:
                         return null

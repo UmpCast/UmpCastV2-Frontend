@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-import useUser, { ApiSubmit } from "hooks"
+import useUser, { useDisplay, ApiSubmit } from "hooks"
 import basicApi from "promises"
 
 import { Button, ListGroup } from "react-bootstrap"
@@ -10,19 +10,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function LeagueItem(props) {
 
     const myUser = useUser()
+    const myDisplay = useDisplay()
 
     const User = myUser[0]
     let { token } = User
 
     const { status, useUls } = props
 
-    const {pk, league} = status
+    const { pk, league } = status
     const [uls, setUls] = useUls
 
     const useSubmit = () => {
-        ApiSubmit(myUser, () => basicApi("api/user-league-status/", { pk: pk, token: token }, "DELETE"))
+        ApiSubmit(
+            myDisplay,
+            () => basicApi(
+                "api/user-league-status/",
+                { pk: pk, token: token },
+                "DELETE"
+            ).then(res => res.data)
+        )
             .then(() => setUls(uls.filter(status => status.league.pk !== league.pk)))
-            .catch()
     }
 
     return (

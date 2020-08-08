@@ -5,10 +5,10 @@ export const myUrl = (endpoint) => {
     return "https://127.0.0.1:3000/" + endpoint
 }
 
-export const config = (token = null, params = null) => {
+export const config = (token = null, params = null, content_type = null) => {
     return {
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": content_type ? content_type : "application/json",
             ...(token && { "Authorization": `Bearer ${token}` })
         },
         ...(params && { "params": params })

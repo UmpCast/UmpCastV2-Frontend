@@ -33,7 +33,7 @@
 
 @media (min-width: 768px) {
     .ump-main-game-banner h1 {
-        font-size: 3.5rem !important;
+        font-size: 3rem !important;
     }
     .ump-main-game-banner h2 {
         font-size: 1.45rem !important;
@@ -42,7 +42,7 @@
 
 @media (min-width: 991px) {
     .ump-main-game-banner h1 {
-        font-size: 4rem !important;
+        font-size: 3.5rem !important;
     }
     .ump-main-game-banner h2 {
         font-size: 1.65rem !important;
@@ -51,9 +51,14 @@
 
 @media (min-width: 1200px) {
     .ump-game-header h1 {
-        font-size: 4.5rem !important;
+        font-size: 4rem !important;
     }
     .ump-game-header h2 {
         font-size: 1.8rem !important;
     }
+}
+
+.pfp-square {
+    width: 100%;
+    height: auto
 }

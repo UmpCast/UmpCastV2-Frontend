@@ -1,5 +1,7 @@
 import React from "react"
 
-const userContext = React.createContext(["User", ()=>{}])
+const UserContext = React.createContext(["User", ()=>{}])
 
-export default userContext
+export const DisplayContext = React.createContext(["Display", ()=>{}])
+
+export default UserContext

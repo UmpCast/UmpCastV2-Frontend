@@ -2,12 +2,12 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useUser from "hooks"
-import AuthRedirect from "./authRedirect"
+import { useLeagueRedirect } from "./authRedirect"
 
-import LeagueProfile from "../league/main/settings/LeagueProfile"
-import Payouts from "../league/main/settings/Payouts"
-import UmpireDefaults from "../league/main/settings/umpireDefaults/UmpireDefaults"
-import DivisionsSettings from "../league/main/settings/divisions/DivisionsSettings"
+import LeagueProfile from "../league/settings/LeagueProfile"
+import Payouts from "../league/settings/Payouts"
+import UmpireDefaults from "../league/settings/umpireDefaults/UmpireDefaults"
+import DivisionsSettings from "../league/settings/divisions/DivisionsSettings"
 
 const LeagueSettingsRoute = (rest) => {
 
@@ -16,14 +16,20 @@ const LeagueSettingsRoute = (rest) => {
     const User = useUser()[0]
     const { user } = User
 
-    const redirect = AuthRedirect(User)
+    const redirect = useLeagueRedirect(User, pk)[0]
 
     return (
         <Route
             {...rest}
             render={props => {
-                if (redirect) {
-                    return redirect
+
+                switch(redirect){
+                    case ("accepted"):
+                        break
+                    case ("not_accepted"):
+                        return <Redirect to={`/league/${pk}/join/`} />
+                    default:
+                        return redirect
                 }
 
                 switch (user.account_type) {

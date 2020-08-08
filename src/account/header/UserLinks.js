@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 
-import useUser, { useApi } from "hooks"
+import useUser, { useFetch } from "hooks"
 import basicApi from "promises"
 
 import CreateLeague from "./CreateLeague"
@@ -13,27 +13,27 @@ export default function UserLinks() {
     const User = useUser()[0]
     const { user, token } = User
 
-    const myUls = useApi(() => basicApi("api/user-league-status/",
+    const myUls = useFetch(() => basicApi("api/user-league-status/",
         {
             token: token,
             params: {
                 user: user.pk,
-                request_status: "accepted"
+                request_status: "accepted",
+                page_size: 100
             }
-        })
+        }).then(res => res.data)
     )
-
     const uls = myUls[0]
-
+    
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     let formatted_uls = null
 
-    if (uls && uls.length > 0) {
-        formatted_uls = uls.map(status => (
-            <NavDropdown.Item as={Link} to={`/league/${status.league.pk}`} key={status.league.pk}>
+    if (uls && uls.results.length > 0) {
+        formatted_uls = uls.results.map(status => (
+            <NavDropdown.Item as={Link} to={`/league/${status.league.pk}/`} key={status.league.pk}>
                 {status.league.title}
             </ NavDropdown.Item>
         ))

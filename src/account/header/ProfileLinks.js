@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 import UserContext from "UserContext"
 
@@ -17,6 +17,7 @@ export default function Logout() {
             user: {},
             token: null
         })
+        Redirect("/login")
     }
 
     return (

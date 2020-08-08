@@ -34,13 +34,16 @@ export {
     faUsers,
     faSpinner,
     faLock,
-    faLayerGroup
+    faLayerGroup,
+    faPen,
+    faClock
 } from "@fortawesome/free-solid-svg-icons"
 
 export {
     faEnvelope as farFaEnvelope,
     faPlusSquare as farFaPlusSquare,
     faPaperPlane as farFaPaperPlane,
+    faCalendarCheck as farFaCalendarCheck,
 } from "@fortawesome/free-regular-svg-icons"
 
 export {

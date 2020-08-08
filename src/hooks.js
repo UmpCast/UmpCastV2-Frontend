@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import UserContext from "UserContext"
+import UserContext, { DisplayContext } from "UserContext"
 
 import { MyAlert } from "tools/Display"
 
@@ -8,56 +8,59 @@ const useUser = () => {
     return useContext(UserContext)
 }
 
-export const useApi = (request) => {
+export const useDisplay = () => {
+    return useContext(DisplayContext)
+}
 
-    const [User, setUser] = useUser()
+export const useMountEffect = (fun) => useEffect(fun, [])
+
+export const useFetch = (request) => {
+
+    const [Display, setDisplay] = useDisplay()
 
     const myState = useState(null)
     const setState = myState[1]
 
-    useEffect(() => {
-        setUser({ ...User, isLoading: User.isLoading + 1 })
+    useMountEffect(() => {
+        setDisplay({ ...Display, isLoading: true })
 
         request()
-            .then(res => {
-                setState(res)
-            })
+            .then(setState)
             .catch(err => console.log(err))
             .finally(() => {
-                setUser({ ...User, isLoading: Math.max(User.isLoading - 1, 0) })
+                setDisplay({ ...Display, isLoading: false })
             })
-    }, [])
+    })
 
     return myState
 }
 
-export async function ApiSubmit(myUser, request, buffer = true) {
+export async function ApiSubmit(myDisplay, request, buffer = true) {
 
-    const [User, setUser] = myUser
+    const [Display, setDisplay] = myDisplay
     let res = {}
 
     if (buffer) {
-        setUser({ ...User, isLoading: User.isLoading + 1 })
+        setDisplay({ ...Display, isLoading: Display.isLoading + 1 })
     }
 
     return request()
         .then(payload => {
-
             res = { variant: "success", msg: "Success!" }
 
             return Promise.resolve(payload)
         })
         .catch(err => {
-            console.log(err)
-            const error = err.response
             res.variant = "danger"
 
-            if (error) {
-                if (error.data.non_field_errors) {
-                    res.msg = error.data.non_field_errors
+            if (err.response) {
+                const errors = err.response.data
+
+                if (errors.non_field_errors) {
+                    res.msg = errors.non_field_errors
                 }
 
-                return Promise.reject(error.data)
+                return Promise.reject(errors)
             } else {
                 res.msg = "An unknown error occured while performing request"
 
@@ -65,23 +68,20 @@ export async function ApiSubmit(myUser, request, buffer = true) {
             }
         })
         .finally(() => {
+
+            let updatedDisplay = Display
+
+            if (buffer) {
+                updatedDisplay.isLoading = Math.max(Display.isLoading - 1, 0)
+            }
             
-            let updatedUser = User
+            updatedDisplay.alert =
+                <MyAlert variant={res.variant} className="mb-0">
+                    {res.msg}
+                </MyAlert>
 
-            if(buffer){
-                updatedUser.isLoading = Math.max(User.isLoading - 1, 0)
-            }
-
-            if (res.variant && res.msg) {
-                updatedUser.alert =
-                    <MyAlert variant={res.variant} className="mb-0">
-                        {res.msg}
-                    </MyAlert>
-            }
-
-            setUser(updatedUser)
+            setDisplay(updatedDisplay)
         })
 }
-
 
 export default useUser
