@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 
 import UserContext from "UserContext"
-import { FocusContainer } from "tools/Display"
+import { FocusContainer } from "common/Display"
 
 import { configure } from "../promises"
 

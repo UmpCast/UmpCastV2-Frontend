@@ -3,9 +3,9 @@ import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 
-import { myUrl, config } from "tools/Api"
-import { pickProps, isEmpty, pickFirst } from "tools/Utils"
-import { TextInput } from "tools/Input"
+import { myUrl, config } from "common/Api"
+import { pickProps, isEmpty, pickFirst } from "common/Utils"
+import { TextInput } from "common/Input"
 
 import RegisterSocial from "./Social"
 

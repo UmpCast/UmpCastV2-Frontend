@@ -1,18 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import useUser from "hooks"
-
-import { useLeagueRedirect } from "./authRedirect"
+import useLeagueRedirect from "./LeagueRedirect" 
 
 const LeagueRoute = (rest) => {
 
-    const User = useUser()[0]
-
     const { pk } = rest.computedMatch.params
 
-    const redirect = useLeagueRedirect(User, pk)[0]
-
+    const redirect = useLeagueRedirect(pk)
+    
     return (
         <Route
             {...rest}
@@ -27,7 +23,7 @@ const LeagueRoute = (rest) => {
                         return redirect
                 }
                 
-                return <Redirect to={`/league/${pk}/announcements/`} />
+                return <Redirect to={`/league/${pk}/umpires/`} />
             }}
         />
     )

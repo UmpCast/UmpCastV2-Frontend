@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 import useUser from "hooks"
 
-import AuthRedirect from "./authRedirect"
+import AuthRedirect from "./Redirect"
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     

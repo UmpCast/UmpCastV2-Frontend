@@ -1,6 +1,5 @@
+import { myUrl, config } from "common/Api"
 import axios from "axios"
-
-import { myUrl, config } from "tools/Api"
 
 export async function patchUls(headers, body, payload = {}) {
 
@@ -19,12 +18,10 @@ export default async function basicApi(endpoint, values, method = "get") {
 
     const { pk, token, params, data } = values
 
-    return Promise.resolve(
-        axios({
-            method: method,
-            url: myUrl(`${endpoint}${pk ? `${pk}/` : ""}`),
-            ...config(token, params),
-            data: data
-        })
-    )
+    return axios({
+        method: method,
+        url: myUrl(`${endpoint}${pk ? `${pk}/` : ""}`),
+        ...config(token, params),
+        data: data
+    })
 }

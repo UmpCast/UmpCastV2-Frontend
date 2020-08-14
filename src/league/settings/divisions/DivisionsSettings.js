@@ -1,63 +1,78 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 
-import useUser, { useFetch } from "hooks"
-import basicApi from "promises"
+import { useApi, useMountEffect } from "hooks"
 
-import SubNav from "../../SubNav"
-import SettingsNav from "../LeagueSettingsNav"
+import Loader from "common/Display"
 
-import TsDivisions from "./TsDivisions"
-import DivisionCard from "./DivisionCard"
+import SettingsContainer from "league/settings/SettingsContainer"
+
+import TsDivisions from "./Ts/TsDivisions"
+import DivisionCard from "./Roles/DivisionRoles"
 
 import { Row, Col, Button } from "react-bootstrap"
+import { LeagueSyncFeatures } from 'league/settings/Text'
 
 export default function Divisions() {
 
     const { pk } = useParams()
-    const { token } = useUser()[0]
 
-    const useLeague = useFetch(() =>
-        basicApi("api/leagues/", { pk: pk, token: token })
-            .then(res => res.data)
-    )
-    const [league] = useLeague
+    const Api = useApi(fetchLeague)
+    const useLeague = useState()
 
-    const formatted_divisions = league ?
-        league.divisions.map(division =>
-            <DivisionCard
-                key={division.pk}
-                pk={division.pk}
-                title={division.title}
-                roles={division.roles}
-            />
-        ) : null
+    const [league, setLeague] = useLeague
+
+    useMountEffect(() => {
+        Api.fetchLeague(pk)
+            .then(res =>
+                setLeague(res.data)
+            )
+    })
 
     league && (league.ts_divisions = temp_ts_divisions)
 
     return (
-        <SubNav pk={pk} active="settings" league={league}>
-            <SettingsNav pk={pk} active="divisions">
+        <SettingsContainer league={league} active="divisions">
+            <Loader dep={[league]}>
                 <h3><strong>League Divisions</strong></h3>
                 <hr className="my-3" />
                 <Row>
                     <Col xs={6}>
-                        <h5 className=""><strong>Sync Divisions & Games</strong></h5>
-                        <Button variant="danger rounded my-2"><strong>Unsync</strong></Button>
+                        <h5 className="font-weight-bold">
+                            Sync Divisions & Games
+                            </h5>
+                        <Button variant="danger rounded my-2 font-weight-bold">
+                            Unsync
+                            </Button>
                         <small className="form-text text-muted">
-                            Umpcast will be able to transfer all existing divisions and games
-                            from your account, while keeping up-to-date with any changes
+                            <LeagueSyncFeatures />
                         </small>
-                        {league && <TsDivisions useLeague={useLeague} />}
+                        <TsDivisions useLeague={useLeague} />
                     </Col>
                     <Col xs={6}>
-                        {formatted_divisions}
+                        <ListDivisions league={league} />
                     </Col>
                 </Row>
-            </SettingsNav>
-        </SubNav>
+            </Loader>
+        </SettingsContainer>
     )
 }
+
+const ListDivisions = ({ league }) => (
+    league.divisions.map(division =>
+        <DivisionCard
+            key={division.pk}
+            division={division}
+        />
+    )
+)
+
+const fetchLeague = (league_pk) => [
+    "api/leagues/",
+    {
+        pk: league_pk
+    }
+]
 
 const temp_ts_divisions = [
     {

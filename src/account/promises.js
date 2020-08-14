@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { myUrl, config, tokenCreateBody, accessCreateBody } from "tools/Api"
+import { myUrl, config, tokenCreateBody, accessCreateBody } from "common/Api"
 
 export async function inputRegister(body, payload = {}) {
 

@@ -2,28 +2,26 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useUser from "hooks"
-import { useLeagueRedirect } from "./authRedirect"
+import useLeagueRedirect from "./LeagueRedirect"   
 
-import LeagueProfile from "../league/settings/LeagueProfile"
-import Payouts from "../league/settings/Payouts"
-import UmpireDefaults from "../league/settings/umpireDefaults/UmpireDefaults"
+import LeagueProfile from "../league/settings/profile/LeagueProfile"
+import Payouts from "../league/settings/report/Payouts"
+import UmpireDefaults from "../league/settings/umpires/UmpireDefaults"
 import DivisionsSettings from "../league/settings/divisions/DivisionsSettings"
 
 const LeagueSettingsRoute = (rest) => {
 
     const { pk, active } = rest.computedMatch.params
 
-    const User = useUser()[0]
-    const { user } = User
-
-    const redirect = useLeagueRedirect(User, pk)[0]
+    const redirect = useLeagueRedirect(pk)
+    const { user } = useUser()
 
     return (
         <Route
             {...rest}
             render={props => {
 
-                switch(redirect){
+                switch (redirect) {
                     case ("accepted"):
                         break
                     case ("not_accepted"):

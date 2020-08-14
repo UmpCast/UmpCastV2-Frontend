@@ -42,7 +42,13 @@ export function gameStatus(game, league, user_app) {
     const cancel_expired = cancel_by < now
     const signups_not_open = now < signup_after
 
-    if (user_app) {
+    if (signups_not_open) {
+        const days_before_signup = signup_after.diff(now, "day") + 1
+        return {
+            status: "signups_not_open",
+            days_before_signup: days_before_signup
+        }
+    } else if (user_app) {
         const { post, index } = user_app
         
         return {
@@ -52,12 +58,6 @@ export function gameStatus(game, league, user_app) {
             cancel_expired: cancel_expired
         }
 
-    } else if (signups_not_open) {
-        const days_before_signup = signup_after.diff(now, "day") + 1
-        return {
-            status: "signups_not_open",
-            days_before_signup: days_before_signup
-        }
     }
 
     return { status: "signups_open" }

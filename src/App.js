@@ -18,7 +18,7 @@ import Register from "account/login/Register"
 import Configure from "account/login/Configure"
 import Dashboard from "account/home/Dashboard"
 
-import Calendar from "game/calendar/Calendar"
+import Calendar from "league/calendar/Calendar"
 import Search from "game/search/Search"
 import GamePage from "game/main/GamePage"
 
@@ -26,9 +26,11 @@ import NoMatch from "router/NoMatch"
 
 import { tokenLogin } from "account/promises"
 
+import Loader from "common/Display"
+
 import { Container } from "react-bootstrap"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import ClipLoader from "react-spinners/ClipLoader"
 import * as icons from "Icons"
 
 import "styles/App.css"
@@ -50,6 +52,7 @@ const App = () => {
         isAuthenticated: false,
         isConfigured: false,
         token: null,
+        isLoading: 0
     }
 
     const myUser = useState(userState)
@@ -72,14 +75,14 @@ const App = () => {
         }
     })
 
-    if (fetching) { 
+    if (fetching) {
         return null
-    } 
+    }
 
     return (
-        <DisplayContext.Provider value={myDisplay}>
-            <UserContext.Provider value={myUser}>
-                <Router>
+        <Router>
+            <DisplayContext.Provider value={myDisplay}>
+                <UserContext.Provider value={myUser}>
                     <Header />
                     {Display.alert}
                     <Container fluid className={`p-0 no-select ${Display.isLoading ? "ump-loading-container" : null}`}>
@@ -90,9 +93,6 @@ const App = () => {
                             <Route path="/register/" component={Register} />
                             <Route path="/login/" component={Login} />
 
-                            <Route exact path="/calendar/" component={Calendar} />
-                            <Route path="/calendar/:date/" component={Calendar} />
-
                             <Route path="/games/" component={Search} />
                             <Route path="/game/:pk/" component={GamePage} />
 
@@ -100,6 +100,8 @@ const App = () => {
                             <LeagueJoinRoute exact path="/league/:pk/join/" />
 
                             <LeagueDetailsRoute exact path="/league/:pk/:active/" />
+                            <Route path="/league/:pk/calendar/:date" component={Calendar} />
+
                             <LeagueUmpiresRoute path="/league/:pk/umpires/:active" />
                             <LeagueSettingsRoute path="/league/:pk/settings/:active" />
 
@@ -108,13 +110,17 @@ const App = () => {
 
                             <Route component={NoMatch} />
                         </Switch>
-                        {Display.isLoading ?
-                            <FontAwesomeIcon icon={'spinner'} className="fa-pulse fa-2x ump-loading-spinner text-secondary" />
-                            : null}
+                        <Loader dep={[Display.isLoading]}>
+                            <div className="ump-loading-spinner">
+                                <ClipLoader
+                                    size={75}
+                                    color={"#2375DF"} />
+                            </div>
+                        </Loader>
                     </Container>
-                </Router>
-            </UserContext.Provider>
-        </DisplayContext.Provider>
+                </UserContext.Provider>
+            </DisplayContext.Provider >
+        </Router >
     )
 }
 

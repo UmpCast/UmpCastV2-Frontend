@@ -2,25 +2,25 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useUser from "hooks"
-import { useLeagueRedirect } from "./authRedirect"
+import useLeagueRedirect from "./LeagueRedirect" 
 
+import Calendar from "league/calendar/Calendar"
 import Urgent from "league/urgent/Urgent"
+import CalendarGame from "league/calendar/CalendarGame";
 
 const LeagueDetailsRoute = (rest) => {
 
-    const User = useUser()[0]
-    const {user} = User
-
     const { pk, active } = rest.computedMatch.params
 
-    const redirect = useLeagueRedirect(User, pk)[0]
+    const { user } = useUser()
+    const redirect = useLeagueRedirect(pk)
 
     return (
         <Route
             {...rest}
             render={props => {
 
-                switch(redirect){
+                switch (redirect) {
                     case ("accepted"):
                         break
                     case ("not_accepted"):
@@ -34,6 +34,7 @@ const LeagueDetailsRoute = (rest) => {
                         switch (active) {
                             case ("announcements"):
                             case ("calendar"):
+                                return <Calendar {...props} />
                             case ("umpires"):
                                 return <Redirect to={`/league/${pk}/umpires/existing`} />
                             case ("urgent"):
@@ -48,6 +49,7 @@ const LeagueDetailsRoute = (rest) => {
                             case ("announcements"):
                                 return null
                             case ("calendar"):
+                                return <Calendar {...props} />
                             default:
                                 return <Redirect to={`/league/${pk}/announcements`} />
                         }

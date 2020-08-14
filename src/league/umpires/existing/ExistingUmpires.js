@@ -1,64 +1,112 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import useUser, { useFetch } from "hooks"
-import basicApi from "promises"
+import { useApi, useMountEffect } from "hooks"
 
-import SubNav from "../../SubNav"
-import UmpiresNav from "../UmpiresNav"
-import UmpireRow from "./UmpireRow"
+import Loader, { PagesNav } from "common/Display"
 
-import { Table, Card } from "react-bootstrap"
+import UmpiresContainer from "league/umpires/UmpiresContainer"
+
+import UmpireRow from "./Umpire/UmpireRow"
+
+import { Row, Col, Table, Card } from "react-bootstrap"
+
+const page_size = 10
 
 export default function ManageUmpires() {
 
     const { pk } = useParams()
-    const { token } = useUser()[0]
 
-    const league = useFetch(() =>
-        basicApi("api/leagues/", { pk: pk, token: token })
-            .then(res => res.data)
-    )[0]
+    const Api = useApi(fetchLeague, fetchUls)
 
-    const [uls, setUls] = useFetch(() => basicApi("api/user-league-status/",
-        {
-            token: token,
-            params: { league: pk, request_status: "accepted" }
-        })
-        .then(res => {
-            const umpires = res.data.results.filter(status =>
-                status.user.account_type === "umpire"
-            )
-            return { ...uls, count: umpires.length, results: umpires }
-        })
-    )
+    const useUls = useState()
+    const useLeague = useState()
 
-    const onChange = (new_status) => {
-        setUls({ ...uls, results: uls.results.map(status => status.pk === new_status.pk ? new_status : status) })
+    const [uls, setUls] = useUls
+    const [league, setLeague] = useLeague
+
+    useMountEffect(() => {
+        Promise.all([Api.fetchLeague(pk), Api.fetchUls(pk, 1)])
+            .then(res => {
+                setLeague(res[0].data)
+                setUls(res[1].data)
+            })
+    })
+
+    const setPage = (page) => {
+        Api.fetchUls(pk, page)
+            .then(res => setUls(res.data))
     }
 
-    const formatted_umpires = uls && league ?
-        uls.results.map(status => < UmpireRow league={league} status={status} onChange={onChange} key={status.user.pk} />) : null
-
     return (
-        <SubNav pk={pk} active="umpires" league={league}>
-            <UmpiresNav pk={pk} active="existing">
-                <Card>
-                    <Table className="mb-0 table-borderless">
-                        <thead>
-                            <tr className="bg-light border-bottom text-muted text-center">
-                                <th>Umpires</th>
-                                <th>Casts</th>
-                                <th>Backups</th>
-                                <th>Visibility</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {formatted_umpires}
-                        </tbody>
-                    </Table>
-                </Card>
-            </UmpiresNav>
-        </SubNav>
+        <UmpiresContainer league={league} active="existing">
+            <Loader dep={[uls, league]}>
+                <Row className="mb-3">
+                    <Col>
+                        <Card>
+                            <Table className="mb-0 table-borderless">
+                                <TableHead />
+                                <ListExisting
+                                    {...{ uls, league }} />
+                            </Table>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="d-flex w-100">
+                        <PagesNav
+                            {...{ list: uls, setPage, page_size }} />
+                    </Col>
+                </Row>
+            </Loader>
+        </UmpiresContainer>
     )
 }
+
+const TableHead = () => (
+    <thead>
+        <tr className="bg-light border-bottom text-muted">
+            <th className="text-center">
+                Umpires
+            </th>
+            <th>Casts</th>
+            <th>Backups</th>
+            <th className="text-center">
+                Visibility
+            </th>
+        </tr>
+    </thead>
+)
+
+const ListExisting = ({ uls, league }) => {
+    const existing = (
+        uls.results.map(status =>
+            <UmpireRow
+                status={status}
+                league={league}
+                key={status.user.pk} />
+        )
+    )
+
+    return <tbody>{existing}</tbody>
+}
+
+const fetchLeague = (league_pk) => [
+    "api/leagues/",
+    {
+        pk: league_pk
+    }
+]
+
+const fetchUls = (league_pk, page) => [
+    "api/user-league-status/",
+    {
+        params: {
+            league: league_pk,
+            account_type: "umpire",
+            request_status: "accepted",
+            page_size: page_size,
+            page: page
+        }
+    }
+]

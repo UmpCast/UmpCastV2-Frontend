@@ -2,26 +2,24 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useUser from "hooks"
-import { useLeagueRedirect } from "./authRedirect"
+import useLeagueRedirect from "./LeagueRedirect" 
 
 import ExistingUmpires from "league/umpires/existing/ExistingUmpires"
 import PendingUmpires from "league/umpires/pending/PendingUmpires"
 
 const LeagueUmpiresRoute = (rest) => {
 
-    const User = useUser()[0]
-    const { user } = User
-    
     const { pk, active } = rest.computedMatch.params
 
-    const redirect = useLeagueRedirect(User, pk)[0]
+    const redirect = useLeagueRedirect(pk)
+    const { user } = useUser()
 
     return (
         <Route
             {...rest}
             render={props => {
-                
-                switch(redirect){
+
+                switch (redirect) {
                     case ("accepted"):
                         break
                     case ("not_accepted"):

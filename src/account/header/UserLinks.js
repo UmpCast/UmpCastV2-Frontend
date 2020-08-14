@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 
-import useUser, { useFetch } from "hooks"
-import basicApi from "promises"
+import useUser, { useApi, useMountEffect } from "hooks"
 
 import CreateLeague from "./CreateLeague"
 
@@ -10,39 +9,21 @@ import { Nav, NavDropdown } from "react-bootstrap"
 
 export default function UserLinks() {
 
-    const User = useUser()[0]
-    const { user, token } = User
+    const Api = useApi(fetchUls)
+    const User = useUser()
 
-    const myUls = useFetch(() => basicApi("api/user-league-status/",
-        {
-            token: token,
-            params: {
-                user: user.pk,
-                request_status: "accepted",
-                page_size: 100
-            }
-        }).then(res => res.data)
-    )
-    const uls = myUls[0]
-    
-    const [show, setShow] = useState(false)
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+    const useUls = useState()
+    const useShow = useState(false)
 
-    let formatted_uls = null
+    const { user } = User
+    const [uls, setUls] = useUls
+    const [, setShow] = useShow
 
-    if (uls && uls.results.length > 0) {
-        formatted_uls = uls.results.map(status => (
-            <NavDropdown.Item as={Link} to={`/league/${status.league.pk}/`} key={status.league.pk}>
-                {status.league.title}
-            </ NavDropdown.Item>
-        ))
-    } else {
-        formatted_uls =
-            <NavDropdown.Item disabled>
-                No Leagues
-            </ NavDropdown.Item>
-    }
+    useMountEffect(() => {
+        Api.fetchUls(user.pk).then(
+            res => setUls(res.data.results)
+        )
+    })
 
     return (
         <Nav className="mr-auto">
@@ -50,14 +31,67 @@ export default function UserLinks() {
             <Nav.Link as={Link} to="/calendar">Calendar</Nav.Link>
             <Nav.Link as={Link} to="/games">Games</Nav.Link>
             <NavDropdown title="Leagues">
-                {formatted_uls}
-                {User.user.account_type === "manager" ?
-                    <NavDropdown.Item onClick={handleShow} className="text-primary">
-                        + Your League
-                    </NavDropdown.Item>
-                    : null}
-                <CreateLeague show={show} handleClose={handleClose} myUls={myUls} />
+
+                <UlsNav
+                    uls={uls} />
+
+                <AddLeagueNav
+                    setShow={setShow}
+                    account_type={user.account_type} />
+
+                <CreateLeague
+                    useShow={useShow}
+                    useUls={useUls} />
+
             </NavDropdown>
         </Nav>
     )
+}
+
+const fetchUls = (user_pk) => [
+    "api/user-league-status/",
+    {
+        params: {
+            user: user_pk,
+            request_status: "accepted",
+            page_size: 100
+        }
+    }
+]
+
+const UlsNav = props => {
+    const { uls } = props
+
+    if (uls && uls.length > 0)
+        return (
+            uls.map(status => (
+                <NavDropdown.Item
+                    as={Link}
+                    to={`/league/${status.league.pk}/`}
+                    key={status.league.pk}>
+                    {status.league.title}
+                </ NavDropdown.Item>
+            ))
+        )
+
+    return (
+        <NavDropdown.Item disabled>
+            No Leagues
+        </ NavDropdown.Item>
+    )
+}
+
+const AddLeagueNav = props => {
+    const { account_type, setShow } = props
+
+    if (account_type === "manager")
+        return (
+            <NavDropdown.Item
+                onClick={() => setShow(true)}
+                className="text-primary">
+                + Your League
+            </NavDropdown.Item>
+        )
+
+    return null
 }

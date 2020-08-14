@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import useUser, { useFetch } from "hooks"
-import basicApi from "promises"
+import { useApi, useMountEffect } from "hooks"
 
-import LeagueBanner, { LeagueContainer } from "../LeagueBanner"
+import LeagueContainer from "league/LeagueContainer"
 import SearchGame from "game/search/SearchGame"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,43 +12,50 @@ import { Card } from "react-bootstrap"
 export default function UrgentGame() {
 
     const { pk } = useParams()
-    const { token } = useUser()[0]
 
-    const league = useFetch(() =>
-        basicApi("api/leagues/", { pk: pk, token: token })
-            .then(res => res.data)
-    )[0]
+    const Api = useApi(fetchLeague)
+
+    const [league, setLeague] = useState()
+
+    useMountEffect(() => {
+        Api.fetchLeague(pk)
+            .then(res => setLeague(res.data))
+    })
 
     return (
-        <Fragment>
-            <LeagueBanner pk={pk} active="urgent" league={league} />
-            <LeagueContainer>
-                <Card>
-                    <Card.Header>
-                        <span className="text-danger">
-                            <FontAwesomeIcon icon={['fas', 'fire']} className="mr-2" />2 days left
+        <LeagueContainer league={league} active="urgent">
+            <Card>
+                <Card.Header>
+                    <span className="text-danger">
+                        <FontAwesomeIcon icon={['fas', 'fire']} className="mr-2" />2 days left
                             </span>
-                        <span className="float-right text-muted">
-                            <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
-                            <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
-                            <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
-                        </span>
-                    </Card.Header>
-                    <Card.Body className="pl-0">
-                        <SearchGame
-                            date="Aug 10"
-                            time_start="3:30 PM"
-                            time_end="5:30 PM"
-                            title="Morgan-Gault vs. Agile"
-                            division="Majors"
-                            location="Mitchell Ballpark"
-                            cast={cast} />
-                    </Card.Body>
-                </Card>
-            </LeagueContainer>
-        </Fragment>
+                    <span className="float-right text-muted">
+                        <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
+                        <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
+                        <FontAwesomeIcon icon={['fas', 'user-slash']} className="ml-1 fa-sm" />
+                    </span>
+                </Card.Header>
+                <Card.Body className="pl-0">
+                    <SearchGame
+                        date="Aug 10"
+                        time_start="3:30 PM"
+                        time_end="5:30 PM"
+                        title="Morgan-Gault vs. Agile"
+                        division="Majors"
+                        location="Mitchell Ballpark"
+                        cast={cast} />
+                </Card.Body>
+            </Card>
+        </LeagueContainer>
     )
 }
+
+const fetchLeague = (league_pk) => [
+    "api/leagues/",
+    {
+        pk: league_pk
+    }
+]
 
 const cast = [
     {

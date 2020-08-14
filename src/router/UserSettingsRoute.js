@@ -2,12 +2,12 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import setUser from "hooks"
-import authRedirect from "./authRedirect"
+import authRedirect from "./Redirect"
 
-import UserProfile from "account/settings/UserProfile"
+import UserProfile from "account/settings/profile/UserProfile"
 import UserSecurity from "account/settings/UserSecurity"
 import UserNotifications from "account/settings/UserNotifications"
-import UserLeagues from "account/settings/UserLeagues"
+import UserLeagues from "account/settings/leagues/UserLeagues"
 
 const UserSettingsRoute = (rest) => {
 

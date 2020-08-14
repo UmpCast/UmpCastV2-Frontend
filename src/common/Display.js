@@ -1,0 +1,293 @@
+import React, { Fragment, useState, useEffect } from 'react'
+import { Link } from "react-router-dom"
+import { Formik, Form as FormikForm } from "formik"
+import * as Yup from "yup"
+
+import { useDisplay } from "hooks"
+import { TextInput } from "common/Input"
+
+import { Nav, Pagination, Alert, Modal, Button } from "react-bootstrap"
+
+export const FocusContainer = (props) => (
+    <div className="d-flex
+                    align-items-center
+                    justify-content-center"
+        style={{ "height": "80vh" }}>
+        {props.children}
+    </div>
+)
+
+export const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <div ref={ref}
+        onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+        }}>
+        {children}
+    </div>
+));
+
+export const SettingsHeader = (props) => {
+
+    const { icon, title, footer } = props
+
+    return (
+        <Nav.Item >
+            <Nav.Link eventKey="disabled" className="bg-light text-secondary border ump-border-rounded-top disabled">
+                <div className="d-inline-flex justify-content-center">
+                    {icon && <div className="d-inline-flex flex-wrap bg-secondary rounded p-1 mr-2 mt-1">{icon}</div>}
+                    <div className="my-auto d-flex flex-column">
+                        <div className="my-auto flex-shrink-0">
+                            <p className="mb-0"><strong>{title}</strong></p>
+                        </div>
+                        {footer && <small className="text-muted" style={{ "lineHeight": .5 }} >{footer}</small>}
+                    </div>
+                </div>
+            </Nav.Link>
+        </Nav.Item >
+    )
+}
+
+export const SettingsNav = ({active, subjects, toPath}) => (
+    subjects.map(subject => {
+        const subject_caps = subject.charAt(0).toUpperCase() + subject.slice(1)
+        return (
+            <Nav.Item key={subject}>
+                <Nav.Link
+                    as={Link}
+                    to={toPath(subject)}
+                    className={`text-muted rounded-0 ump-border-top-0 ${active === subject ? "active" : null}`}
+                >
+                    {subject_caps}
+                </Nav.Link>
+            </Nav.Item>
+        )
+    })
+)
+
+export const MyAlert = props => {
+
+    const [Display, setDisplay] = useDisplay()
+
+    const [show, setShow] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setShow(false), props.delay ? props.delay : 3000)
+    }, [props.delay])
+
+    useEffect(() => {
+        if (!show) {
+            setDisplay({ ...Display, alert: null })
+        }
+    })
+
+    return (
+        <Alert {...props} show={show} onClose={() => setShow(false)} dismissible style={{ "position": "absolute", "width": "100%", "opacity": .8, "zIndex": 1000 }}>
+            {props.children}
+        </Alert>
+    )
+}
+
+export const setAlert = (useUser, res) => {
+
+    const [User, setUser] = useUser
+
+    setUser({
+        ...User,
+        alert:
+            <MyAlert variant={res.variant} className="mb-0">
+                {res.msg}
+            </MyAlert>
+    })
+}
+
+export const InputConfirm = props => {
+
+    const { action, consequences, action_text, confirm_text, useShow, onConfirm } = props
+
+    const [show, setShow] = useShow
+
+    const initialValues = {
+        title: ""
+    }
+
+    const validationSchema =
+        Yup.object({
+            title: Yup.string()
+                .matches(confirm_text)
+                .required()
+        })
+
+    return (
+        <Modal show={show} onHide={() => setShow(false)}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={() => { }}
+            >
+                {formik => (
+                    <FormikForm noValidate>
+                        <div onClick={e => e.stopPropagation()}>
+                            <Modal.Header closeButton className="py-3">
+                                <p className="my-auto"><strong>{action}</strong></p>
+                            </Modal.Header>
+                        </div>
+                        {consequences ?
+                            <Modal.Body>
+                                {consequences}
+                            </Modal.Body> : null}
+                        <Modal.Footer>
+                            <TextInput
+                                label={<span>Please type <strong>{confirm_text}</strong> to confirm.</span>}
+                                name="title"
+                                type="text"
+                                className="rounded"
+                                groupClass="w-100"
+                                noError
+                            />
+                            <Button
+                                type="button"
+                                disabled={!formik.isValid || !formik.dirty}
+                                onClick={onConfirm}
+                                variant="primary rounded py-1"
+                                block
+                            >
+                                {action_text}
+                            </Button>
+                        </Modal.Footer>
+                    </FormikForm>
+                )}
+            </Formik>
+        </Modal>
+    )
+}
+
+export const BasicConfirm = props => {
+
+    const { action, consequences, action_text, useShow, onConfirm } = props
+
+    const [show, setShow] = useShow
+
+    return (
+        <Modal show={show} size="sm">
+            <Modal.Header className="py-3 no-border">
+                <h5 className="my-auto mx-auto"><strong>{action}</strong></h5>
+            </Modal.Header>
+            {consequences ? <Modal.Body className="text-center no-border py-0">{consequences}</Modal.Body> : null}
+            <Modal.Footer className="no-border">
+                <div className="mx-auto" onClick={e => e.stopPropagation()}>
+                    <Button
+                        type="button"
+                        onClick={() => setShow(false)}
+                        variant="secondary rounded py-1 mr-2"
+                    >
+                        Cancel
+                        </Button>
+                    <Button
+                        type="button"
+                        onClick={onConfirm}
+                        variant="primary rounded py-1"
+                    >
+                        {action_text}
+                    </Button>
+                </div>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+export const TitleInput = ({ setShow, action, confirm, formik, ...props }) => {
+    return (
+        <Fragment>
+            <Modal.Header closeButton className="no-border py-3">
+                <Modal.Title>{action}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="no-border py-0">
+                <TextInput
+                    name="title"
+                    type="text"
+                    className="rounded"
+                    {...props}
+                />
+            </Modal.Body>
+            <Modal.Footer className="no-border pt-0">
+                <Button
+                    type="button"
+                    variant="secondary rounded py-1"
+                    onClick={() => setShow(false)}>
+                    Cancel
+                </Button>
+                <Button
+                    disabled={formik.isSubmitting}
+                    type="submit"
+                    variant="primary rounded py-1">
+                    {confirm}
+                </Button>
+            </Modal.Footer>
+        </Fragment>
+    )
+}
+
+export const PagesNav = ({ list, setPage, page_size }) => {
+
+    const { page_number, count } = list
+    const num_pages = Math.ceil(count / page_size)
+
+    const isFirst = page_number === 1
+    const isLast = page_number === num_pages
+
+    const pages = []
+
+    for (let i = 1; i <= num_pages; i++) {
+        const active = i === page_number
+
+        pages.push(
+            <Pagination.Item
+                active={active}
+                key={i}
+                onClick={() => setPage(i)}>
+                {i}
+            </Pagination.Item>
+        )
+    }
+
+    return (
+        <Pagination className="mx-auto">
+            <Pagination.Prev
+                disabled={isFirst}
+                onClick={() => setPage(page_number - 1)} />
+            {pages}
+            <Pagination.Next
+                disabled={isLast}
+                onClick={() => setPage(page_number + 1)} />
+        </Pagination>
+    )
+}
+
+export const ProfilePicture = (props) => {
+
+    const { src, className, size, alt } = props
+
+    return (
+        <img
+            src={src ? src : alt}
+            alt="Profile"
+            className={className + (size ? "" : " img-fluid")}
+            style={{ width: size }}
+        />
+    )
+}
+
+
+const Loader = ({ dep, children }) => {
+    if (Array.isArray(dep)) {
+        for (const cond of dep) {
+            if (!cond) return null
+        }
+    } else {
+        if (!dep) return null
+    }
+    return children
+}
+
+export default Loader

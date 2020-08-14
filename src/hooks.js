@@ -1,84 +1,130 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
+import axios from "axios"
 
 import UserContext, { DisplayContext } from "UserContext"
 
-import { MyAlert } from "tools/Display"
+import { myUrl, config } from "common/Api"
+import { MyAlert } from "common/Display"
 
-const useUser = () => {
-    return useContext(UserContext)
+const useUser = (full = false) => {
+    const myUser = useContext(UserContext)
+    return full ? myUser : myUser[0]
 }
 
 export const useDisplay = () => {
     return useContext(DisplayContext)
 }
 
-export const useMountEffect = (fun) => useEffect(fun, [])
+export const useMountEffect = (fun, dep = []) => useEffect(fun, dep)
 
-export const useFetch = (request) => {
+export const useFetch = (request, dep = []) => {
 
     const [Display, setDisplay] = useDisplay()
 
-    const myState = useState(null)
+    const myState = useState()
     const setState = myState[1]
 
     useMountEffect(() => {
         setDisplay({ ...Display, isLoading: true })
 
-        request()
+        Promise.resolve(request())
             .then(setState)
-            .catch(err => console.log(err))
             .finally(() => {
                 setDisplay({ ...Display, isLoading: false })
             })
-    })
+    }, dep)
 
     return myState
 }
 
-export async function ApiSubmit(myDisplay, request, buffer = true) {
+export const useApi = (...requests) => {
+    const { token } = useUser()
+    const myDisplay = useDisplay()
 
-    const [Display, setDisplay] = myDisplay
-    let res = {}
+    const [display, setDisplay] = myDisplay
 
-    if (buffer) {
-        setDisplay({ ...Display, isLoading: Display.isLoading + 1 })
+    const ret = {}
+
+    ret.Generic = (request, shouldLoad) => {
+
+        setDisplay({ ...display, isLoading: shouldLoad })
+
+        return (
+            request()
+                .then(res => {
+                    setDisplay({ ...display, isLoading: false })
+                    return res
+                })
+        )
     }
 
-    return request()
-        .then(payload => {
-            res = { variant: "success", msg: "Success!" }
+    const basicApi = (endpoint, values, method = "get", shouldLoad = true) => {
+        const { pk, params, data } = values
 
-            return Promise.resolve(payload)
+        return [
+            () => axios({
+                method: method,
+                url: myUrl(`${endpoint}${pk ? `${pk}/` : ""}`),
+                ...config(token, params),
+                data: data
+            }),
+            shouldLoad
+        ]
+    }
+
+    for (const request of requests) {
+        ret[request.name] = (...vals) => (
+            ret.Generic(...basicApi(...request(...vals)))
+        )
+    }
+
+    ret.Submit = ApiSubmit(myDisplay)
+
+    return useRef(ret).current
+}
+
+export const ApiSubmit = myDisplay => request => {
+
+    const [display, setDisplay] = myDisplay
+
+    setDisplay({ ...display, isLoading: true })
+
+    let alertInfo = {}
+
+    return request()
+        .then(res => {
+            alertInfo = { variant: "success", msg: "Success!" }
+
+            return res
         })
         .catch(err => {
-            res.variant = "danger"
+            alertInfo.variant = "danger"
 
             if (err.response) {
-                const errors = err.response.data
+                const { non_field_errors } = err.response.data
 
-                if (errors.non_field_errors) {
-                    res.msg = errors.non_field_errors
-                }
-
-                return Promise.reject(errors)
+                if (non_field_errors)
+                    alertInfo.msg = non_field_errors
             } else {
-                res.msg = "An unknown error occured while performing request"
-
-                return Promise.reject({})
+                alertInfo.msg =
+                    "An unknown error occured while performing request"
             }
+
+            return Promise.reject(err)
         })
         .finally(() => {
+            const updatedDisplay = { isLoading: false }
 
-            let updatedDisplay = Display
+            const { variant, msg } = alertInfo
 
-            if (buffer) {
-                updatedDisplay.isLoading = Math.max(Display.isLoading - 1, 0)
-            }
-            
-            updatedDisplay.alert =
-                <MyAlert variant={res.variant} className="mb-0">
-                    {res.msg}
-                </MyAlert>
+            if (variant && msg)
+                updatedDisplay.alert = (
+                    <MyAlert
+                        variant={alertInfo.variant}
+                        className="mb-0">
+                        {alertInfo.msg}
+                    </MyAlert>
+                )
 
             setDisplay(updatedDisplay)
         })

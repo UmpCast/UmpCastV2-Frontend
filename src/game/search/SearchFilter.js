@@ -1,8 +1,14 @@
 import React from 'react'
+import { DateRange } from 'react-date-range';
 
-import {Dropdown} from "react-bootstrap"
+import { Dropdown } from "react-bootstrap"
 
 export default function SearchFilter() {
+
+    const handleSelect = (date)=>{
+        console.log(date); 
+      }
+
     return (
         <div className="my-auto d-inline-flex">
             <Dropdown>
@@ -55,6 +61,7 @@ export default function SearchFilter() {
             </Dropdown>
             <Dropdown>
                 <Dropdown.Toggle
+                    alignRight
                     variant="light"
                     className="rounded-pill bg-light text-muted py-1 debug mx-1"
                     id="dropdown-basic"
@@ -63,10 +70,15 @@ export default function SearchFilter() {
                     Sort by date
             </Dropdown.Toggle>
 
-                <Dropdown.Menu className="mt-2">
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                <Dropdown.Menu className="mt-1">
+                    <DateRange
+                        ranges={[{
+                            startDate: new Date(),
+                            endDate: new Date(),
+                            key: 'selection',
+                          }]}
+                        onChange={handleSelect}
+                    />
                 </Dropdown.Menu>
             </Dropdown>
         </div>

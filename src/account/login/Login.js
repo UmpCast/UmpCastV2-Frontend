@@ -4,8 +4,8 @@ import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
 import useUser from "hooks"
-import { TextInput } from "tools/Input"
-import { FocusContainer } from "tools/Display"
+import { TextInput } from "common/Input"
+import { FocusContainer } from "common/Display"
 
 import { inputLogin } from "../promises"
 
@@ -13,7 +13,7 @@ import { Button } from "react-bootstrap"
 
 export default function Login() {
 
-    const [User, setUser] = useUser()
+    const [User, setUser] = useUser(true)
 
     const { isConfigured, isAuthenticated } = User
 

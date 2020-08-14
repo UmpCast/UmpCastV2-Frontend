@@ -4,8 +4,8 @@ import { Formik, Form as FormikForm } from "formik"
 import useUser, { useDisplay, ApiSubmit } from "hooks"
 import basicApi from "promises"
 
-import { tokenCreateBody } from "tools/Api"
-import { TextInput } from "tools/Input"
+import { tokenCreateBody } from "common/Api"
+import { TextInput } from "common/Input"
 import UserSettingsNav from "./UserSettingsNav"
 
 import { Row, Col, Button } from "react-bootstrap"

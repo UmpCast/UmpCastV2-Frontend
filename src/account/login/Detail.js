@@ -2,8 +2,8 @@ import React from "react"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { createObj, reduceArrays, includeProps } from "tools/Utils"
-import { TextInput, MyPhoneInput } from "tools/Input"
+import { createObj, reduceArrays, includeProps } from "common/Utils"
+import { TextInput, MyPhoneInput } from "common/Input"
 
 import { inputRegister } from "../promises"
 
