@@ -3,7 +3,7 @@ import ReactCrop from "react-image-crop"
 
 import { Button, Modal } from "react-bootstrap"
 
-export default function ProfileCrop(props) {
+export const ProfileCrop = (props) => {
 
     const { src, useShow, handleSubmit } = props
 
@@ -118,3 +118,5 @@ const dataURLtoFile = (dataurl, filename) => {
     let croppedImage = new File([u8arr], filename, { type: mime });
     return croppedImage
 }
+
+export default ProfileCrop

@@ -15,22 +15,22 @@ export const config = (token = null, params = null, content_type = null) => {
     }
 }
 
-export const tokenCreateBody = (values) => {
+export const OauthConvertToken = (backend, token) => {
     return {
-        grant_type: "password",
-        client_id: client_id,
-        client_secret: client_secret,
-        username: (values.username ? values.username : values.email),
-        password: values.password
+        grant_type: "convert_token",
+        client_id,
+        client_secret,
+        backend,
+        token
     }
 }
 
-export const accessCreateBody = (values) => {
+export const OauthUserValidate = (username, password) => {
     return {
-        grant_type: "convert_token",
-        client_id: client_id,
-        client_secret: client_secret,
-        backend: values.backend,
-        token: values.token
+        grant_type: "password",
+        client_id,
+        client_secret,
+        username,
+        password
     }
 }
