@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 
-import useUser, { useApi } from "global/hooks"
+import useUser, { useApi } from "common/hooks"
 
 import { OauthUserValidate } from "common/Api"
 

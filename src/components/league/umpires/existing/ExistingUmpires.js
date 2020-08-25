@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useMountEffect } from "common/hooks"
 
-import Loader, { PageNav } from "common/Components"
+import Loader, { PageNav } from "common/components"
 
 import UmpiresContainer from "components/league/umpires/UmpiresContainer"
 
@@ -26,7 +26,7 @@ export default function ManageUmpires() {
     const [league, setLeague] = useLeague
 
     useMountEffect(() => {
-        Promise.all([Api.fetchLeague(pk), Api.fetchUls(pk, 1)])
+        Promise.all([Api.fetchLeague(pk), Api.fetchUls(pk)])
             .then(res => {
                 setLeague(res[0].data)
                 setUls(res[1].data)

@@ -2,12 +2,13 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
+import {SubmitButtons} from "common/Forms"
 import { TextInput } from "common/Input"
 
-import { ListGroup, Button } from "react-bootstrap"
+import { ListGroup } from "react-bootstrap"
 
 export default function AddRole(props) {
 
@@ -18,7 +19,7 @@ export default function AddRole(props) {
 
     const Api = useApi(createRole)
 
-    const onSubmit = (values, { setErrors }) => {
+    const onSubmit = (values, { setSubmitting, setErrors }) => {
         Api.Submit(() =>
             Api.createRole(division.pk, values)
         )
@@ -29,8 +30,8 @@ export default function AddRole(props) {
                 setAddRole(false)
             })
             .catch(err => {
-                const errors = err.response.data
-                setErrors(errors)
+                setErrors(err.response.data)
+                setSubmitting(false)
             })
     }
 
@@ -54,12 +55,9 @@ export default function AddRole(props) {
                                 placeholder="Role Name"
                                 groupClass="mb-0 w-100 mr-4"
                             />
-                            <div className="d-inline-flex">
-                                <CancelRoleButton
-                                    setAddRole={setAddRole} />
-                                <CreateRoleButton
-                                    submitting={formik.isSubmitting} />
-                            </div>
+                            <SubmitButtons
+                                formik={formik}
+                                setShow={setAddRole}/>
                         </FormikForm>
                     )}
                 </Formik>
@@ -78,26 +76,6 @@ const validationSchema =
             .max(32, 'Max character length of 32')
             .required('Required')
     })
-
-const CancelRoleButton = ({ setAddRole }) => (
-    <Button
-        size="sm"
-        variant="secondary rounded mb-auto mr-2"
-        type="button"
-        onClick={() => setAddRole(false)}>
-        Cancel
-    </Button>
-)
-
-const CreateRoleButton = ({ submitting }) => (
-    <Button
-        size="sm"
-        variant="primary rounded mb-auto"
-        disabled={submitting}
-        type="submit">
-        Create
-    </Button>
-)
 
 const createRole = (division_pk, values) => [
     "api/roles/",

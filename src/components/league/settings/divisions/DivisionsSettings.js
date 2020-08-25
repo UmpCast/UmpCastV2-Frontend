@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useFetchLeague } from "common/hooks"
+import { TsRedirect } from "common/Api"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import SettingsContainer from "components/league/settings/SettingsContainer"
 
@@ -17,17 +18,9 @@ export default function Divisions() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague)
-    const useLeague = useState()
-
-    const [league, setLeague] = useLeague
-
-    useMountEffect(() => {
-        Api.fetchLeague(pk)
-            .then(res =>
-                setLeague(res.data)
-            )
-    })
+    const useLeague = useFetchLeague(pk)
+    
+    const [league] = useLeague
 
     league && (league.ts_divisions = temp_ts_divisions)
 
@@ -40,10 +33,12 @@ export default function Divisions() {
                     <Col xs={6}>
                         <h5 className="font-weight-bold">
                             Sync Divisions & Games
-                            </h5>
-                        <Button variant="danger rounded my-2 font-weight-bold">
-                            Unsync
-                            </Button>
+                        </h5>
+                        <Button
+                            variant="success rounded my-2 font-weight-bold"
+                            href={TsRedirect()}>
+                            Sync
+                        </Button>
                         <small className="form-text text-muted">
                             <LeagueSyncFeatures />
                         </small>
@@ -66,13 +61,6 @@ const ListDivisions = ({ league }) => (
         />
     )
 )
-
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
 
 const temp_ts_divisions = [
     {

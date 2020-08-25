@@ -2,7 +2,7 @@ import React from "react"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { useApi, useTokenLogin } from "global/hooks"
+import { useApi, useTokenLogin } from "common/hooks"
 
 import { TextInput, MyPhoneInput } from "common/Input"
 import { OauthUserValidate } from "common/Api"

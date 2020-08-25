@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
 import { Button, ListGroup } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

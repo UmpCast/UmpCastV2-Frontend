@@ -4,9 +4,9 @@ import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-import useUser, { useApi, useMountEffect } from "global/hooks"
+import useUser, { useApi, useMountEffect } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import Header from "./Header"
 import Week from "./Week"

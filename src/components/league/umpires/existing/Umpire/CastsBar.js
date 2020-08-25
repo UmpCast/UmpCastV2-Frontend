@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Loader, { CustomToggle } from "common/Components"
+import Loader, { CustomToggle } from "common/components"
 
 import UpdateCasts from "./UpdateCasts"
 

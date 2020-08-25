@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import ClipLoader from "react-spinners/ClipLoader"
 
-import { useDisplay } from "global/hooks"
+import { useDisplay } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import { Container } from "react-bootstrap"
 

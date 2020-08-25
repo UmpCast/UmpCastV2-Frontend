@@ -1,8 +1,8 @@
 import React from "react";
 
-import useUser from "global/hooks"
+import useUser from "common/hooks"
 
-import Loader, { ProfilePicture } from "common/Components"
+import Loader, { ProfilePicture } from "common/components"
 
 import CancelButton from "./CancelButton"
 

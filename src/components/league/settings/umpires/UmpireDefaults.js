@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useFetchLeague } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 import SettingsContainer from "components/league/settings/SettingsContainer"
 
 import SignupDefaults from "./signups/SignupDefaults"
@@ -14,13 +14,9 @@ export default function LeagueUmpires() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague)
-    const [league, setLeague] = useState()
+    const useLeague = useFetchLeague(pk)
 
-    useMountEffect(() => {
-        Api.fetchLeague(pk)
-            .then(res => setLeague(res.data))
-    })
+    const [league, setLeague] = useLeague
 
     return (
         <SettingsContainer league={league} active="umpires">
@@ -35,10 +31,3 @@ export default function LeagueUmpires() {
         </SettingsContainer>
     )
 }
-
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]

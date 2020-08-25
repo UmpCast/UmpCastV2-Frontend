@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-import { useTokenLogin, useApi } from "global/hooks"
+import { useTokenLogin, useApi } from "common/hooks"
 
-import { FocusContainer } from "common/Components"
+import { FocusContainer } from "common/components"
 import { OauthUserValidate } from "common/Api"
 
 import Social from "./Social"
@@ -25,7 +25,6 @@ export default function Login() {
             )
             .catch(err => {
                 let errors = err.response.data
-
                 // TEMP FIX
                 const description = errors["error_description"]
                 if (description) {

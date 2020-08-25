@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useMountEffect } from "common/hooks"
 
 import SubNav from "../../LeagueContainer"
 import SettingsNav from "../SettingsContainer"

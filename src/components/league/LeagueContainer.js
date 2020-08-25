@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import LeagueBanner from "./banner/LeagueBanner"
 

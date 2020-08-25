@@ -19,8 +19,7 @@ export default function DivisionVisibility(props) {
         <Dropdown>
             <Dropdown.Toggle
                 variant={styles.fill === "empty" ? "light" : "primary"}
-                className={`rounded-pill py-0 mx-1 ump-visibility-${styles.fill}`}
-                id="dropdown-basic">
+                className={`rounded-pill py-0 mx-1 ump-visibility-${styles.fill}`}>
                 {styles.title}
             </Dropdown.Toggle>
             <Dropdown.Menu>

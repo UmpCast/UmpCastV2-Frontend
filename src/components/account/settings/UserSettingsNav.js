@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SettingsHeader, SettingsNav } from "common/Components"
+import { SettingsHeader, SettingsNav } from "common/components"
 
 import { Container, Row, Col, Nav } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

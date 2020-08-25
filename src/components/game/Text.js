@@ -1,5 +1,3 @@
-import React from "react"
-
 export const CancelAppConseq = ({ status }) => (
     status === "Cast" ?
         "Manger's will be notified. The next umpire in-line will replace your cast." :

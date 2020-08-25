@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useFetchLeague } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 import SettingsContainer from "components/league/settings/SettingsContainer"
 
 import LeagueForm from "./LeagueForm"
@@ -17,16 +17,11 @@ export default function LeagueProfile() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague, updateLeague)
-    const useLeague = useState()
+    const Api = useApi(updateLeague)
+
+    const useLeague = useFetchLeague(pk)
 
     const [league, setLeague] = useLeague
-
-    useMountEffect(() => {
-        Api.fetchLeague(pk).then(res =>
-            setLeague(res.data)
-        )
-    })
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
 
@@ -44,11 +39,9 @@ export default function LeagueProfile() {
             )
     }
 
-    if (!league) { return null }
-
     return (
-        <SettingsContainer league={league} active="profile">
-            <Loader dep={[league]}>
+        <Loader dep={league}>
+            <SettingsContainer league={league} active="profile">
                 <h3><strong>League Profile</strong></h3>
                 <hr className="my-3" />
                 <Row>
@@ -70,21 +63,23 @@ export default function LeagueProfile() {
                         />
                     </Col>
                 </Row>
-            </Loader>
-        </SettingsContainer>
+            </SettingsContainer>
+        </Loader>
     )
 }
 
 const initialValues = (league) => {
-    let initialValues = {}
+    if(!league) return null
+
+    let values = {}
 
     for (const field of ["title", "description", "email", "website_url"]) {
-        initialValues[field] = (
+        values[field] = (
             league[field] ? league[field] : ""
         )
     }
 
-    return initialValues
+    return values
 }
 
 const validationSchema = (
@@ -99,13 +94,6 @@ const validationSchema = (
             .max(30, "Maximum of 30 characters")
     })
 )
-
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
 
 const updateLeague = (league_pk, values) => [
     "api/leagues/",

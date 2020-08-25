@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
 import { BasicConfirm } from "common/Forms"
 import { CancelAppConseq } from "components/game/Text"

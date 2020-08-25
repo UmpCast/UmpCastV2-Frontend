@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 
-import useUser, { useApi } from "global/hooks"
+import useUser, { useApi } from "common/hooks"
 
-import { ProfilePicture } from "common/Components"
+import { ProfilePicture } from "common/components"
 import { BasicConfirm } from "common/Forms"
 import { GameSignupConseq } from "components/game/Text"
 

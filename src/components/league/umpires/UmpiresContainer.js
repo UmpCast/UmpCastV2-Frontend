@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Loader, { SettingsHeader, SettingsNav } from "common/Components"
+import Loader, { SettingsHeader, SettingsNav } from "common/components"
 
 import LeagueContainer from "components/league/LeagueContainer"
 

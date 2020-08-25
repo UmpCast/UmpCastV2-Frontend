@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom"
 import dayjs from "dayjs"
 
-import useUser, { useApi, useMountEffect } from "global/hooks"
+import useUser, { useApi, useMountEffect } from "common/hooks"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import GameBanner from "./GameBanner"
 import Post from "./Post"

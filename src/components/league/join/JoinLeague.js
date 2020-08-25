@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import useUser, { useApi, useMountEffect } from "global/hooks"
-import Loader from "common/Components"
+import useUser, { useApi, useMountEffect } from "common/hooks"
+import Loader from "common/components"
 
 import LeagueContainer from "components/league/LeagueContainer"
 import JoinCard from "./JoinCard"

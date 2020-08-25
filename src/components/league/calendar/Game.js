@@ -3,9 +3,7 @@ import { Link } from "react-router-dom"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 
-import { ProfilePicture } from "common/Components"
-import PrimaryBaseball from "assets/primary_baseball.png"
-import LightPlus from "assets/light_plus.png"
+import { AppPicture } from "common/components"
 
 import { Card } from "react-bootstrap"
 
@@ -38,7 +36,6 @@ export default function CalendarGame(props) {
         </Card>
     )
 }
-
 
 const GameHeader = ({ game }) => {
 
@@ -114,12 +111,13 @@ const CastGallery = ({ game }) => {
         const { pk, applications } = post
 
         const casted = applications[0]
-        const last = (index + 1 === posts.length) ? "" : "mr-2"
+        const className = (index + 1 === posts.length) ? "" : "mr-2"
 
         return (
-            <PostPicture
-                casted={casted}
-                last={last}
+            <AppPicture
+                app={casted}
+                className={className}
+                size={25}
                 key={pk} />
         )
     })
@@ -129,17 +127,4 @@ const CastGallery = ({ game }) => {
             {gallery}
         </div>
     )
-}
-
-const PostPicture = ({ casted, last }) => {
-    return casted ?
-        <ProfilePicture
-            src={casted.user.profile_picture}
-            alt={PrimaryBaseball}
-            size={25}
-            className={`rounded border ${last}`} />
-        : <ProfilePicture
-            src={LightPlus}
-            size={25}
-            className={`rounded border ${last}`} />
 }

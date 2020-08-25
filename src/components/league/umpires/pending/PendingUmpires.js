@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useMountEffect } from "common/hooks"
 
-import Loader, { CustomToggle } from "common/Components"
+import Loader, { CustomToggle } from "common/components"
 
 import UmpiresContainer from "components/league/umpires/UmpiresContainer"
 

@@ -36,7 +36,9 @@ export {
     faLock,
     faLayerGroup,
     faPen,
-    faClock
+    faClock,
+    faBell,
+    faBullhorn
 } from "@fortawesome/free-solid-svg-icons"
 
 export {

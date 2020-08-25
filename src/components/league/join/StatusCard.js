@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import useUser from "global/hooks"
+import useUser from "common/hooks"
 
 import { Row, Col } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

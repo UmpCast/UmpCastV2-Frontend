@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SocialLogin from "react-social-login"
 
-import { useApi, useTokenLogin } from "global/hooks"
+import { useApi, useTokenLogin } from "common/hooks"
 
 import { OauthConvertToken } from "common/Api"
 

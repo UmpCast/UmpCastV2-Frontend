@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useApi, useMountEffect } from "global/hooks"
+import { useApi, useFetchLeague } from "common/hooks"
 
 import LeagueContainer from "components/league/LeagueContainer"
-import SearchGame from "components/game/search/SearchGame"
+import SearchGame from "components/game/search/listings/GameListing"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card } from "react-bootstrap"
@@ -13,14 +13,7 @@ export default function UrgentGame() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague)
-
-    const [league, setLeague] = useState()
-
-    useMountEffect(() => {
-        Api.fetchLeague(pk)
-            .then(res => setLeague(res.data))
-    })
+    const [league, setLeague] = useFetchLeague(pk)
 
     return (
         <LeagueContainer league={league} active="urgent">
@@ -36,26 +29,12 @@ export default function UrgentGame() {
                     </span>
                 </Card.Header>
                 <Card.Body className="pl-0">
-                    <SearchGame
-                        date="Aug 10"
-                        time_start="3:30 PM"
-                        time_end="5:30 PM"
-                        title="Morgan-Gault vs. Agile"
-                        division="Majors"
-                        location="Mitchell Ballpark"
-                        cast={cast} />
+                   
                 </Card.Body>
             </Card>
         </LeagueContainer>
     )
 }
-
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
 
 const cast = [
     {

@@ -1,6 +1,6 @@
 import React from "react"
 
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import SignupCard from "./SignupCard";
 import UmpireCard from "./UmpireCard";

@@ -1,8 +1,8 @@
 import React from "react"
 
-import useUser, { useApi } from "global/hooks"
+import useUser, { useApi } from "common/hooks"
 
-import { FocusContainer } from "common/Components"
+import { FocusContainer } from "common/components"
 
 import { Card, Row, Col, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
 import MaxDaysInput from "./MaxDaysInput"
 

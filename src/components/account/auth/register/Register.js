@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 
 import {UserContext} from "global/Context"
-import Loader, { FocusContainer } from "common/Components"
+import Loader, { FocusContainer } from "common/components"
 
 import RegisterEmail from "./Email";
 import RegisterDetail from "./Details";

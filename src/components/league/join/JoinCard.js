@@ -1,7 +1,7 @@
 import React from 'react'
 
-import useUser, { useApi } from "global/hooks"
-import Loader from "common/Components"
+import useUser, { useApi } from "common/hooks"
+import Loader from "common/components"
 
 import { Row, Col, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"

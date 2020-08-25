@@ -1,7 +1,7 @@
 import React from "react"
 
 import BannerSubNav from "./BannerSubNav"
-import Loader from "common/Components"
+import Loader from "common/components"
 
 import LeagueDetails from "./BannerDetails"
 import { Container, Row } from "react-bootstrap"

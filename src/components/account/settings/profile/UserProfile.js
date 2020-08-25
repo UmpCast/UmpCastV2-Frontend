@@ -3,10 +3,10 @@ import axios from "axios"
 import { Formik } from "formik"
 import * as Yup from "yup"
 
-import useUser, { useApi } from "global/hooks"
+import useUser, { useApi } from "common/hooks"
 
 import { formatPhone } from "common/Input"
-import { ProfilePicture } from "common/Components"
+import { ProfilePicture } from "common/components"
 import { myUrl, config } from "common/Api"
 
 import darkBaseball from "assets/dark_baseball.png"

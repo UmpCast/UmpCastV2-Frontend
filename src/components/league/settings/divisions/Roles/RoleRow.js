@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
 import { InputConfirm } from "common/Forms"
 

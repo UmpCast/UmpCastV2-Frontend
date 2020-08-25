@@ -2,7 +2,7 @@ import React from 'react'
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 
-import { useApi } from "global/hooks"
+import { useApi } from "common/hooks"
 
 import { Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
