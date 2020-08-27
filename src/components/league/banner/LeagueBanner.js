@@ -1,22 +1,31 @@
 import React from "react"
 
-import BannerSubNav from "./BannerSubNav"
+import useUser from "common/hooks"
+
 import Loader from "common/components"
 
+import BannerSubNav from "./BannerSubNav"
 import LeagueDetails from "./BannerDetails"
+
 import { Container, Row } from "react-bootstrap"
 
 export default function LeagueBanner(props) {
 
     const { league, active, noDetails, noSubNav } = props
 
-    const subjects = [
+    const isManager = useUser().user.account_type === "manager"
+
+    let subjects = [
         "announcements",
         "calendar",
-        "umpires",
-        "urgent",
-        "settings"
     ]
+
+    if (isManager)
+        subjects.push.apply(subjects, [
+            // TODO "urgent",
+            "umpires",
+            "settings"
+        ])
 
     return (
         <div className="px-3 pt-1 bg-light border-bottom">

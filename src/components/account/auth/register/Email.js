@@ -18,6 +18,8 @@ export default function RegisterEmail(props) {
     const Api = useApi(validateEmail)
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
+
+        console.log(Api)
         Api.validateEmail(values.email)
             .catch(err => {
                 setSubmitting(false)

@@ -7,42 +7,41 @@ import { BasicConfirm } from "common/Forms"
 import { ListGroup } from "react-bootstrap"
 import { SyncDivisionConseq } from "components/league/settings/Text"
 
-export default function UnusedDivision(props) {
-
-    const { division, useLeague } = props
+export default function UnusedDivision({ division, useLeague }) {
 
     const { title, path, ts_id } = division
     const [league, setLeague] = useLeague
-    const { divisions } = league
 
-    const Api = useApi(syncDivision)
+    const Api = useApi(fetchLeague, syncDivision)
     const useShow = useState(false)
 
     const setShow = useShow[1]
 
-    const onCreate = (title, ts_id) => () => {
-        Api.syncDivision(title, league.pk, ts_id)
-            .then(res =>
-                setLeague(
-                    {
-                        ...league,
-                        divisions: divisions.concat(res.data)
-                    }
-                )
-            )
-            .finally(() =>
+    const onCreate = (ts_id) => () => {
+
+        let ts_ids = league.divisions.map(div => div.ts_id)
+
+        ts_ids.push(parseInt(ts_id))
+
+        Api.syncDivision(league.pk, ts_ids)
+            .then(res => {
                 setShow(false)
+                return Api.fetchLeague(league.pk)
+            })
+            .then(res =>
+                setLeague(res.data)
             )
+            .catch(() => setShow(false))
     }
 
     return (
         <ListGroup.Item
             action
-            className="border-0 p-1 px-2 text-primary"
+            className="d-inline-flex justify-content-between text-primary border-0 p-1 px-2 "
             onClick={() => setShow(true)}
             key={ts_id}>
             {title}
-            <small className="float-right text-muted">
+            <small className="d-inline-block text-truncate text-muted float-right ml-3 my-auto">
                 {path}
             </small>
             <BasicConfirm
@@ -50,22 +49,28 @@ export default function UnusedDivision(props) {
                 action_text="Confirm"
                 consequences={
                     <SyncDivisionConseq
+                        division={division}
                         league={league} />
                 }
                 useShow={useShow}
-                onConfirm={onCreate(title, ts_id)}
+                onConfirm={onCreate(ts_id)}
             />
         </ListGroup.Item>
     )
 }
 
-const syncDivision = (title, league_pk, ts_id) => [
-    "api/divisions/",
+const fetchLeague = (league_pk) => [
+    "api/leagues/",
+    {
+        pk: league_pk
+    }
+]
+
+const syncDivision = (league_pk, ts_ids) => [
+    `api/teamsnap/${league_pk}/build/`,
     {
         data: {
-            title: title,
-            ts_id: ts_id,
-            league: league_pk
+            divisions: ts_ids
         }
     }, "POST"
 ]

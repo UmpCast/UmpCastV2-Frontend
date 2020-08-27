@@ -1,7 +1,5 @@
 import React from "react"
 
-import { formatRole } from "../../../game/search/listings/GameListing"
-
 export default function FullGame(props) {
 
     const { date, time_start, time_end, title, division, role, location, cast } = props

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useParams } from "react-router-dom"
 import { Formik } from "formik"
 import * as Yup from "yup"
@@ -6,11 +6,11 @@ import * as Yup from "yup"
 import { useApi, useFetchLeague } from "common/hooks"
 
 import Loader from "common/components"
-import SettingsContainer from "components/league/settings/SettingsContainer"
+import SettingsContainer from "../SettingsContainer"
 
 import LeagueForm from "./LeagueForm"
+import UpdatePfp from "./UpdatePfp"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Row, Col } from "react-bootstrap"
 
 export default function LeagueProfile() {
@@ -18,7 +18,6 @@ export default function LeagueProfile() {
     const { pk } = useParams()
 
     const Api = useApi(updateLeague)
-
     const useLeague = useFetchLeague(pk)
 
     const [league, setLeague] = useLeague
@@ -42,7 +41,9 @@ export default function LeagueProfile() {
     return (
         <Loader dep={league}>
             <SettingsContainer league={league} active="profile">
-                <h3><strong>League Profile</strong></h3>
+                <h3>
+                    <strong>League Profile</strong>
+                </h3>
                 <hr className="my-3" />
                 <Row>
                     <Col lg="8" className="pr-5">
@@ -56,11 +57,7 @@ export default function LeagueProfile() {
                         </Formik>
                     </Col>
                     <Col lg="4">
-                        <p className="mb-2"><strong>Profile Picture</strong></p>
-                        <FontAwesomeIcon icon={["fas", "meteor"]}
-                            className="rounded text-white bg-dark p-3 mr-3"
-                            style={{ "width": "200px", "height": "200px" }}
-                        />
+                        <UpdatePfp useLeague={useLeague}/>
                     </Col>
                 </Row>
             </SettingsContainer>
@@ -69,7 +66,7 @@ export default function LeagueProfile() {
 }
 
 const initialValues = (league) => {
-    if(!league) return null
+    if (!league) return null
 
     let values = {}
 

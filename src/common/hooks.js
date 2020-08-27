@@ -133,7 +133,7 @@ const ApiSubmit = myDisplay => request => {
         .catch(err => {
             alertInfo.variant = "danger"
 
-            if (err.response) {
+            if (err.response && err.response.data) {
                 const { non_field_errors } = err.response.data
 
                 if (non_field_errors)

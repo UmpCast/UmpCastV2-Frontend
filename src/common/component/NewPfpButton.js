@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import 'react-image-crop/dist/ReactCrop.css'
 
-export default function EditPfp(props) {
+export default function NewPfpButton(props) {
 
     let inputElement = null
 

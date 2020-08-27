@@ -23,7 +23,7 @@ export default function Level(props) {
     const useShowRename = useState(false)
 
     const onDelete = () => {
-        Api.Submit(() => 
+        Api.Submit(() =>
             Api.deleteLevel(pk)
         ).then(() =>
             setLevels(levels.filter(level => level.pk !== pk))
@@ -31,12 +31,14 @@ export default function Level(props) {
     }
 
     return (
-        <Draggable draggableId={pk.toString()} index={index}>
+        <Draggable
+            draggableId={pk.toString()}
+            index={index}>
             {provided => (
                 <ListGroup.Item
                     className="border-top-0"
-                    {...provided.draggableProps}
                     ref={provided.innerRef}
+                    {...provided.draggableProps}
                 >
                     <div className="d-inline-flex justify-content-between w-100">
                         <LevelName
@@ -133,7 +135,7 @@ export const DeleteButton = ({ setShow }) => (
     </Button>
 )
 
-export const ConfirmDelete = ({level, useShow, onDelete}) => (
+export const ConfirmDelete = ({ level, useShow, onDelete }) => (
     <InputConfirm
         action="Delete Level"
         consequences={

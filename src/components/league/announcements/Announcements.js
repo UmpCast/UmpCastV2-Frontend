@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useFetchLeague } from "common/hooks"
+import useUser, { useFetchLeague } from "common/hooks"
 
 import Loader, { NotifsPage } from "common/components"
 import Message from "./Message"
@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 export default function Announcements() {
 
     const { pk } = useParams()
+
+    const isManager = useUser().user.account_type === "manager"
 
     const [league] = useFetchLeague(pk)
 
@@ -38,14 +40,16 @@ export default function Announcements() {
         <Loader dep={league}>
             <LeagueContainer league={league} active="announcements">
                 <Row className="mx-0">
-                    <Button
-                        variant="primary rounded ml-auto"
-                        onClick={() => setShow(true)}>
-                        Add New
+                    <Loader dep={isManager}>
+                        <Button
+                            variant="primary rounded ml-auto"
+                            onClick={() => setShow(true)}>
+                            Add New
                         <FontAwesomeIcon
-                            icon="bullhorn"
-                            className="ml-2" />
-                    </Button>
+                                icon="bullhorn"
+                                className="ml-2" />
+                        </Button>
+                    </Loader>
                 </Row>
                 <Row className="mx-0">
                     <NewMessage
@@ -57,6 +61,6 @@ export default function Announcements() {
                     msgTemplate={Message}
                     useReset={useReset} />
             </LeagueContainer>
-        </Loader>
+        </Loader >
     )
 }

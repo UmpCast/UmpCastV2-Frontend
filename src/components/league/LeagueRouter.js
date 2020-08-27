@@ -51,7 +51,7 @@ export default function LeagueRouter() {
                 auth="league"
                 component={UmpiresRouter} />
 
-            <Route
+            <AuthRoute
                 path="/league/:pk/settings"
                 is="league_manager"
                 auth="league"

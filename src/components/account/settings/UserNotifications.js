@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import UserSettingsNav from "./UserSettingsNav"
+import UserSettingsNav from "./SettingsContainer"
 
 import { Row, Col, Form, InputGroup, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

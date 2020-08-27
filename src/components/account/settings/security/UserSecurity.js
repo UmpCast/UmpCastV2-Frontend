@@ -5,7 +5,7 @@ import useUser, { useApi } from "common/hooks"
 
 import { OauthUserValidate } from "common/Api"
 
-import UserSettingsNav from "../UserSettingsNav"
+import UserSettingsContainer from "../SettingsContainer"
 import PasswordForm from "./PasswordForm"
 
 import { Row, Col, Button } from "react-bootstrap"
@@ -41,7 +41,7 @@ export default function UserSecurity() {
     }
 
     return (
-        <UserSettingsNav active="security">
+        <UserSettingsContainer active="security">
             <div>
                 <h3>
                     <strong>
@@ -74,7 +74,7 @@ export default function UserSecurity() {
                     </Col>
                 </Row>
             </div>
-        </UserSettingsNav>
+        </UserSettingsContainer>
     )
 }
 

@@ -50,8 +50,8 @@ export default function UserLinks() {
                 <Dropdown.Menu alignRight>
                     <Dropdown.Item
                         as={Link}
-                        to="/settings/profile">
-                        Profile
+                        to="/settings/leagues">
+                        Leagues
                     </Dropdown.Item>
 
                     <Dropdown.Item

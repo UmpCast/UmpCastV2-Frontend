@@ -29,7 +29,6 @@ export default function LeagueLinks() {
     return (
         <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Dashboard</Nav.Link>
-            <Nav.Link as={Link} to="/calendar">Calendar</Nav.Link>
             <Nav.Link as={Link} to="/game/search">Games</Nav.Link>
             <NavDropdown title="Leagues">
 

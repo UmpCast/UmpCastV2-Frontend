@@ -59,7 +59,7 @@ const initialValues = {
 const validationSchema =
     Yup.object({
         title: Yup.string()
-            .max(20, "maximum of 20 characters")
+            .max(32, "maximum of 32 characters")
             .required("Required")
     })
 

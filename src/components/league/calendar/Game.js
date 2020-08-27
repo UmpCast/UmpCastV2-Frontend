@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 
+import useUser from "common/hooks"
 import { AppPicture } from "common/components"
 
 import { Card } from "react-bootstrap"
@@ -99,9 +100,9 @@ const TitleLink = ({ game }) => (
 )
 
 const GameDetails = ({ game }) => (
-    <small className="text-muted">
+    <p className="text-muted small my-1" style={{ lineHeight: 1.2 }} >
         {game.location} · {game.division}
-    </small>
+    </p>
 )
 
 const CastGallery = ({ game }) => {
@@ -115,7 +116,7 @@ const CastGallery = ({ game }) => {
 
         return (
             <AppPicture
-                app={casted}
+                casted={casted}
                 className={className}
                 size={25}
                 key={pk} />

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import arrayMove from "array-move"
+import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
 import { useApi } from "common/hooks"
 
 import CreateLevel from "./CreateLevel"
 import Level from "./Level"
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, Button } from "react-bootstrap"
-import { DragDropContext, Droppable } from "react-beautiful-dnd"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function UmpireLevels(props) {
 

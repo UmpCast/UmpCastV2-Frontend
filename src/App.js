@@ -8,6 +8,7 @@ import Header from "global/header/Header"
 import { UserContext, DisplayContext } from "global/Context"
 
 import AccountRouter from "components/account/AccountRouter"
+import CallbackRouter from "components/callback/CallbackRouter"
 import GameRouter from "components/game/GameRouter"
 import LeagueRouter from "components/league/LeagueRouter"
 
@@ -42,6 +43,7 @@ const App = () => {
                             <Switch>
                                 <Route path="/league/:pk" component={LeagueRouter} />
                                 <Route path="/game" component={GameRouter} />
+                                <Route path="/callback" component={CallbackRouter} />
                                 <Route path="/" component={AccountRouter} />
                             </Switch>
                         </DisplayContainer>

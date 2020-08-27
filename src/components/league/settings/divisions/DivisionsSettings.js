@@ -1,32 +1,65 @@
 import React, { useState } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"
 
-import { useApi, useFetchLeague } from "common/hooks"
+import { useApi, useDisplay, useMountEffect } from "common/hooks"
 import { TsRedirect } from "common/Api"
 
-import Loader from "common/components"
+import Loader, { TimerAlert } from "common/components"
+import SettingsContainer from "../SettingsContainer"
 
-import SettingsContainer from "components/league/settings/SettingsContainer"
-
-import TsDivisions from "./Ts/TsDivisions"
-import DivisionCard from "./Roles/DivisionRoles"
+import TsDivisions from "./ts/TsDivisions"
+import DivisionsCol from "./divisions/SortDivisions"
 
 import { Row, Col, Button } from "react-bootstrap"
 import { LeagueSyncFeatures } from 'components/league/settings/Text'
 
-export default function Divisions() {
+export default function DivisionsSettings() {
 
     const { pk } = useParams()
 
-    const useLeague = useFetchLeague(pk)
-    
-    const [league] = useLeague
+    const Api = useApi(fetchLeague, buildDivisions)
+    const [display, setDisplay] = useDisplay()
 
-    league && (league.ts_divisions = temp_ts_divisions)
+    const useLeague = useState()
+    const [tsDivs, setTsDivs] = useState()
+
+    const [league, setLeague] = useLeague
+
+    useMountEffect(() => {
+        Api.fetchLeague(pk)
+            .then(res => {
+                const league = res.data
+                setLeague(league)
+
+                const { api_key } = league
+
+                if (!api_key) return Promise.reject()
+
+                return Api.buildDivisions(pk, api_key)
+            }).then(res => {
+                const divs = res.data
+                const { error } = divs
+
+                if (error) {
+                    setDisplay({
+                        ...display,
+                        alert: (
+                            <TimerAlert
+                                variant="danger"
+                                className="mb-0">
+                                {error}
+                            </TimerAlert>
+                        )
+                    })
+                } else {
+                    setTsDivs(res.data)
+                }
+            })
+    })
 
     return (
-        <SettingsContainer league={league} active="divisions">
-            <Loader dep={[league]}>
+        <Loader dep={[league]}>
+            <SettingsContainer league={league} active="divisions">
                 <h3><strong>League Divisions</strong></h3>
                 <hr className="my-3" />
                 <Row>
@@ -36,49 +69,37 @@ export default function Divisions() {
                         </h5>
                         <Button
                             variant="success rounded my-2 font-weight-bold"
-                            href={TsRedirect()}>
+                            href={TsRedirect(pk)}>
                             Sync
                         </Button>
                         <small className="form-text text-muted">
                             <LeagueSyncFeatures />
                         </small>
-                        <TsDivisions useLeague={useLeague} />
+                        <Loader dep={tsDivs}>
+                            <TsDivisions
+                                tsDivs={tsDivs}
+                                useLeague={useLeague} />
+                        </Loader>
                     </Col>
-                    <Col xs={6}>
-                        <ListDivisions league={league} />
-                    </Col>
+                    <DivisionsCol useLeague={useLeague} />
                 </Row>
-            </Loader>
-        </SettingsContainer>
+            </SettingsContainer>
+        </Loader>
     )
 }
 
-const ListDivisions = ({ league }) => (
-    league.divisions.map(division =>
-        <DivisionCard
-            key={division.pk}
-            division={division}
-        />
-    )
-)
+const fetchLeague = (league_pk) => [
+    "api/leagues/",
+    {
+        pk: league_pk
+    }
+]
 
-const temp_ts_divisions = [
+const buildDivisions = (league_pk, key) => [
+    `api/teamsnap/${league_pk}/build/`,
     {
-        title: 'AAA',
-        path: 'Spring 2020 / Spring 2020 /',
-        ts_id: 100,
-        pk: 14
-    },
-    {
-        title: 'PCL',
-        path: 'Spring 2020 / Spring 2020 /',
-        ts_id: 200,
-        pk: null
-    },
-    {
-        title: 'Majors',
-        path: 'Spring 2020 / Spring 2020 /',
-        ts_id: 300,
-        pk: null
-    },
+        params: {
+            api_key: key
+        }
+    }
 ]

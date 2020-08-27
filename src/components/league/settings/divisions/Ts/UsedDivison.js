@@ -8,19 +8,31 @@ import { ListGroup } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { UnsyncDivisionConseq } from 'components/league/settings/Text'
 
-export default function UsedDivison(props) {
+export default function UsedDivison({ division, useLeague }) {
 
     const Api = useApi(deleteDivision)
 
-    const { division } = props
     const { title, ts_id, pk } = division
+    const [league, setLeague] = useLeague
 
     const useShow = useState(false)
     const setShow = useShow[1]
 
     const onDelete = () => {
-        Api.deleteDivision(pk)
-            .finally(setShow(false))
+        Api.Submit(() =>
+            Api.deleteDivision(pk)
+        )
+        .then(() => {
+            const new_divisions = league.divisions.filter(
+                div => div.pk !== pk
+            )
+
+            setLeague({
+                ...league,
+                divisions: new_divisions
+            })
+        })
+        .finally(() => setShow(false))
     }
 
     return (

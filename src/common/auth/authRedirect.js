@@ -59,8 +59,14 @@ const getAuths = (data) => (
             fail: <Redirect to="/register/configure" />,
             success: <Redirect to="/" />
         },
-        user: {
+        manager: {
             parent: "configured",
+            validator: isManager,
+            fail: <Redirect to="/" />,
+            success: null
+        },
+        user: {
+            parent: "manager",
             validator: authEndpoint
         },
         league_member: {
@@ -102,6 +108,6 @@ const isLeagueMember = (User, data) => {
     const { accepted_leagues } = User.user
 
     return accepted_leagues.some(
-        ({ pk }) => pk === parseInt(pk)
+        ({ pk }) => pk === parseInt(data.pk)
     )
 }

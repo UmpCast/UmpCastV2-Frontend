@@ -7,10 +7,10 @@ export const LeagueSyncFeatures = () => (
     </span>
 )
 
-export const SyncDivisionConseq = ({ league }) => (
+export const SyncDivisionConseq = ({ league, division }) => (
     <span>
-        This division, and all associated games, will be syncedfrom Teamsnap onto
-        <strong>{league.title}'s</strong> UmpCast calendar.
+        <strong>{division.title}</strong>, and all associated games, will be synced
+        from Teamsnap onto <strong>{league.title}'s</strong> UmpCast calendar.
     </span>
 )
 

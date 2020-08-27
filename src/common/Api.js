@@ -4,7 +4,7 @@ const TS_CLIENT_ID = process.env.REACT_APP_TS_CLIENT_ID
 const TS_CLIENT_SECRET = process.env.REACT_APP_TS_CLIENT_SECRET
 
 export const myUrl = (endpoint) => {
-    return "https://127.0.0.1:3000/" + endpoint
+    return "https://umpcastv2-backend.herokuapp.com/" + endpoint
 }
 
 export const config = (token = null, params = null, content_type = null) => {
@@ -37,12 +37,26 @@ export const OauthUserValidate = (username, password) => {
     }
 }
 
-export const TsRedirect = () => {
+export const TsRedirect = (pk) => {
     const base = new URL("https://auth.teamsnap.com/oauth/authorize")
 
     base.searchParams.append("client_id", TS_CLIENT_ID)
-    base.searchParams.append("redirect_uri", "https://localhost:9000/teamsnap/callback")
+    base.searchParams.append("redirect_uri", TsCallbackUri(pk))
     base.searchParams.append("response_type", "code")
 
     return base.toString()
+}
+
+export const TsCallbackUri = (pk) => (
+    `https://localhost:9000/callback/teamsnap/?pk=${pk}`
+)
+
+export const OauthTsToken = (code, redirect_uri) => {
+    return {
+        client_id: TS_CLIENT_ID,
+        client_secret: TS_CLIENT_SECRET,
+        grant_type: "authorization_code",
+        redirect_uri,
+        code
+    }
 }

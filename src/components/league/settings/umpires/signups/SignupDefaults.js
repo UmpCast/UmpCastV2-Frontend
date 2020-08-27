@@ -45,8 +45,8 @@ export default function SignupDefaults(props) {
                                     name="cancellation"
                                     current={cancellation}
                                     max={30}
-                                    text="Days before a game, when signup cancellations 
-                                    are disabled."/>
+                                    text="Minimum days in advanced that an umpire can
+                                    cancel a casted signup."/>
                             </Col>
                         </Row>
                         <Button

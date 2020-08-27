@@ -14,8 +14,8 @@ export default function UpdateCasts(props) {
         const new_max = e.target.value
 
         onChange({
-            [`max_${type}`]: new_max,
-            ...status
+            ...status,
+            [`max_${type}`]: new_max
         })
 
         Api.adjustMaxScheduling(status.pk, type, new_max)

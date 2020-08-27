@@ -6,7 +6,7 @@ import { Nav } from "react-bootstrap"
 
 const SettingsHeader = (props) => {
 
-    const { icon, title, footer } = props
+    const { profilePicture, title, footer } = props
 
     return (
         <Nav.Item >
@@ -14,10 +14,8 @@ const SettingsHeader = (props) => {
                 eventKey="disabled"
                 className="bg-light text-secondary border ump-border-rounded-top disabled">
                 <div className="d-inline-flex justify-content-center">
-                    <Loader dep={icon}>
-                        <div className="d-inline-flex flex-wrap bg-secondary rounded p-1 mr-2 mt-1">
-                            {icon}
-                        </div>
+                    <Loader dep={profilePicture}>
+                        {profilePicture}
                     </Loader>
                     <div className="my-auto d-flex flex-column">
                         <div className="my-auto flex-shrink-0">
@@ -25,7 +23,7 @@ const SettingsHeader = (props) => {
                                 {title}
                             </p>
                         </div>
-                        <small className="text-muted" style={{ "lineHeight": .5 }} >
+                        <small className="text-muted" style={{ "lineHeight": 1 }} >
                             {footer}
                         </small>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useApi, useFetchLeague } from "common/hooks"
+import { useFetchLeague } from "common/hooks"
 
 import Loader from "common/components"
 import SettingsContainer from "components/league/settings/SettingsContainer"
@@ -16,18 +16,18 @@ export default function LeagueUmpires() {
 
     const useLeague = useFetchLeague(pk)
 
-    const [league, setLeague] = useLeague
+    const [league] = useLeague
 
     return (
-        <SettingsContainer league={league} active="umpires">
-            <Loader dep={[league]}>
-                <h3>
-                    <strong>Umpire Defaults</strong>
-                </h3>
-                <hr className="my-3" />
-                <SignupDefaults league={league} />
-                <VisibilityLevels league={league} />
-            </Loader>
-        </SettingsContainer>
+        <Loader dep={league}>
+            <SettingsContainer league={league} active="umpires">
+                    <h3>
+                        <strong>Umpire Defaults</strong>
+                    </h3>
+                    <hr className="my-3" />
+                    <SignupDefaults league={league} />
+                    <VisibilityLevels league={league} />
+            </SettingsContainer>
+        </Loader>
     )
 }

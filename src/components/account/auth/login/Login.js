@@ -47,6 +47,8 @@ export default function Login() {
                         Login
                     </h2>
 
+                    <Social />
+
                     <HorizontalOr />
 
                     <Formik

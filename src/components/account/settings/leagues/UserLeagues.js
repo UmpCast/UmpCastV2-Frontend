@@ -4,10 +4,10 @@ import useUser, { useApi, useMountEffect } from "common/hooks"
 
 import Loader from "common/components"
 
-import UserSettingsNav from "../UserSettingsNav"
+import UserSettingsContainer from "../SettingsContainer"
 import LeagueRow from "./LeagueRow"
 
-import { Button, ListGroup } from "react-bootstrap"
+import { ListGroup } from "react-bootstrap"
 
 export default function UserLeagues() {
 
@@ -24,17 +24,17 @@ export default function UserLeagues() {
     })
 
     return (
-        <UserSettingsNav active="leagues">
+        <UserSettingsContainer active="leagues">
             <div className="d-inline-flex justify-content-between w-100 mb-3">
                 <h3 className="font-weight-strong">
                     Leagues
                 </h3>
-                <Button
+                {/* TODO <Button
                     variant="light"
                     className="rounded my-auto py-1 px-2"
                     style={{ "border": "1px solid #DFDFDF" }}>
                     <strong>+</strong> Join League
-                </Button>
+                </Button> */}
             </div>
             <Loader dep={[uls]}>
             <ListGroup>
@@ -42,7 +42,7 @@ export default function UserLeagues() {
                     {...{ useUls }} />
                     </ListGroup>
             </Loader>
-        </UserSettingsNav>
+        </UserSettingsContainer>
     )
 }
 

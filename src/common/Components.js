@@ -1,6 +1,7 @@
 import AppPicture from "common/component/AppPicture"
 import CustomToggle from "common/component/CustomToggle"
 import FocusContainer from "common/component/FocusContainer"
+import NewPfpButton from "common/component/NewPfpButton"
 import NotifsPage from "common/component/NotifsPage"
 import PageNav from "common/component/PageNav"
 import ProfilePicture from "common/component/ProfilePicture"
@@ -12,6 +13,7 @@ export {
     AppPicture,
     CustomToggle,
     FocusContainer,
+    NewPfpButton,
     NotifsPage,
     PageNav,
     ProfilePicture,

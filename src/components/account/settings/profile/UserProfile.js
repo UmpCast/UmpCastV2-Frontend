@@ -6,14 +6,11 @@ import * as Yup from "yup"
 import useUser, { useApi } from "common/hooks"
 
 import { formatPhone } from "common/Input"
-import { ProfilePicture } from "common/components"
 import { myUrl, config } from "common/Api"
 
-import darkBaseball from "assets/dark_baseball.png"
-
-import UserSettingsNav from "../UserSettingsNav"
+import UserSettingsContainer from "../SettingsContainer"
 import ProfileForm from "./ProfileForm"
-import NewPfpButton from "./NewPfpButton"
+import UpdatePfp from "./UpdatePfp"
 
 import { Row, Col } from "react-bootstrap"
 
@@ -24,7 +21,6 @@ export default function UserProfile() {
 
     const { user, token } = User
     const pk = user.pk
-    const src = user.profile_picture
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
 
@@ -73,7 +69,7 @@ export default function UserProfile() {
     }
 
     return (
-        <UserSettingsNav active="profile">
+        <UserSettingsContainer active="profile">
             <h3><strong>User Profile</strong></h3>
             <hr className="my-3" />
             <Row>
@@ -93,26 +89,12 @@ export default function UserProfile() {
                     </Row>
                 </Col>
                 <Col lg="4">
-                    <Row className="mr-0">
-                        <Col className="d-inline-flex">
-                            <h5 className="mb-3 mr-auto">
-                                <strong>Profile Picture</strong>
-                            </h5>
-                            <NewPfpButton
-                                handleSubmit={handlePfpSubmit} />
-                        </Col>
-                    </Row>
-                    <Row className="mr-0">
-                        <Col>
-                            <ProfilePicture
-                                className="img-thumbnail rounded-circle"
-                                src={src}
-                                alt={darkBaseball} />
-                        </Col>
-                    </Row>
+                    <UpdatePfp
+                        src={user.profile_picture}
+                        handlePfpSubmit={handlePfpSubmit}/>
                 </Col>
             </Row>
-        </UserSettingsNav>
+        </UserSettingsContainer>
     )
 }
 

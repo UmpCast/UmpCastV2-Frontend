@@ -1,19 +1,21 @@
 import React from 'react'
 
-import Loader, { SettingsHeader, SettingsNav } from "common/components"
+import Loader, { SettingsHeader, SettingsNav, ProfilePicture } from "common/components"
 import LeagueContainer from "components/league/LeagueContainer"
 
 import { Row, Col, Nav } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import darkMeteor from "assets/dark_meteor.png"
 
 export default function SettingsContainer({ league, active, children }) {
+
+    const { league_picture } = league
 
     const subjects = [
         "profile",
         "umpires",
         "divisions",
-        "payouts",
-        "billing"
+        // TODO "payouts",
+        // TODO "billing"
     ]
 
     return (
@@ -25,11 +27,12 @@ export default function SettingsContainer({ league, active, children }) {
                             variant="pills"
                             className="flex-column ump-settings-nav">
                             <SettingsHeader
-                                icon={
-                                    <FontAwesomeIcon
-                                        className="text-white fa-lg"
-                                        icon={['fas', 'meteor']}
-                                    />
+                                profilePicture={
+                                    <ProfilePicture
+                                        src={league_picture}
+                                        alt={darkMeteor}
+                                        size={25}
+                                        className="rounded mr-2 my-auto" />
                                 }
                                 title="Palo Alto Little League"
                                 footer="League Settings"

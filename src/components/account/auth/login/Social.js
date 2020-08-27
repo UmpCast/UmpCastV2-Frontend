@@ -8,8 +8,8 @@ import { OauthConvertToken } from "common/Api"
 import { Row, Col, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const client_id = process.env.REACT_APP_CLIENT_ID
-const client_secret = process.env.REACT_APP_CLIENT_SECRET
+const google_id = process.env.REACT_APP_GOOGLE_ID
+const facebook_id = process.env.REACT_APP_FACEBOOK_ID
 
 export default function Social(props) {
 
@@ -38,7 +38,7 @@ export default function Social(props) {
                 <SocialButton
                     className="btn-block rounded p-2 border-0"
                     provider="google"
-                    appId="465788009761-4vmel0as85nisk2aqe138cbes2e7r0ra"
+                    appId={google_id}
                     onLoginSuccess={handleSocialLogin}
                     color="#D95140">
                     <FontAwesomeIcon
@@ -51,7 +51,7 @@ export default function Social(props) {
                 <SocialButton
                     className="btn-block rounded p-2 border-0"
                     provider="facebook"
-                    appId="263365151623275"
+                    appId={facebook_id}
                     onLoginSuccess={handleSocialLogin}
                     color="#4867AD">
                     <FontAwesomeIcon

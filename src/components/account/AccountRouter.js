@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Route, Switch } from "react-router-dom"
 
 import AuthRoute from "common/auth/AuthRoute"
@@ -15,16 +14,16 @@ export default function accountRouter() {
     return (
         <Switch>
             <AuthRoute
-                path="/login"
-                is="public"
-                not="authenticated"
-                component={Login} />
-
-            <AuthRoute
                 path="/register/configure"
                 is="authenticated"
                 not="configured"
                 component={Configure} />
+
+            <AuthRoute
+                path="/login"
+                is="public"
+                not="authenticated"
+                component={Login} />
 
             <AuthRoute
                 path="/register"
@@ -33,8 +32,8 @@ export default function accountRouter() {
                 component={Register} />
 
             <Route
-                path="/settings" 
-                component = {SettingsRouter} />
+                path="/settings"
+                component={SettingsRouter} />
 
             <AuthRoute
                 path="/"
