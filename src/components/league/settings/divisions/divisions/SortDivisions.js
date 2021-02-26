@@ -12,10 +12,12 @@ export default function Divisions({ useLeague }) {
     const [league, setLeague] = useLeague
     const { divisions } = league
 
-    const Api = useApi(reorderDivision)
+    const Api = useApi(requests)
 
     const onDragEnd = result => {
         const { destination, source } = result
+
+        if (!destination || !source) return
 
         const start = source.index
         const end = destination.index
@@ -38,8 +40,7 @@ export default function Divisions({ useLeague }) {
                 {provided => (
                     <Col
                         ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        xs={6}>
+                        {...provided.droppableProps}>
                         <ListDivisions league={league} />
                         {provided.placeholder}
                     </Col>
@@ -59,12 +60,14 @@ const ListDivisions = ({ league }) => (
     )
 )
 
-const reorderDivision = (division_pk, end) => [
-    `api/divisions/${division_pk}/move/`,
-    {
-        data: {
-            order: end
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    reorderDivision: (division_pk, end) => [
+        `api/divisions/${division_pk}/move/`,
+        {
+            data: {
+                order: end
+            }
+        },
+        "PATCH"
+    ]
+}

@@ -13,7 +13,7 @@ export default function RegisterDetails(props) {
 
     const { migrated } = props
 
-    const Api = useApi(register, fetchToken)
+    const Api = useApi(requests)
     const tokenLogin = useTokenLogin()
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
@@ -144,17 +144,18 @@ const handlePhone = values => {
     return new_values
 }
 
-const register = (values) => [
-    "api/users/",
-    {
-        data: values
-    },
-    "POST"
-]
-
-export const fetchToken = ({ email, password }) => [
-    "api/auth/token/",
-    { data: OauthUserValidate(email, password) },
-    "POST"
-]
+const requests = {
+    register: (values) => [
+        "api/users/",
+        {
+            data: values
+        },
+        "POST"
+    ],
+    fetchToken: ({ email, password }) => [
+        "api/auth/token/",
+        { data: OauthUserValidate(email, password) },
+        "POST"
+    ]
+}
 

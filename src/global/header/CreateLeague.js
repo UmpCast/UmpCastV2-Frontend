@@ -2,8 +2,8 @@ import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
-import { useApi } from "common/hooks"
-import { TitleInput } from "common/Forms"
+import useUser, { useApi } from "common/hooks"
+import { TitleInput } from "common/forms"
 
 import { Modal } from "react-bootstrap"
 
@@ -11,8 +11,10 @@ export default function CreateLeague(props) {
 
     const { useShow, useUls } = props
 
-    const Api = useApi(createLeague)
+    const [User, setUser] = useUser(true)
+    const Api = useApi(requests)
 
+    const {user} = User
     const [show, setShow] = useShow
     const [uls, setUls] = useUls
 
@@ -21,6 +23,13 @@ export default function CreateLeague(props) {
             Api.createLeague(values)
         ).then(res => {
             setUls(uls.concat({ league: res.data }))
+            setUser({
+                ...User,
+                user: {
+                    ...user,
+                    accepted_leagues: user.accepted_leagues.concat(res.data)
+                }
+            })
             setShow(false)
         })
             .catch(err => {
@@ -63,10 +72,12 @@ const validationSchema =
             .required("Required")
     })
 
-const createLeague = (values) => [
-    "api/leagues/",
-    {
-        data: values
-    },
-    "POST"
-]
+const requests = {
+    createLeague: (values) => [
+        "api/leagues/",
+        {
+            data: values
+        },
+        "POST"
+    ]
+}

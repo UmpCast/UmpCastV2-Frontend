@@ -7,7 +7,7 @@ import { useApi } from "common/hooks"
 
 import Loader from "common/components"
 
-import { SubmitButtons } from "common/Forms"
+import { SubmitButtons } from "common/forms"
 import { TextInput } from "common/Input"
 
 import { Row, Col, Card } from "react-bootstrap"
@@ -16,7 +16,7 @@ export default function NewMessage({ useShow, useReset }) {
 
     const { pk } = useParams()
 
-    const Api = useApi(createNotif)
+    const Api = useApi(requests)
 
     const [show, setShow] = useShow
     const [, setReset] = useReset
@@ -41,6 +41,7 @@ export default function NewMessage({ useShow, useReset }) {
                 <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
+                    validationSchema={validationSchema}
                     validateOnChange={false}
                     validateOnBlur={false}>
                     {formik => (
@@ -54,8 +55,7 @@ export default function NewMessage({ useShow, useReset }) {
                                         <TextInput
                                             name="subject"
                                             placeholder="Subject"
-                                            className="rounded"
-                                        />
+                                            className="rounded"/>
                                     </Col>
                                 </Row>
                                 <TextInput
@@ -84,14 +84,26 @@ const initialValues = {
     message: ""
 }
 
-const createNotif = (league_pk, values) => [
-    "api/league-notifications/",
-    {
-        data: {
-            league: league_pk,
-            ...values
-        }
-    },
-    "POST"
-]
+const validationSchema =
+    Yup.object({
+        subject: Yup.string()
+            .max(64, "Too Long!"),
+        message: Yup.string()
+            .max(1024, "Too Long!")
+            .required('Required!'),
+    })
+
+
+const requests = {
+    createNotif: (league_pk, values) => [
+        "api/league-notifications/",
+        {
+            data: {
+                league: league_pk,
+                ...values
+            }
+        },
+        "POST"
+    ]
+}
 

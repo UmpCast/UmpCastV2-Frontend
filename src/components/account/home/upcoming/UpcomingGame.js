@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom"
 import dayjs from "dayjs"
 
+import { ToolTip } from "common/components"
 import useUser from "common/hooks"
 
-import { ListGroup, Badge, OverlayTrigger, Tooltip } from "react-bootstrap"
+import { ListGroup, Badge } from "react-bootstrap"
 
 const UpcomingGame = ({ game, league }) => {
 
@@ -78,7 +79,7 @@ const extractUserInfo = (user_pk, game, league) => {
     }
 }
 
-const StatusBadge = ({order}) => {
+const StatusBadge = ({ order }) => {
     const [title, variant, tip] = (
         order === 0 ?
             ["CASTED", "success", "Be on time!"]
@@ -86,13 +87,11 @@ const StatusBadge = ({order}) => {
     )
 
     return (
-        <OverlayTrigger
-            placement="bottom"
-            overlay={<Tooltip>{tip}</Tooltip>}>
+        <ToolTip tip={tip}>
             <Badge variant={variant} className="mt-auto">
                 {title}
             </Badge>
-        </OverlayTrigger>
+        </ToolTip>
     )
 }
 

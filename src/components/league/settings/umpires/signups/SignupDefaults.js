@@ -9,7 +9,7 @@ import { Row, Col, Button } from "react-bootstrap"
 
 export default function SignupDefaults(props) {
 
-    const Api = useApi(updateLeague)
+    const Api = useApi(requests)
 
     const { league } = props
 
@@ -69,14 +69,16 @@ const initialValues = ({ adv_scheduling_limit, cancellation_period }) => (
     }
 )
 
-const updateLeague = (league_pk, values) => [
-    "api/leagues/",
-    {
-        pk: league_pk,
-        data: {
-            adv_scheduling_limit: values.scheduling,
-            cancellation_period: values.cancellation
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    updateLeague: (league_pk, values) => [
+        "api/leagues/",
+        {
+            pk: league_pk,
+            data: {
+                adv_scheduling_limit: values.scheduling,
+                cancellation_period: values.cancellation
+            }
+        },
+        "PATCH"
+    ]
+}

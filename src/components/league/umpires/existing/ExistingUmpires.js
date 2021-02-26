@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
 import { useApi, useMountEffect } from "common/hooks"
-
 import Loader, { PageNav } from "common/components"
 
 import UmpiresContainer from "components/league/umpires/UmpiresContainer"
@@ -17,7 +16,7 @@ export default function ManageUmpires() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague, fetchUls)
+    const Api = useApi(requests)
 
     const useUls = useState()
     const useLeague = useState()
@@ -43,8 +42,8 @@ export default function ManageUmpires() {
             <Loader dep={[uls, league]}>
                 <Row className="mb-3">
                     <Col>
-                        <Card>
-                            <Table className="mb-0 table-borderless">
+                        <Card className="border">
+                            <Table className="mb-0 border-0">
                                 <TableHead />
                                 <ListExisting
                                     {...{ uls, league }} />
@@ -65,7 +64,7 @@ export default function ManageUmpires() {
 
 const TableHead = () => (
     <thead>
-        <tr className="bg-light border-bottom text-muted">
+        <tr className="bg-light text-muted border-0">
             <th className="text-center">
                 Umpires
             </th>
@@ -91,22 +90,23 @@ const ListExisting = ({ uls, league }) => {
     return <tbody>{existing}</tbody>
 }
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
-
-const fetchUls = (league_pk, page) => [
-    "api/user-league-status/",
-    {
-        params: {
-            league: league_pk,
-            account_type: "umpire",
-            request_status: "accepted",
-            page_size: page_size,
-            page: page
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
         }
-    }
-]
+    ],
+    fetchUls: (league_pk, page) => [
+        "api/user-league-status/",
+        {
+            params: {
+                league: league_pk,
+                account_type: "umpire",
+                request_status: "accepted",
+                page_size: page_size,
+                page: page
+            }
+        }
+    ]
+}

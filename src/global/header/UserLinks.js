@@ -9,7 +9,7 @@ import PrimaryBaseball from "assets/primary_baseball.png"
 import { Nav, Dropdown } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function UserLinks() {
+export default function UserLinks({ setExpanded }) {
 
     const [User, setUser] = useUser(true)
 
@@ -33,9 +33,9 @@ export default function UserLinks() {
                     alignRight
                     id="collasible-nav-dropdown"
                     className="mb-0 pb-0">
-                    <div 
-                        className="d-inline-flex"
-                        style={{cursor: "pointer"}}>
+                    <div
+                        className="d-inline-flex mt-2 mt-sm-0"
+                        style={{ cursor: "pointer" }}>
                         <ProfilePicture
                             src={user.profile_picture}
                             alt={PrimaryBaseball}
@@ -50,13 +50,15 @@ export default function UserLinks() {
                 <Dropdown.Menu alignRight>
                     <Dropdown.Item
                         as={Link}
-                        to="/settings/leagues">
+                        to="/settings/leagues"
+                        onClick={() => setExpanded(false)}>
                         Leagues
                     </Dropdown.Item>
 
                     <Dropdown.Item
                         as={Link}
-                        to="/settings">
+                        to="/settings"
+                        onClick={() => setExpanded(false)}>
                         Settings
                     </Dropdown.Item>
 
@@ -65,7 +67,7 @@ export default function UserLinks() {
                     <Dropdown.Item
                         as={Link}
                         to="/login"
-                        onClick={logout}>
+                        onClick={() => { setExpanded(false); logout(); }}>
                         Logout
                     </Dropdown.Item>
                 </Dropdown.Menu>

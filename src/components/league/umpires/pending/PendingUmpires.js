@@ -16,7 +16,7 @@ export default function PendingUmpires() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchLeague, fetchPending)
+    const Api = useApi(requests)
 
     const useLeague = useState()
     const usePending = useState()
@@ -75,20 +75,21 @@ const ListPending = ({ usePending }) => (
     )
 )
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
-
-const fetchPending = (league_pk) => [
-    "api/user-league-status/",
-    {
-        params: {
-            league: league_pk,
-            request_status: "pending"
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
         }
-    },
-    "GET"
-]
+    ],
+    fetchPending: (league_pk) => [
+        "api/user-league-status/",
+        {
+            params: {
+                league: league_pk,
+                request_status: "pending"
+            }
+        },
+        "GET"
+    ]
+}

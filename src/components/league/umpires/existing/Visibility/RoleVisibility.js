@@ -12,7 +12,7 @@ export default function RoleVisibility(props) {
     const vis = status.visibilities
     const { pk } = status
 
-    const Api = useApi(updateVis)
+    const Api = useApi(requests)
 
     const checked = vis.includes(role.pk)
 
@@ -46,14 +46,16 @@ export default function RoleVisibility(props) {
     )
 }
 
-const updateVis = (endpoint, status_pk, new_vis) => [
-    `api/${endpoint}/`,
-    {
-        pk: status_pk,
-        data: {
-            visibilities: new_vis
-        }
-    },
-    "PATCH",
-    false
-]
+const requests = {
+    updateVis: (endpoint, status_pk, new_vis) => [
+        `api/${endpoint}/`,
+        {
+            pk: status_pk,
+            data: {
+                visibilities: new_vis
+            }
+        },
+        "PATCH",
+        false
+    ]
+}

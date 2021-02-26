@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
 import { useApi } from "common/hooks"
+import { RenameListItem } from "common/forms"
 
-import { InputConfirm } from "common/Forms"
+import { InputConfirm } from "common/forms"
 
 import { ListGroup, Badge, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,10 +16,11 @@ export default function RoleRow(props) {
     const { pk, title } = role
     const [roles, setRoles] = useRoles
 
-    const Api = useApi(deleteRole)
+    const Api = useApi(requests)
     const useShow = useState(false)
+    const useShowRename = useState(false)
 
-    const [,setShow] = useShow
+    const [, setShow] = useShow
 
     const onConfirm = () => {
         Api.Submit(() =>
@@ -33,8 +35,16 @@ export default function RoleRow(props) {
 
     return (
         <ListGroup.Item className="d-inline-flex w-100 justify-content-between border-0">
-            <RoleProfile
-                role={role} />
+
+            <div className="d-inline-flex">
+                <RoleProfile
+                    role={role} />
+
+                <RoleRename
+                    role={role}
+                    useRoles={useRoles}
+                    useShow={useShowRename} />
+            </div>
 
             <DeleteRoleButton
                 setShow={setShow} />
@@ -68,6 +78,24 @@ const RoleProfile = ({ role }) => (
     </div>
 )
 
+export const RoleRename = ({ role, useRoles, useShow }) => (
+    <Fragment>
+        <Button
+            className="bg-white border-0 my-auto ml-2 p-0"
+            onClick={() => useShow[1](true)}>
+            <FontAwesomeIcon
+                icon="pen"
+                className="text-muted fa-sm" />
+        </Button>
+        <RenameListItem
+            action="Rename Role"
+            useShow={useShow}
+            useList={useRoles}
+            item={role}
+            endpoint="api/roles/" />
+    </Fragment>
+)
+
 const DeleteRoleButton = ({ setShow }) => (
     <Button
         variant="bg-none border-0 my-auto p-0"
@@ -78,10 +106,22 @@ const DeleteRoleButton = ({ setShow }) => (
     </Button>
 )
 
-const deleteRole = (role_pk) => [
-    "api/roles/",
-    {
-        pk: role_pk
-    },
-    "DELETE"
-]
+const requests = {
+    deleteRole: (role_pk) => [
+        "api/roles/",
+        {
+            pk: role_pk
+        },
+        "DELETE"
+    ]
+}
+
+const renameRequest = {
+    rename: (role_pk, data) => [
+        "api/roles/",
+        {
+            pk: role_pk
+        },
+
+    ]
+}

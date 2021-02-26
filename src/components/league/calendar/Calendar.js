@@ -21,7 +21,7 @@ export default function Calendar() {
 
     const week_start = getWeekStart(date)
 
-    const Api = useApi(fetchLeague, fetchUls, fetchGames)
+    const Api = useApi(requests)
     const User = useUser()
 
     const { user } = User
@@ -67,10 +67,12 @@ export default function Calendar() {
                     league={league} />
             </Loader>
             <Loader dep={[league, games]}>
-                <Week
-                    start={week_start}
-                    games={games}
-                    league={league} />
+                <div className="px-5 mt-3">
+                    <Week
+                        start={week_start}
+                        games={games}
+                        league={league} />
+                </div>
             </Loader >
         </Fragment>
     )
@@ -78,7 +80,7 @@ export default function Calendar() {
 
 const getWeekStart = date => {
     let day = dayjs(date, "M-D-YYYY")
-    
+
     if (!day.isValid()) {
         day = dayjs()
     }
@@ -87,41 +89,40 @@ const getWeekStart = date => {
 
 const basicHandleGames = (Api, setGames) => vis => week_start => {
     if (vis.length > 0) {
-        Api.fetchGames(
-            week_start, week_start.endOf("week"), vis)
+        return Api.fetchGames(week_start, week_start.endOf("week"), vis)
             .then(res => setGames(res.data.results))
     } else {
-        setGames([])
+        return setGames([])
     }
 }
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
-
-const fetchUls = (user_pk, league_pk) => [
-    "api/user-league-status/",
-    {
-        params: {
-            user: user_pk,
-            league: league_pk,
-            request_status: "accepted",
-            page_size: 1
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
         }
-    }
-]
-
-const fetchGames = (start, end, div_vis) => [
-    "api/games/",
-    {
-        params: {
-            division__in: div_vis.toString(),
-            date_time_after: start.toISOString(),
-            date_time_before: end.toISOString(),
-            page_size: 100
+    ],
+    fetchUls: (user_pk, league_pk) => [
+        "api/user-league-status/",
+        {
+            params: {
+                user: user_pk,
+                league: league_pk,
+                request_status: "accepted",
+                page_size: 1
+            }
         }
-    }
-]
+    ],
+    fetchGames: (start, end, div_vis) => [
+        "api/games/",
+        {
+            params: {
+                division__in: div_vis.toString(),
+                date_time_after: start.toISOString(),
+                date_time_before: end.toISOString(),
+                page_size: 100
+            }
+        }
+    ]
+}

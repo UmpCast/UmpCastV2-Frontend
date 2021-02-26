@@ -20,7 +20,8 @@ export default function SearchListings() {
     const [history, setHistory] = useHistory
     const myGames = useGames(useFilters[0], setHistory)
 
-    const [games] = myGames 
+    const [games] = myGames
+    const [league] = myLeague
 
     return (
         <Loader dep={games}>
@@ -31,7 +32,10 @@ export default function SearchListings() {
 
                 <ListGroup>
                     <GamesFound games={games} />
-                    <ListGames games={games} history={history} />
+                    <ListGames
+                        games={games}
+                        history={history}
+                        league={league} />
                 </ListGroup>
                 <Row className="mt-3">
                     <NextPageLink
@@ -51,12 +55,16 @@ const GamesFound = ({ games }) => (
     </ListGroup.Item>
 )
 
-const ListGames = ({ history, games }) => {
+const ListGames = ({ history, games, league }) => {
+
     const all_games = history.concat(games.results)
+    const { divisions } = league
 
     return (
         all_games.map(game =>
-            <GameListing game={game} />
+            <GameListing
+                game={game}
+                key={game.pk} />
         )
     )
 }
@@ -73,8 +81,8 @@ const NextPageLink = ({ useGames, useFilters, useHistory }) => {
             ...filters,
             page: page_number + 1
         })
-        
-        setGames({count, results: []})
+
+        setGames({ count, results: [] })
         setHistory(history.concat(results))
     }
 

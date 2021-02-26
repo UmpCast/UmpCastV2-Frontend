@@ -3,16 +3,13 @@ import { Link } from "react-router-dom"
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 
-import useUser from "common/hooks"
-import { AppPicture } from "common/components"
+import { AppPicture, ToolTip } from "common/components"
 
 import { Card } from "react-bootstrap"
 
 dayjs.extend(localizedFormat)
 
-export default function CalendarGame(props) {
-
-    const { game } = props
+export default function CalendarGame({ game }) {
 
     const { date_time } = game
     const game_over = dayjs(date_time) < dayjs()
@@ -20,7 +17,7 @@ export default function CalendarGame(props) {
     const style = { opacity: game_over ? .8 : 1 }
 
     return (
-        <Card className="mb-2 mx-0 w-100" style={style}>
+        <Card className="mb-2 mx-0 w-100" style={style} >
             <GameHeader
                 {...{ game }} />
 
@@ -101,7 +98,7 @@ const TitleLink = ({ game }) => (
 
 const GameDetails = ({ game }) => (
     <p className="text-muted small my-1" style={{ lineHeight: 1.2 }} >
-        {game.location} · {game.division}
+        {game.location} · {game.division.title}
     </p>
 )
 
@@ -109,17 +106,19 @@ const CastGallery = ({ game }) => {
     const { posts } = game
 
     const gallery = game.posts.map((post, index) => {
-        const { pk, applications } = post
+        const { pk, applications, role } = post
 
         const casted = applications[0]
         const className = (index + 1 === posts.length) ? "" : "mr-2"
 
         return (
             <AppPicture
-                casted={casted}
                 className={className}
+                casted={casted}
+                role={role}
                 size={25}
-                key={pk} />
+                key={pk}
+            />
         )
     })
 

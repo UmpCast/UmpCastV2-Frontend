@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 
-import { useApi, useDisplay, useMountEffect } from "common/hooks"
+import { useApi, useMountEffect } from "common/hooks"
 import { TsRedirect } from "common/Api"
 
 import Loader, { TimerAlert } from "common/components"
@@ -16,54 +16,28 @@ import { LeagueSyncFeatures } from 'components/league/settings/Text'
 export default function DivisionsSettings() {
 
     const { pk } = useParams()
-
-    const Api = useApi(fetchLeague, buildDivisions)
-    const [display, setDisplay] = useDisplay()
+    const Api = useApi(requests)
 
     const useLeague = useState()
-    const [tsDivs, setTsDivs] = useState()
 
     const [league, setLeague] = useLeague
 
     useMountEffect(() => {
         Api.fetchLeague(pk)
-            .then(res => {
-                const league = res.data
-                setLeague(league)
-
-                const { api_key } = league
-
-                if (!api_key) return Promise.reject()
-
-                return Api.buildDivisions(pk, api_key)
-            }).then(res => {
-                const divs = res.data
-                const { error } = divs
-
-                if (error) {
-                    setDisplay({
-                        ...display,
-                        alert: (
-                            <TimerAlert
-                                variant="danger"
-                                className="mb-0">
-                                {error}
-                            </TimerAlert>
-                        )
-                    })
-                } else {
-                    setTsDivs(res.data)
-                }
-            })
+            .then(res =>
+                setLeague(res.data)
+            )
     })
 
     return (
-        <Loader dep={[league]}>
+        <Loader dep={league}>
             <SettingsContainer league={league} active="divisions">
-                <h3><strong>League Divisions</strong></h3>
+                <h3>
+                    <strong>League Divisions</strong>
+                </h3>
                 <hr className="my-3" />
                 <Row>
-                    <Col xs={6}>
+                    <Col lg={6} className="mb-4">
                         <h5 className="font-weight-bold">
                             Sync Divisions & Games
                         </h5>
@@ -72,34 +46,25 @@ export default function DivisionsSettings() {
                             href={TsRedirect(pk)}>
                             Sync
                         </Button>
-                        <small className="form-text text-muted">
+                        <small className="form-text text-muted mb-3 mb-md-4">
                             <LeagueSyncFeatures />
                         </small>
-                        <Loader dep={tsDivs}>
-                            <TsDivisions
-                                tsDivs={tsDivs}
-                                useLeague={useLeague} />
-                        </Loader>
+                        <TsDivisions
+                            useLeague={useLeague} />
                     </Col>
-                    <DivisionsCol useLeague={useLeague} />
+                    <DivisionsCol
+                        useLeague={useLeague} />
                 </Row>
             </SettingsContainer>
         </Loader>
     )
 }
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
-
-const buildDivisions = (league_pk, key) => [
-    `api/teamsnap/${league_pk}/build/`,
-    {
-        params: {
-            api_key: key
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
         }
-    }
-]
+    ]
+}

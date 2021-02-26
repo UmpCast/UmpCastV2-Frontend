@@ -15,15 +15,16 @@ import { Card } from "react-bootstrap"
 
 export default function Login() {
 
-    const Api = useApi(fetchToken)
+    const Api = useApi(requests)
     const tokenLogin = useTokenLogin()
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
-        Api.fetchToken(values)
-            .then(res =>
-                tokenLogin(res.data.access_token)
-            )
-            .catch(err => {
+        Api.Submit(() =>
+            Api.fetchToken(values)
+        ).then(res =>
+            tokenLogin(res.data.access_token)
+        ).catch(err => {
+            if (err.response) {
                 let errors = err.response.data
                 // TEMP FIX
                 const description = errors["error_description"]
@@ -35,19 +36,21 @@ export default function Login() {
                 }
 
                 setErrors(errors)
-                setSubmitting(false)
-            })
+            }
+        }).finally( () =>
+            setSubmitting(false)
+        )
     }
 
     return (
-        <FocusContainer>
-            <Card style={{ width: "500px" }}>
+        <FocusContainer wrap={true}>
+            <Card>
                 <Card.Body>
                     <h2 className="text-center">
                         Login
-                    </h2>
+                        </h2>
 
-                    <Social />
+                    {/* <Social /> */}
 
                     <HorizontalOr />
 
@@ -98,10 +101,12 @@ const validationSchema =
             .required('Required'),
     })
 
-export const fetchToken = ({ username, password }) => {
-    return [
-        "api/auth/token/",
-        { data: OauthUserValidate(username, password) },
-        "POST"
-    ]
+export const requests = {
+    fetchToken: ({ username, password }) => {
+        return [
+            "api/auth/token/",
+            { data: OauthUserValidate(username, password) },
+            "POST"
+        ]
+    }
 }

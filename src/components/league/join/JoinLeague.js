@@ -16,7 +16,7 @@ export default function UmpireJoin() {
 
     const league_pk = params.pk
 
-    const Api = useApi(fetchUls, fetchLeaguePublic)
+    const Api = useApi(requests)
     const { user } = useUser()
 
     const useUls = useState()
@@ -58,18 +58,19 @@ const UlsCard = ({ useUls, league }) => {
     }
 }
 
-const fetchUls = (user_pk, league_pk) => [
-    "api/user-league-status/",
-    {
-        params: {
-            user: user_pk,
-            league: league_pk,
-            page_size: 1
+const requests = {
+    fetchUls: (user_pk, league_pk) => [
+        "api/user-league-status/",
+        {
+            params: {
+                user: user_pk,
+                league: league_pk,
+                page_size: 1
+            }
         }
-    }
-]
-
-const fetchLeaguePublic = (league_pk) => [
-    `api/leagues/${league_pk}/public/`,
-    {}
-]
+    ],
+    fetchLeaguePublic: (league_pk) => [
+        `api/leagues/${league_pk}/public/`,
+        {}
+    ]
+}

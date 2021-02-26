@@ -9,10 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Configure = () => {
 
-    const Api = useApi(configureUser)
+    const Api = useApi(requests)
     const [User, setUser] = useUser(true)
 
-    const {user} = User
+    const { user } = User
 
     const onClick = (config) => {
         Api.configureUser(user.pk, config)
@@ -42,7 +42,7 @@ const Configure = () => {
                                 icon={
                                     <FontAwesomeIcon
                                         icon="baseball-ball"
-                                        className="mr-3"/>
+                                        className="mr-3" />
                                 }
                                 onClick={() => onClick("umpire")}
                             />
@@ -54,7 +54,7 @@ const Configure = () => {
                                 icon={
                                     <FontAwesomeIcon
                                         icon="user"
-                                        className="mr-3"/>
+                                        className="mr-3" />
                                 }
                                 onClick={() => onClick("manager")}
                             />
@@ -93,15 +93,17 @@ const styles = {
     }
 }
 
-const configureUser = (user_pk, config) => [
-    "api/users/",
-    {
-        pk: user_pk,
-        data: {
-            account_type: config
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    configureUser: (user_pk, config) => [
+        "api/users/",
+        {
+            pk: user_pk,
+            data: {
+                account_type: config
+            }
+        },
+        "PATCH"
+    ]
+}
 
 export default Configure

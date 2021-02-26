@@ -4,13 +4,13 @@ import * as Yup from "yup"
 
 import { useApi } from "common/hooks"
 
-import { TitleInput } from "common/Forms"
+import { TitleInput } from "common/forms"
 
 import { Modal } from "react-bootstrap"
 
 export default function CreateLevel(props) {
 
-    const Api = useApi(createLevel)
+    const Api = useApi(requests)
 
     const { useShow, useLevels, league_pk } = props
 
@@ -64,18 +64,20 @@ const initialValues = levels => (
 const validationSchema =
     Yup.object({
         title: Yup.string()
-            .max(20, "maximum of 20 characters")
-            .required('Required')
+            .max(32, "Too Long!")
+            .required('Required!')
     })
 
-const createLevel = (league_pk, values) => [
-    "api/levels/",
-    {
-        data: {
-            league: league_pk,
-            ...values
-        }
-    },
-    "POST"
-]
+const requests = {
+    createLevel: (league_pk, values) => [
+        "api/levels/",
+        {
+            data: {
+                league: league_pk,
+                ...values
+            }
+        },
+        "POST"
+    ]
+}
 

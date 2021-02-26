@@ -1,33 +1,62 @@
-import React from "react";
+import React, { Fragment, createElement } from "react";
 import dayjs from "dayjs"
 import localizedFormat from "dayjs/plugin/localizedFormat"
 
-import CalendarDay from "./Day"
+import Loader from "common/components"
+
+import { expandGames } from "common/Utils"
+
+import ListDay from "./ListDay"
+import ColumnDay from "./ColumnDay"
+import NoGame from "./NoGame"
+
+import {Row, Col} from "react-bootstrap"
 
 dayjs.extend(localizedFormat)
 
 export default function Week(props) {
 
-    const { league, start } = props
+    const { league, start, games } = props
 
-    const divisions = divsByPk(league.divisions)
+    const { divisions } = league
 
-    const games = props.games.map(game => ({
-        ...game,
-        division: divisions[game.division].title
-    }))
+    const weekGames = binByDay(expandGames(games, divisions))
 
-    const formatted_week = binByDay(games).map((day_games, index) =>
-        <CalendarDay
-            games={day_games}
-            date={start.add(index, "day")}
-            key={index} />
+    const weekViews = [ColumnDay, ListDay].map(
+        component => weekGames.map(
+            (day_games, index) => createElement(
+                component,
+                {
+                    games: day_games,
+                    date: start.add(index, "day"),
+                    key: index
+                }
+            )
+        )
     )
 
+    const now = dayjs()
+    const end = start.add(7, "days")
+    const thisWeek = start <= now && now < end
+
     return (
-        <div className="row mt-4 mx-3">
-            {formatted_week}
-        </div>
+        <Fragment>
+            <div className="d-none d-lg-block">
+                <Row>
+                    {weekViews[0]}
+                </Row>
+            </div>
+            <div className="d-lg-none">
+                <Col>
+                    {weekViews[1]}
+                </Col>
+                <Loader dep={!thisWeek && games.length === 0}>
+                    <NoGame>
+                        No Games This Week
+                    </NoGame>
+                </Loader>
+            </div>
+        </Fragment>
     )
 }
 
@@ -43,14 +72,4 @@ const binByDay = (games) => {
     }
 
     return days
-}
-
-const divsByPk = (divisions) => {
-    const ret = {}
-
-    for (const div of divisions) {
-        ret[div.pk] = div
-    }
-
-    return ret
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faBan, faCheckCircle, faSortDown} from "@fortawesome/free-solid-svg-icons";
 import {Dropdown} from "react-bootstrap";
 

@@ -34,21 +34,22 @@ export default function UpdatePfp({ useLeague }) {
 
     return (
         <Fragment>
-            <Row className="mx-0 mt-5 mt-lg-0" style={{ width: 210 }}>
-                <h5 className="mb-3 mr-auto">
-                    <strong>League Logo</strong>
-                </h5>
-                <NewPfpButton
-                    handleSubmit={handlePfpSubmit} />
+            <Row>
+                <Col className="d-inline-flex">
+                    <h5 className="mb-3 mr-auto">
+                        <strong>League Logo</strong>
+                    </h5>
+                    <NewPfpButton
+                        handleSubmit={handlePfpSubmit} />
+                </Col>
             </Row>
-            <Row className="mr-0">
-                <Col>
+            <Row>
+                <Col className="text-center">
                     <div className="d-inline-flex flex-wrap border border-muted rounded p-1">
                         <ProfilePicture
-                            className="rounded"
+                            className="img-fluid rounded"
                             src={league.league_picture}
-                            alt={darkMeteor}
-                            size={200} />
+                            alt={darkMeteor} />
                     </div>
                 </Col>
             </Row>

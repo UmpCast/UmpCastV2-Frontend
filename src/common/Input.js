@@ -60,25 +60,24 @@ export const RangeInput = (props) => {
     )
 }
 
-export const CheckboxInput = ({ label, groupClass, noError, ...props }) => {
-    const [field, meta] = useField({ ...props, type: 'checkbox' })
-
+export const ToggleInput = (props) => {
+    const [field] = useField(props)
     return (
-        <Form.Group className={groupClass}>
-            <Form.Check {...field} {...props} type="checkbox" label={label}
-                isInvalid={noError ? false : meta.error} />
-            {noError ? null : <Form.Control.Feedback type="invalid">{meta.error}</Form.Control.Feedback>}
-        </Form.Group>
+        <Form.Check
+            {...field}
+            {...props}
+            checked={field.value}
+            id={props.name}
+        />
     )
 }
-
-export const FileInputHidden = ({setRef, ...props}) => {
+export const FileInputHidden = ({ setRef, ...props }) => {
     const [field] = useField(props)
     return (
         <Form.File
             {...field}
             {...props}
-            ref = {setRef}
+            ref={setRef}
         />
     )
 }

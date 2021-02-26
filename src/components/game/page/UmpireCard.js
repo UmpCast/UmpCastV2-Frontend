@@ -48,7 +48,7 @@ const UmpireCard = (props) => {
                     <ProfilePicture
                         src={umpire.profile_picture}
                         alt={isMe ? PrimaryBaseball : DarkBaseball}
-                        className="rounded-circle img-thumbnail mt-2 mb-3" />
+                        className="rounded-circle img-thumbnail border-0 mt-2 mb-3 p-4" />
 
                     <Card.Text>
                         {styles.umpire_name}

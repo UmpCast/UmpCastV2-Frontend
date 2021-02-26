@@ -8,6 +8,7 @@ import umpcastLogo from "assets/umpcast.png"
 
 import { Row, Col, Card } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import darkMeteor from "assets/dark_meteor.png"
 
 dayjs.extend(relativeTime)
 
@@ -61,6 +62,7 @@ const MessageIcon = ({ msg }) => {
             return (
                 <ProfilePicture
                     src={related_object.league_picture}
+                    alt={darkMeteor}
                     size={30}
                     className="rounded border border-muted mx-auto" />
             )
@@ -92,14 +94,16 @@ const MessageOrigin = ({ msg }) => {
                 ]
             case ("game"):
                 return [
-                    <span>{bell} Game Changes</span>,
+                    <span>{bell} Games</span>,
                     `game/${related_object.pk}/`
                 ]
             case ("application"):
                 return [
-                    <span>{bell}Cast Changes</span>,
+                    <span>{bell} Casts</span>,
                     `game/${related_object.game}`
                 ]
+            default:
+                return [null, null]
         }
     })()
 

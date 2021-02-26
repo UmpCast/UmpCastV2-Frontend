@@ -15,7 +15,7 @@ export default function Day(props) {
     const isToday = date.isSame(today)
 
     const formatted_games = games.map(game =>
-        <Row className="px-2" key={game.pk}>
+        <Row className="px-2 mb-2" key={game.pk}>
             <CalendarGame game={game} />
         </Row>
     )
@@ -28,7 +28,12 @@ export default function Day(props) {
                     <span className="h4">{date.format("MMM DD")}</span>
                 </h3>
             </Row>
-            {games.length > 0 ? formatted_games : <NoGame date={date} />}
+            {games.length > 0 ?
+                formatted_games :
+                <NoGame date={date}>
+                    No Games
+                </NoGame>
+            }
         </Col>
     )
 }

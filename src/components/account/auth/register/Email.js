@@ -15,7 +15,7 @@ export default function RegisterEmail(props) {
 
     const { updateStep } = props
 
-    const Api = useApi(validateEmail)
+    const Api = useApi(requests)
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
 
@@ -36,7 +36,7 @@ export default function RegisterEmail(props) {
 
     return (
         <Fragment>
-            <Social action="Signup"/>
+            <Social action="Signup" />
             <HorizontalOr />
             <Formik
                 {...{
@@ -79,10 +79,12 @@ const validationSchema =
             .required('Required')
     })
 
-const validateEmail = (email) => [
-    "api/users/",
-    {
-        data: { email }
-    },
-    "POST"
-]
+const requests = {
+    validateEmail: (email) => [
+        "api/users/",
+        {
+            data: { email }
+        },
+        "POST"
+    ]
+}

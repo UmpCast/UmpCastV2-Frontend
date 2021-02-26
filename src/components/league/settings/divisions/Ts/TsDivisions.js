@@ -1,23 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+import Loader from "common/components"
+
+import TsHeader from "./TsHeader"
 import UsedDivision from "./UsedDivison"
 import UnusedDivision from "./UnusedDivision"
 
-import { Card } from "react-bootstrap"
+import { Accordion, Card } from "react-bootstrap"
 
-export default function TsDivisions({ tsDivs, useLeague }) {
+export default function TsDivisions({ useLeague }) {
+
+    const useTsDivs = useState()
+
+    const [tsDivs] = useTsDivs
+
     return (
-        <Card className="mt-4 border-0 rounded">
-            <Card.Header
-                className="p-2 pr-3 border rounded-top bg-light text-secondary">
-                Select Teamsnap Divisions
-            </Card.Header>
-            <Card.Body className="border p-0 rounded-bottom">
-                <ListTsDivs
-                    tsDivs={tsDivs}
-                    useLeague={useLeague} />
-            </Card.Body>
-        </Card>
+        <Accordion defaultActiveKey={null}>
+            <Card>
+                <TsHeader
+                    useLeague={useLeague}
+                    useTsDivs={useTsDivs}
+                    eventKey="0"/>
+                <Accordion.Collapse eventKey="0">
+                    <Loader dep={tsDivs}>
+                        <ListTsDivs
+                            tsDivs={tsDivs}
+                            useLeague={useLeague} />
+                    </Loader>
+                </Accordion.Collapse>
+            </Card>
+        </Accordion>
     )
 }
 

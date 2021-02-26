@@ -24,7 +24,8 @@ const SubNavItem = ({ league, subject, active }) => (
     <Nav.Item
         key={subject}
         variant="light"
-        className="mx-1 px-auto text-muted">
+        className={`mx-1 px-auto text-muted 
+        ${subject === "umpires" ? " d-none d-lg-block" : null}`}>
         <Nav.Link
             as={Link}
             to={`/league/${league.pk}/${subject}`}

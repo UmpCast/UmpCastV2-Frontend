@@ -1,6 +1,7 @@
 export {
     faUser,
     faBaseballBall,
+    faChevronUp,
     faChevronDown,
     faChevronLeft,
     faChevronRight,
@@ -38,7 +39,9 @@ export {
     faPen,
     faClock,
     faBell,
-    faBullhorn
+    faBullhorn,
+    faSync,
+    faSearch
 } from "@fortawesome/free-solid-svg-icons"
 
 export {

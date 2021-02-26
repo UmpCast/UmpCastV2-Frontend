@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 import { Link } from "react-router-dom"
 
 import useUser from "common/hooks"
@@ -15,21 +15,28 @@ const Header = () => {
 
     const { isAuthenticated, isConfigured } = useUser()
 
+    const [expanded, setExpanded] = useState(false);
+
     return (
-        <Navbar expand="sm" variant="dark" bg="secondary">
+        <Navbar
+            expand="sm"
+            expanded={expanded}
+            variant="dark"
+            bg="secondary">
             <LogoNav />
 
             <Navbar.Toggle
                 data-toggle="collapse"
-                data-target="#responsive-navbar-nav" />
-            
+                data-target="#responsive-navbar-nav"
+                onClick={() => setExpanded(expanded ? false : "expanded")} />
+
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Loader dep={isAuthenticated && isConfigured}>
-                    <LeagueLinks />
-                    <UserLinks />
+                    <LeagueLinks setExpanded={setExpanded} />
+                    <UserLinks setExpanded={setExpanded} />
                 </Loader>
                 <Loader dep={!isAuthenticated && !isConfigured}>
-                    <GuestLinks />
+                    <GuestLinks setExpanded={setExpanded} />
                 </Loader>
             </Navbar.Collapse>
         </Navbar>
@@ -37,20 +44,30 @@ const Header = () => {
 }
 
 const LogoNav = () => (
-    <Navbar.Brand href="/">
+    <Navbar.Brand as={Link} to="/">
         <FontAwesomeIcon
             icon="mountain"
-            className="mr-1"/>
+            className="mr-1" />
         UmpCast
     </Navbar.Brand>
 )
 
-const GuestLinks = () => (
+const GuestLinks = ({setExpanded}) => (
     <Fragment>
         <Nav className="mr-auto" />
         <Nav>
-            <Nav.Link as={Link} to="/register">Register</Nav.Link>
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/register"
+                onClick={() => setExpanded(false)}>
+                Register
+            </Nav.Link>
+            <Nav.Link
+                as={Link}
+                to="/login"
+                onClick={() => setExpanded(false)}>
+                Login
+            </Nav.Link>
         </Nav>
     </Fragment>
 )

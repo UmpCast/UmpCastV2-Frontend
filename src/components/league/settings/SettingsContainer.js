@@ -21,7 +21,7 @@ export default function SettingsContainer({ league, active, children }) {
     return (
         <LeagueContainer league={league} active="settings">
             <Row>
-                <Col sm={3}>
+                <Col md={4} lg={3} className="mb-4">
                     <Loader dep={[league]}>
                         <Nav
                             variant="pills"
@@ -38,11 +38,15 @@ export default function SettingsContainer({ league, active, children }) {
                                 footer="League Settings"
                             />
                             <SettingsNav
-                                {...{ active, subjects, toPath: toPath(league) }} />
+                                {...{
+                                    active,
+                                    subjects,
+                                    toPath: toPath(league)
+                                }} />
                         </Nav>
                     </Loader>
                 </Col>
-                <Col sm={9}>
+                <Col>
                     {children}
                 </Col>
             </Row>

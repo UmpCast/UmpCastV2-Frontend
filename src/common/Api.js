@@ -1,10 +1,13 @@
+const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+
 const DB_CLIENT_ID = process.env.REACT_APP_DB_CLIENT_ID 
 const DB_CLIENT_SECRET = process.env.REACT_APP_DB_CLIENT_SECRET
 const TS_CLIENT_ID = process.env.REACT_APP_TS_CLIENT_ID
 const TS_CLIENT_SECRET = process.env.REACT_APP_TS_CLIENT_SECRET
 
 export const myUrl = (endpoint) => {
-    return "https://umpcastv2-backend.herokuapp.com/" + endpoint
+    return `${BACKEND_URL}/${endpoint}`
 }
 
 export const config = (token = null, params = null, content_type = null) => {
@@ -48,7 +51,7 @@ export const TsRedirect = (pk) => {
 }
 
 export const TsCallbackUri = (pk) => (
-    `https://localhost:9000/callback/teamsnap/?pk=${pk}`
+    `${FRONTEND_URL}/callback/teamsnap/?pk=${pk}`
 )
 
 export const OauthTsToken = (code, redirect_uri) => {

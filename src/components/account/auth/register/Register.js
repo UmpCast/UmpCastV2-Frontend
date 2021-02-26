@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 
-import {UserContext} from "global/Context"
+import { UserContext } from "global/Context"
 import Loader, { FocusContainer } from "common/components"
 
 import RegisterEmail from "./Email";
@@ -23,10 +23,8 @@ export default function Register() {
     }
 
     return (
-        <FocusContainer>
-            <Card
-                className="mt-5 px-4"
-                style={{ "width": "500px" }}>
+        <FocusContainer wrap={true}>
+            <Card>
                 <Card.Body>
                     <h2 className="text-center mb-3">
                         Register

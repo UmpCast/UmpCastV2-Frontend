@@ -2,9 +2,8 @@ import React, { Fragment, useState } from 'react'
 
 import { useApi } from "common/hooks"
 
-import { InputConfirm } from "common/Forms"
+import { InputConfirm, RenameListItem } from "common/forms"
 
-import RenameLevel from "./RenameLevel"
 import UmpireVisibility from "components/league/umpires/existing/Visibility/UmpireVisibility"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -18,7 +17,7 @@ export default function Level(props) {
     const { pk } = level
     const [levels, setLevels] = useLevels
 
-    const Api = useApi(deleteLevel)
+    const Api = useApi(requests)
     const useShow = useState(false)
     const useShowRename = useState(false)
 
@@ -41,14 +40,16 @@ export default function Level(props) {
                     {...provided.draggableProps}
                 >
                     <div className="d-inline-flex justify-content-between w-100">
-                        <LevelName
-                            level={level}
-                            provided={provided} />
+                        <div className="d-inline-flex">
+                            <LevelName
+                                level={level}
+                                provided={provided} />
 
-                        <LevelRename
-                            level={level}
-                            useLevels={useLevels}
-                            useShowRename={useShowRename} />
+                            <LevelRename
+                                level={level}
+                                useLevels={useLevels}
+                                useShowRename={useShowRename} />
+                        </div>
 
                         <UmpiresBadge />
 
@@ -87,16 +88,18 @@ export const LevelName = ({ level, provided }) => {
 export const LevelRename = ({ level, useShowRename, useLevels }) => (
     <Fragment>
         <Button
-            className="p-0 bg-white border-0 my-auto"
+            className="bg-white border-0 my-auto ml-2 p-0"
             onClick={() => useShowRename[1](true)}>
             <FontAwesomeIcon
                 icon="pen"
-                className="ml-2 text-muted fa-sm" />
+                className="text-muted fa-sm" />
         </Button>
-        <RenameLevel
-            level={level}
+        <RenameListItem
+            action="Rename Level"
             useShow={useShowRename}
-            useLevels={useLevels} />
+            useList={useLevels}
+            item={level}
+            endpoint="api/levels/" />
     </Fragment>
 )
 
@@ -116,12 +119,11 @@ export const LevelVis = ({ level, divisions, onChange }) => {
     }
 
     return (
-        <div className="d-inline-flex">
-            <UmpireVisibility
-                divisions={divisions}
-                onChange={onChange}
-                status={status} />
-        </div>
+        <UmpireVisibility
+            className="d-flex"
+            divisions={divisions}
+            onChange={onChange}
+            status={status} />
     )
 }
 
@@ -153,10 +155,12 @@ export const ConfirmDelete = ({ level, useShow, onDelete }) => (
     />
 )
 
-export const deleteLevel = (level_pk) => [
-    "api/levels/",
-    {
-        pk: level_pk
-    },
-    "DELETE"
-]
+const requests = {
+    deleteLevel: (level_pk) => [
+        "api/levels/",
+        {
+            pk: level_pk
+        },
+        "DELETE"
+    ]
+}

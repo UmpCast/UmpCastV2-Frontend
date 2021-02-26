@@ -20,14 +20,16 @@ export const useDisplay = () => {
 
 export const useFetchLeague = (pk) => {
 
-    const fetchLeague = (league_pk) => [
-        "api/leagues/",
-        {
-            pk: league_pk
-        }
-    ]
-    
-    const Api = useApi(fetchLeague)
+    const requests = {
+        fetchLeague: (league_pk) => [
+            "api/leagues/",
+            {
+                pk: league_pk
+            }
+        ]
+    }
+
+    const Api = useApi(requests)
 
     const useLeague = useState()
 
@@ -39,7 +41,7 @@ export const useFetchLeague = (pk) => {
                 setLeague(res.data)
             )
     })
-    
+
     return useLeague
 }
 
@@ -71,7 +73,7 @@ export const useTokenLogin = () => {
     }
 }
 
-export const useApi = (...requests) => {
+export const useApi = (requests) => {
     const { token } = useUser()
     const myDisplay = useDisplay()
 
@@ -80,7 +82,6 @@ export const useApi = (...requests) => {
     const ret = {}
 
     ret.Generic = (request, shouldLoad) => {
-
         setDisplay({ ...display, isLoading: shouldLoad })
 
         return (
@@ -105,11 +106,12 @@ export const useApi = (...requests) => {
         ]
     }
 
-    for (const request of requests) {
-        ret[request.name] = (...vals) => (
-            ret.Generic(...basicApi(...request(...vals)))
-        )
-    }
+    if (requests)
+        for (const [name, fun] of Object.entries(requests)) {
+            ret[name] = (...vals) => (
+                ret.Generic(...basicApi(...fun(...vals)))
+            )
+        }
 
     ret.Submit = ApiSubmit(myDisplay)
 
@@ -126,21 +128,44 @@ const ApiSubmit = myDisplay => request => {
 
     return request()
         .then(res => {
-            alertInfo = { variant: "success", msg: "Success!" }
+            if(!res) return
+
+            alertInfo.variant = "success"
+
+            alertInfo.msg = ((code) => {
+                switch (code) {
+                    case 201:
+                        return "Created!"
+                    default:
+                        return "Success!"
+                }
+            })(res.status)
 
             return res
         })
         .catch(err => {
             alertInfo.variant = "danger"
 
-            if (err.response && err.response.data) {
-                const { non_field_errors } = err.response.data
+            const { response } = err
 
-                if (non_field_errors)
-                    alertInfo.msg = non_field_errors
-            } else {
-                alertInfo.msg =
-                    "An unknown error occured while performing request"
+            if (!response) {
+                alertInfo.msg = JSON.stringify(err)
+            } else{
+                alertInfo.msg = ((code) => {
+                    switch (code) {
+                        case 400:
+                            const { non_field_errors } = response.data
+                            if (non_field_errors)
+                                alertInfo.msg = non_field_errors
+                            return null
+                        case 401:
+                            return "Please sign-in first"
+                        case 403:
+                            return "You don't have permission!"
+                        default:
+                            return "Something unexpected went wrong!"
+                    }
+                })(response.status)
             }
 
             return Promise.reject(err)
@@ -154,12 +179,14 @@ const ApiSubmit = myDisplay => request => {
                 updatedDisplay.alert = (
                     <TimerAlert
                         variant={alertInfo.variant}
-                        className="mb-0">
+                        className="mb-0"
+                        delay={3000}>
                         {alertInfo.msg}
                     </TimerAlert>
                 )
 
             setDisplay(updatedDisplay)
+
         })
 }
 

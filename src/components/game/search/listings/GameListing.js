@@ -60,7 +60,7 @@ const GameDetails = ({ game }) => (
         <p className="mb-0">
             <strong>Division: </strong>
             <span className="text-uppercase">
-                {game.division}
+                {game.division.title}
             </span>
         </p>
         <p className="mb-0">
@@ -88,8 +88,9 @@ const GameCast = ({ game }) => {
 
     const gallery = posts.map((post, index) =>
         <AppPicture
-            app={post.applications[0]}
+            casted={post.applications[0]}
             className={index + 1 < posts.length ? "mr-2" : ""}
+            role={post.role}
             size={25}
             key={post.pk} />
     )
@@ -101,7 +102,7 @@ const GameCast = ({ game }) => {
                     Cast:
                 </strong>
             </h5>
-            <div>
+            <div className="d-inline-flex">
                 {gallery}
             </div>
         </div >

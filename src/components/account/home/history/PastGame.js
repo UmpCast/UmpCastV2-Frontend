@@ -1,28 +1,41 @@
 import React from "react";
 
-import GameStatus from "./Completion";
+import AppStatus from "./AppStatus";
 
-import {faCheckCircle, faBan, faMedal} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faBan, faMedal } from "@fortawesome/free-solid-svg-icons";
 
 const PastGame = (props) => (
     <div className="list-group-item border-top-0 pb-0">
-        <div className="d-flex justify-content-between">
-            <div className="d-flex flex-column card-title">
+        <div className="d-flex flex-column">
+            <div className="d-inline-flex justify-content-between">
                 <div className="d-inline-flex">
-                    <h4 className="mb-auto mr-2">
-                        <strong>
+                    <h4 className="mb-auto mr-2 pb-1">
+                        <strong className="mr-2">
                             <a href="/" className="text-secondary">{props.title}</a>
                         </strong>
                     </h4>
-                    {statusBadge(props.status)}
                 </div>
-                <p className="mb-0 mt-1">
-                    <span className="text-uppercase text-muted">{props.division} {props.role}</span>
-                </p>
+                <h5 className="mb-auto flex-shrink-0">
+                    <small className="text-muted mr-1">
+                        {props.start_time} ·
+                    </small>
+                    <strong className="">
+                        {props.date}
+                    </strong>
+                </h5>
             </div>
-            <div className="d-flex flex-column text-right card-title flex-shrink-0">
-                <h5 className="mb-auto mt-1 mr-1"><strong>{props.date}</strong></h5>
-                <h5 className="mb-0 text-muted mr-1"><small>{props.start_time} - {props.end_time}</small></h5>
+            <div className="d-inline-flex text-right card-title">
+                <p className="mb-0 mt-1 mr-auto">
+                    <span className="text-muted">
+                        <span className="text-uppercase mr-1">
+                            {props.division}:
+                        </span>
+                        {props.role}
+                    </span>
+                </p>
+                <h5 className="mb-0 text-muted">
+                    {statusBadge(props.status)}
+                </h5>
             </div>
         </div>
     </div>
@@ -32,7 +45,7 @@ const statusBadge = (status) => {
     switch (status) {
         case "completed":
             return (
-                <GameStatus
+                <AppStatus
                     variant="success"
                     icon={faCheckCircle}
                     title="Completed"
@@ -41,7 +54,7 @@ const statusBadge = (status) => {
             )
         case "canceled":
             return (
-                <GameStatus
+                <AppStatus
                     variant="danger"
                     icon={faBan}
                     title="Canceled"
@@ -50,7 +63,7 @@ const statusBadge = (status) => {
             )
         case "short_notice":
             return (
-                <GameStatus
+                <AppStatus
                     variant="info"
                     icon={faMedal}
                     title="Short Notice"

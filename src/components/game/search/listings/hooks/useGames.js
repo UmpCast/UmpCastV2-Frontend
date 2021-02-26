@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 
+import { expandGames } from "common/Utils"
+
 import { useApi } from "common/hooks"
 
 export default function useGames(filters, setHistory) {
 
-    const Api = useApi(fetchGames)
+    const Api = useApi(requests)
 
     const useGames = useState()
 
@@ -21,9 +23,13 @@ export default function useGames(filters, setHistory) {
             if (enabledDivs.length > 0) {
                 Api.fetchGames(enabledDivs, start_date, page)
                     .then(res => {
-                        setGames(res.data)
+                        const games = res.data
+                        setGames({
+                            ...games,
+                            results: expandGames(games.results, divisions)
+                        })
 
-                        if(!page){
+                        if (!page) {
                             setHistory([])
                         }
                     })
@@ -35,24 +41,26 @@ export default function useGames(filters, setHistory) {
                     results: []
                 })
 
-                if(!page){
+                if (!page) {
                     setHistory([])
                 }
             }
         }
-    }, [filters, Api, setGames])
+    }, [filters, Api, setGames, setHistory])
 
     return useGames
 }
 
-const fetchGames = (divisions, start_date, page) => [
-    "api/games/",
-    {
-        params: {
-            division__in: divisions.toString(),
-            date_time_after: start_date.toISOString(),
-            page_size: 1,
-            page: page
+const requests = {
+    fetchGames: (divisions, start_date, page) => [
+        "api/games/",
+        {
+            params: {
+                division__in: divisions.toString(),
+                date_time_after: start_date.toISOString(),
+                page_size: 10,
+                page: page
+            }
         }
-    }
-]
+    ]
+}

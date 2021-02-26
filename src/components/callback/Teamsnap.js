@@ -7,7 +7,7 @@ import { OauthTsToken, TsCallbackUri } from "common/Api"
 
 export default function Teamsnap() {
 
-    const Api = useApi(saveApiKey)
+    const Api = useApi(requests)
     const { search } = useLocation()
 
     const [fetched, setFetched] = useState(false)
@@ -33,20 +33,22 @@ export default function Teamsnap() {
                 Api.saveApiKey(pk, res.data.access_token)
             )
         )
-        .finally(
-            () => setFetched(true)
-        )
+            .finally(
+                () => setFetched(true)
+            )
     })
 
     return fetched ?
         <Redirect to={`/league/${pk}/settings/divisions`} /> : null
 }
 
-const saveApiKey = (league_pk, key) => [
-    `api/teamsnap/${league_pk}/save/`,
-    {
-        params: {
-            api_key: key
+const requests = {
+    saveApiKey: (league_pk, key) => [
+        `api/teamsnap/${league_pk}/save/`,
+        {
+            params: {
+                api_key: key
+            }
         }
-    }
-]
+    ]
+}

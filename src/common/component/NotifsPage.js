@@ -32,7 +32,7 @@ export default function NotifsPage({ fetchNotifs, msgTemplate, useReset }) {
                     setReset(false)
                 )
         }
-    }, [useReset])
+    }, [Api, useReset])
 
     const onNext = (page_number) => {
         Api.fetchNotifs(page_number)

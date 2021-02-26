@@ -15,7 +15,7 @@ export default function GamePage() {
 
     const { pk } = useParams()
 
-    const Api = useApi(fetchGame, fetchLeague)
+    const Api = useApi(requests)
     const { user } = useUser()
 
     const useGame = useState()
@@ -163,16 +163,17 @@ const getGameStatus = (game, league, user_app) => {
     return { status: "signups_open" }
 }
 
-const fetchGame = (game_pk) => [
-    "api/games/",
-    {
-        pk: game_pk
-    }
-]
-
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
+const requests = {
+    fetchGame: (game_pk) => [
+        "api/games/",
+        {
+            pk: game_pk
+        }
+    ],
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
+        }
+    ]
+}

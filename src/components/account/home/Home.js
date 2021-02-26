@@ -1,10 +1,9 @@
 import React from "react"
 
-import useUser, { useApi, useMountEffect } from "common/hooks"
-
 import Feed from "./feed/Feed"
-import Upcoming from "./upcoming/Upcoming"
 import History from "./history/History"
+import Visibility from "./visibility/Visibility"
+import Upcoming from "./upcoming/Upcoming"
 
 import { Container, Row, Col, Tabs, Tab } from "react-bootstrap"
 
@@ -13,8 +12,8 @@ export default function Dashboard() {
     return (
         <Container fluid={"lg"} className="mt-4">
             <Row>
-                <Col className="mt-3">
-                    <Tabs defaultActiveKey="feed" id="uncontrolled-tab-example">
+                <Col className="order-xs-last mt-3">
+                    <Tabs defaultActiveKey="visibility">
                         <Tab eventKey="feed" title="Feed">
                             <Feed />
                         </Tab>
@@ -22,11 +21,15 @@ export default function Dashboard() {
                             <History />
                         </Tab>
                         <Tab eventKey="visibility" title="Visibility">
-
+                            <Visibility />
                         </Tab>
                     </Tabs>
                 </Col>
-                <Col xs={12} md={5} lg={4} className="pr-xl-3 mt-3">
+                <Col
+                    xs={{ span: 12, order: "first" }}
+                    md={{ span: 5, order: "last" }}
+                    lg={4}
+                    className="pr-xl-3 mt-3">
                     <Upcoming />
                 </Col>
             </Row>

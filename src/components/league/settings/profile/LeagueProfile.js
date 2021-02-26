@@ -17,7 +17,7 @@ export default function LeagueProfile() {
 
     const { pk } = useParams()
 
-    const Api = useApi(updateLeague)
+    const Api = useApi(requests)
     const useLeague = useFetchLeague(pk)
 
     const [league, setLeague] = useLeague
@@ -46,18 +46,26 @@ export default function LeagueProfile() {
                 </h3>
                 <hr className="my-3" />
                 <Row>
-                    <Col lg="8" className="pr-5">
-                        <Formik
-                            initialValues={initialValues(league)}
-                            validationSchema={validationSchema}
-                            onSubmit={onSubmit}
-                            validateOnChange={false}
-                            validateOnBlur={false}>
-                            {formik => <LeagueForm formik={formik} />}
-                        </Formik>
+                    <Col lg="8" className="pr-lg-5">
+                        <Row className="mb-5">
+                            <Col>
+                                <h5>
+                                    <strong>Edit Details</strong>
+                                </h5>
+                                <Formik
+                                    initialValues={initialValues(league)}
+                                    validationSchema={validationSchema}
+                                    onSubmit={onSubmit}
+                                    validateOnChange={false}
+                                    validateOnBlur={false}>
+                                    {formik => <LeagueForm formik={formik} />}
+                                </Formik>
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col lg="4">
-                        <UpdatePfp useLeague={useLeague}/>
+                    <Col>
+                        <UpdatePfp
+                            useLeague={useLeague} />
                     </Col>
                 </Row>
             </SettingsContainer>
@@ -79,7 +87,7 @@ const initialValues = (league) => {
     return values
 }
 
-const validationSchema = (
+const validationSchema =
     Yup.object({
         name: Yup.string()
             .max(20, "Maximum of 20 characters"),
@@ -90,13 +98,14 @@ const validationSchema = (
         email: Yup.string()
             .max(30, "Maximum of 30 characters")
     })
-)
 
-const updateLeague = (league_pk, values) => [
-    "api/leagues/",
-    {
-        pk: league_pk,
-        data: values
-    },
-    "PATCH"
-]
+const requests = {
+    updateLeague: (league_pk, values) => [
+        "api/leagues/",
+        {
+            pk: league_pk,
+            data: values
+        },
+        "PATCH"
+    ]
+}

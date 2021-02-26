@@ -1,5 +1,6 @@
 import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
+import * as Yup from "yup"
 
 import useUser, { useApi } from "common/hooks"
 
@@ -12,7 +13,7 @@ import { Row, Col, Button } from "react-bootstrap"
 
 export default function UserSecurity() {
 
-    const Api = useApi(validatePassword, updatePassword)
+    const Api = useApi(requests)
     const { user } = useUser()
 
     const onSubmit = (values, { setSubmitting, setErrors, resetForm }) => {
@@ -25,6 +26,7 @@ export default function UserSecurity() {
                     Api.updatePassword(user, new_values)
                 )
         )
+            .then(resetForm)
             .catch(err => {
                 const errors = err.response.data
 
@@ -34,10 +36,9 @@ export default function UserSecurity() {
                     setErrors(errors)
                 }
             })
-            .finally(() => {
-                resetForm()
+            .finally(() =>
                 setSubmitting(false)
-            })
+            )
     }
 
     return (
@@ -50,10 +51,11 @@ export default function UserSecurity() {
                 </h3>
                 <hr className="my-3" />
                 <Row>
-                    <Col xs={8}>
+                    <Col lg={8}>
                         <Formik
                             initialValues={initialValues}
                             onSubmit={onSubmit}
+                            validationSchema={validationSchema}
                             validateOnChange={false}
                             validateOnBlur={false}>
                             {formik => (
@@ -64,7 +66,7 @@ export default function UserSecurity() {
                                         <SubmitButton
                                             {...{ formik }} />
 
-                                        <a href="/" className="my-auto">
+                                        <a href="/" className="ml-1 my-auto">
                                             Forgot your password?
                                         </a>
                                     </div>
@@ -93,17 +95,26 @@ const initialValues = {
     password2: ''
 }
 
-const validatePassword = (user, old_password) => [
-    "api/auth/token/",
-    { data: OauthUserValidate(user.email, old_password) },
-    "POST"
-]
+const validationSchema =
+    Yup.object({
+        password: Yup.string()
+            .min(8, "Too Short!")
+            .max(128, "Too Long!")
+            .required('Required!')
+    })
 
-const updatePassword = (user, values) => [
-    "api/users/",
-    {
-        pk: user.pk,
-        data: values
-    },
-    "PATCH"
-]
+const requests = {
+    validatePassword: (user, old_password) => [
+        "api/auth/token/",
+        { data: OauthUserValidate(user.email, old_password) },
+        "POST"
+    ],
+    updatePassword: (user, values) => [
+        "api/users/",
+        {
+            pk: user.pk,
+            data: values
+        },
+        "PATCH"
+    ]
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useApi } from "common/hooks"
 
-import { BasicConfirm } from "common/Forms"
+import { BasicConfirm } from "common/forms"
 
 import { ListGroup } from "react-bootstrap"
 import { SyncDivisionConseq } from "components/league/settings/Text"
@@ -12,7 +12,7 @@ export default function UnusedDivision({ division, useLeague }) {
     const { title, path, ts_id } = division
     const [league, setLeague] = useLeague
 
-    const Api = useApi(fetchLeague, syncDivision)
+    const Api = useApi(requests)
     const useShow = useState(false)
 
     const setShow = useShow[1]
@@ -59,18 +59,19 @@ export default function UnusedDivision({ division, useLeague }) {
     )
 }
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
-
-const syncDivision = (league_pk, ts_ids) => [
-    `api/teamsnap/${league_pk}/build/`,
-    {
-        data: {
-            divisions: ts_ids
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
         }
-    }, "POST"
-]
+    ],
+    syncDivision: (league_pk, ts_ids) => [
+        `api/teamsnap/${league_pk}/build/`,
+        {
+            data: {
+                divisions: ts_ids
+            }
+        }, "POST"
+    ]
+}

@@ -11,6 +11,8 @@ export default function SettingsContainer(props) {
 
     const { user } = useUser()
 
+    const name = user.first_name + " " + user.last_name
+
     const subjects = [
         "profile",
         "security",
@@ -27,7 +29,7 @@ export default function SettingsContainer(props) {
     return (
         <Container className="mt-4 px-5">
             <Row>
-                <Col sm={3}>
+                <Col md={4} lg={3} className="mb-4">
                     <Nav
                         variant="pills"
                         className="flex-column ump-settings-nav">
@@ -39,14 +41,14 @@ export default function SettingsContainer(props) {
                                     size={25}
                                     className="rounded mr-2 my-auto" />
                             }
-                            title="Victor Lin"
+                            title={name}
                             footer="Personal Settings"
                         />
                         <SettingsNav
                             {...{ active, subjects, toPath }} />
                     </Nav>
                 </Col>
-                <Col sm={9}>
+                <Col>
                     {props.children}
                 </Col>
             </Row>

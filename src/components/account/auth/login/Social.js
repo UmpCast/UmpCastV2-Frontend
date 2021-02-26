@@ -15,7 +15,7 @@ export default function Social(props) {
 
     const { action } = props
 
-    const Api = useApi(socialToken)
+    const Api = useApi(requests)
     const tokenLogin = useTokenLogin()
 
     const handleSocialLogin = (user) => {
@@ -28,6 +28,7 @@ export default function Social(props) {
             .then(res =>
                 tokenLogin(res.data.access_token)
             )
+            .catch(err => console.log(err.response))
     }
 
     const SocialButton = SocialLogin(LoginButton)
@@ -77,9 +78,10 @@ class LoginButton extends Component {
         )
     }
 }
-
-const socialToken = (provider, code) => [
-    "api/auth/convert-token/",
-    { data: OauthConvertToken(provider, code) },
-    "POST"
-]
+const requests = {
+    socialToken: (provider, code) => [
+        "api/auth/convert-token/",
+        { data: OauthConvertToken(provider, code) },
+        "POST"
+    ]
+}

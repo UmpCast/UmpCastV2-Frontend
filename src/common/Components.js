@@ -8,6 +8,7 @@ import ProfilePicture from "common/component/ProfilePicture"
 import SettingsHeader from "common/component/SettingsHeader"
 import SettingsNav from "common/component/SettingsNav"
 import TimerAlert from "common/component/TimerAlert"
+import ToolTip from "common/component/ToolTip"
 
 export {
     AppPicture,
@@ -19,7 +20,8 @@ export {
     ProfilePicture,
     SettingsHeader,
     SettingsNav,
-    TimerAlert
+    TimerAlert,
+    ToolTip
 }
 
 export default function Loader({ dep, children }) {

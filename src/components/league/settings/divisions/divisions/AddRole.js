@@ -5,7 +5,7 @@ import * as Yup from "yup"
 import { useApi } from "common/hooks"
 
 import Loader from "common/components"
-import {SubmitButtons} from "common/Forms"
+import { SubmitButtons } from "common/forms"
 import { TextInput } from "common/Input"
 
 import { ListGroup } from "react-bootstrap"
@@ -17,7 +17,7 @@ export default function AddRole(props) {
     const [addRole, setAddRole] = useAddRole
     const [roles, setRoles] = useRoles
 
-    const Api = useApi(createRole)
+    const Api = useApi(requests)
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
         Api.Submit(() =>
@@ -57,7 +57,7 @@ export default function AddRole(props) {
                             />
                             <SubmitButtons
                                 formik={formik}
-                                setShow={setAddRole}/>
+                                setShow={setAddRole} />
                         </FormikForm>
                     )}
                 </Formik>
@@ -77,13 +77,15 @@ const validationSchema =
             .required('Required')
     })
 
-const createRole = (division_pk, values) => [
-    "api/roles/",
-    {
-        data: {
-            division: division_pk,
-            ...values
-        }
-    },
-    "POST"
-]
+const requests = {
+    createRole: (division_pk, values) => [
+        "api/roles/",
+        {
+            data: {
+                division: division_pk,
+                ...values
+            }
+        },
+        "POST"
+    ]
+}

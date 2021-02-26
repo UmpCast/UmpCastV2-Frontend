@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 
 import useUser, { useApi, useMountEffect } from "common/hooks"
-
 import Loader from "common/components"
 
 import UserSettingsContainer from "../SettingsContainer"
+import LeagueSearch from "./LeagueSearch"
 import LeagueRow from "./LeagueRow"
 
-import { ListGroup } from "react-bootstrap"
+import { ListGroup, Button } from "react-bootstrap"
 
 export default function UserLeagues() {
 
-    const Api = useApi(fetchUls)
+    const Api = useApi(requests)
     const { user } = useUser()
 
     const useUls = useState()
+    const useShow = useState(false)
 
     const [uls, setUls] = useUls
+    const [, setShow] = useShow
 
     useMountEffect(() => {
         Api.fetchUls(user)
@@ -29,18 +31,20 @@ export default function UserLeagues() {
                 <h3 className="font-weight-strong">
                     Leagues
                 </h3>
-                {/* TODO <Button
+                <Button
                     variant="light"
                     className="rounded my-auto py-1 px-2"
-                    style={{ "border": "1px solid #DFDFDF" }}>
+                    style={{ "border": "1px solid #DFDFDF" }}
+                    onClick={() => setShow(true)}>
                     <strong>+</strong> Join League
-                </Button> */}
+                </Button>
+                <LeagueSearch useShow={useShow} />
             </div>
             <Loader dep={[uls]}>
-            <ListGroup>
-                <ListLeagues
-                    {...{ useUls }} />
-                    </ListGroup>
+                <ListGroup>
+                    <ListLeagues
+                        {...{ useUls }} />
+                </ListGroup>
             </Loader>
         </UserSettingsContainer>
     )
@@ -55,13 +59,15 @@ const ListLeagues = ({ useUls }) => (
     )
 )
 
-const fetchUls = (user) => [
-    "api/user-league-status/",
-    {
-        params: {
-            user: user.pk,
-            request_status: "accepted",
-            page_size: 100
+const requests = {
+    fetchUls: (user) => [
+        "api/user-league-status/",
+        {
+            params: {
+                user: user.pk,
+                request_status: "accepted",
+                page_size: 100
+            }
         }
-    }
-]
+    ]
+}

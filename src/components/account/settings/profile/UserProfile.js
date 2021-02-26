@@ -16,7 +16,7 @@ import { Row, Col } from "react-bootstrap"
 
 export default function UserProfile() {
 
-    const Api = useApi(updateProfile)
+    const Api = useApi(requests)
     const [User, setUser] = useUser(true)
 
     const { user, token } = User
@@ -24,7 +24,7 @@ export default function UserProfile() {
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
 
-        let new_values = values
+        let new_values = Object.assign({}, values)
 
         const { phone_number } = new_values
 
@@ -43,11 +43,9 @@ export default function UserProfile() {
                     user: res.data
                 })
             )
-            .catch(err => {
-                const errors = err.response.data
-
-                setErrors(errors)
-            })
+            .catch(err => 
+                setErrors(err.response.data)
+            )
             .finally(() =>
                 setSubmitting(false)
             )
@@ -70,13 +68,17 @@ export default function UserProfile() {
 
     return (
         <UserSettingsContainer active="profile">
-            <h3><strong>User Profile</strong></h3>
+            <h3>
+                <strong>User Profile</strong>
+            </h3>
             <hr className="my-3" />
             <Row>
-                <Col lg="8" className="pr-5">
-                    <Row className="mb-4">
+                <Col lg="8" className="pr-lg-5">
+                    <Row className="mb-5">
                         <Col>
-                            <h5><strong>Edit Details</strong></h5>
+                            <h5>
+                                <strong>Edit Details</strong>
+                            </h5>
                             <Formik
                                 initialValues={initialValues(user)}
                                 validationSchema={validationSchema}
@@ -88,10 +90,10 @@ export default function UserProfile() {
                         </Col>
                     </Row>
                 </Col>
-                <Col lg="4">
+                <Col>
                     <UpdatePfp
                         src={user.profile_picture}
-                        handlePfpSubmit={handlePfpSubmit}/>
+                        handlePfpSubmit={handlePfpSubmit} />
                 </Col>
             </Row>
         </UserSettingsContainer>
@@ -103,9 +105,9 @@ const initialValues = (user) => {
 
     return (
         {
-            first_name: first_name,
-            last_name: last_name,
-            email: email,
+            first_name,
+            last_name,
+            email,
             phone_number: formatPhone(phone_number)
         }
     )
@@ -114,24 +116,28 @@ const initialValues = (user) => {
 const validationSchema =
     Yup.object({
         first_name: Yup.string()
-            .max(32, "first name has max of 32 characters")
-            .required('required'),
+            .max(255, "Too Long!")
+            .required('Required!'),
         last_name: Yup.string()
-            .max(32, "last name has max of 32 characters")
-            .required('required'),
+            .max(255, "Too Long!")
+            .required('Required!'),
         email: Yup.string()
-            .max(30, "email has max of 32")
-            .email('Invalid email address')
-            .required('Required'),
+            .max(255, "Too Long!")
+            .email('Invalid email!')
+            .required('Required!'),
         phone_number: Yup.string()
-            .min(12, "Ensure this is a 10-digit number")
-            .max(12, "Ensure this is a 10-digit number")
+            .min(12, "Must be 10 digits!")
+            .max(12, "Must be 10 digits!")
     })
 
-const updateProfile = (user_pk, values) => [
-    "api/users/",
-    {
-        pk: user_pk,
-        data: values
-    }
-]
+
+const requests = {
+    updateProfile: (user_pk, values) => [
+        "api/users/",
+        {
+            pk: user_pk,
+            data: values
+        },
+        "PATCH"
+    ]
+}

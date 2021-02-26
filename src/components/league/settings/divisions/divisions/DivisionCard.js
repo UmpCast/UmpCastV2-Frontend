@@ -24,20 +24,11 @@ export default function DivisionCard(props) {
                     className="border mb-3"
                     ref={provided.innerRef}
                     {...provided.draggableProps}>
-                    <Card.Header 
-                    className="p-1 text-center"
-                    {...provided.dragHandleProps}>
-                        <div className="text-muted">
-                            <FontAwesomeIcon
-                                icon="bars"
-                                style={{
-                                    fontSize: 10,
-                                    position: "absolute",
-                                    right: 10,
-                                    top: 6
-                                }}/>
-                        </div>
+                    <Card.Header
+                        className="p-1 text-center">
                         {title}
+                        <ReorderDivision
+                            provided={provided} />
                     </Card.Header>
                     <Card.Body className="p-0 rounded-bottom">
                         <ListRoles
@@ -47,8 +38,7 @@ export default function DivisionCard(props) {
                         <AddRole
                             useRoles={useRoles}
                             useAddRole={useAddRole}
-                            division={division}
-                        />
+                            division={division} />
 
                         <AddRoleButton
                             setAddRole={useAddRole[1]} />
@@ -58,6 +48,22 @@ export default function DivisionCard(props) {
         </Draggable>
     )
 }
+
+const ReorderDivision = ({ provided }) => (
+    <div
+        className="text-muted"
+        {...provided.dragHandleProps}>
+        <FontAwesomeIcon
+            icon="bars"
+            style={{
+                fontSize: 12,
+                position: "absolute",
+                right: 10,
+                top: 6
+            }}
+        />
+    </div>
+)
 
 const ListRoles = ({ useRoles, division }) => (
     useRoles[0].map(role =>

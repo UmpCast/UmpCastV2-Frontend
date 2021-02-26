@@ -3,28 +3,25 @@ import { Formik, Form as FormikForm } from "formik"
 import * as Yup from "yup"
 
 import { useApi } from "common/hooks"
-
-import { TitleInput } from "common/Forms"
+import { TitleInput } from "common/forms"
 
 import { Modal } from "react-bootstrap"
 
-export default function RenameLevel(props) {
-
-    const { useShow, useLevels, level } = props
+export default function RenameLevel({ useShow, useList, item, action, endpoint }) {
 
     const [show, setShow] = useShow
-    const [levels, setLevels] = useLevels
+    const [list, setList] = useList
 
-    const Api = useApi(renameLevel)
+    const Api = useApi(requests(endpoint))
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
-        Api.Submit(() => 
-            Api.renameLevel(level.pk, values)
+        Api.Submit(() =>
+            Api.rename(item.pk, values)
         )
             .then(res => {
-                setLevels(
-                    levels.map(prev =>
-                        prev.pk === level.pk ? res.data : prev
+                setList(
+                    list.map(prev =>
+                        prev.pk === item.pk ? res.data : prev
                     )
                 )
                 setShow(false)
@@ -38,7 +35,7 @@ export default function RenameLevel(props) {
     return (
         <Modal show={show} onHide={() => setShow(false)} size="sm">
             <Formik
-                initialValues={initialValues}
+                initialValues={initialValues(item)}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
                 validateOnChange={false}
@@ -46,7 +43,7 @@ export default function RenameLevel(props) {
                 {formik => (
                     <FormikForm noValidate>
                         <TitleInput
-                            action="Rename Level"
+                            action={action}
                             confirm="Rename"
                             setShow={setShow}
                             formik={formik}
@@ -59,24 +56,27 @@ export default function RenameLevel(props) {
     )
 }
 
-const initialValues = level => (
+const initialValues = item => (
     {
-        title: level.title
+        title: item.title
     }
 )
 
 const validationSchema =
     Yup.object({
         title: Yup.string()
-            .max(20, "maximum of 20 characters")
-            .required('Required')
+            .max(32, "Too Long!")
+            .required('Required!')
     })
 
-const renameLevel = (level_pk, values) => [
-    "api/levels/",
+const requests = endpoint => (
     {
-        pk: level_pk,
-        data: values
-    },
-    "PATCH"
-]
+        rename: (pk, data) => [
+            endpoint,
+            { 
+                pk, data 
+            },
+            "PATCH"
+        ]
+    }
+)

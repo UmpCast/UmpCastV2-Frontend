@@ -15,7 +15,7 @@ import { DateRange } from 'react-date-range';
 export default function Payouts() {
 
     const { pk } = useParams()
-    const Api = useApi(fetchLeague)
+    const Api = useApi(requests)
 
     const [league, setLeague] = useState()
 
@@ -27,7 +27,7 @@ export default function Payouts() {
     })
 
     const onSubmit = () => {
-        
+
     }
 
     const selectionRange = {
@@ -160,9 +160,11 @@ export default function Payouts() {
     )
 }
 
-const fetchLeague = (league_pk) => [
-    "api/leagues/",
-    {
-        pk: league_pk
-    }
-]
+const requests = {
+    fetchLeague: (league_pk) => [
+        "api/leagues/",
+        {
+            pk: league_pk
+        }
+    ]
+}

@@ -16,7 +16,7 @@ export default function LeagueContainer(props) {
                 <LeagueBanner
                     {...{league, active, ...rest}} />
             </Loader>
-            <div className="px-3 pt-3">
+            <div className="px-0 px-md-3 pt-3">
                 <Container className="px-5">
                     {children}
                 </Container>

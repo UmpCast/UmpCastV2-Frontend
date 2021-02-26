@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 
 import { useApi } from "common/hooks"
 
-import { BasicConfirm } from "common/Forms"
+import { BasicConfirm } from "common/forms"
 import { CancelAppConseq } from "components/game/Text"
 
 import { Button } from "react-bootstrap"
@@ -14,7 +14,7 @@ export default function CancelButton(props) {
 
     const [game, setGame] = useGame
 
-    const Api = useApi(cancelApp)
+    const Api = useApi(requests)
 
     const useShow = useState(false)
 
@@ -78,10 +78,12 @@ const removeAppFromPost = (app, posts) => {
     return new_posts
 }
 
-const cancelApp = (app_pk) => [
-    "api/applications/",
-    {
-        pk: app_pk
-    },
-    "DELETE"
-]
+const requests = {
+    cancelApp: (app_pk) => [
+        "api/applications/",
+        {
+            pk: app_pk
+        },
+        "DELETE"
+    ]
+}

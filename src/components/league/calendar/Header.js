@@ -1,10 +1,19 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+import Loader from "common/components"
+import useUser from "common/hooks"
+
+import SyncButton from "./SyncButton"
+
 import { Nav, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CalendarHeader(props) {
+
+    const { user } = useUser()
+
+    const isManager = user.account_type === "manager"
 
     const { week_start, handleGames, league } = props
 
@@ -15,7 +24,7 @@ export default function CalendarHeader(props) {
 
     return (
         <div className="row bg-light border-bottom ump-calendar-title">
-            <div className="mt-3 mb-1 mb-lg-2 mx-3 d-inline-flex w-100">
+            <div className="my-2 my-lg-3 mx-3 d-inline-flex w-100">
                 <Nav.Link
                     as={Link}
                     to={`/league/${league.pk}/`}
@@ -33,10 +42,10 @@ export default function CalendarHeader(props) {
                             path={base_path}
                             week={last_week}
                             handleGames={handleGames} />
-                        
+
                         <WeekRange
-                            {...{week_start}} />
-                        
+                            {...{ week_start }} />
+
                         <ArrowButton
                             dir="right"
                             path={base_path}
@@ -44,11 +53,14 @@ export default function CalendarHeader(props) {
                             handleGames={handleGames} />
                     </div>
                 </div>
-                <h4
-                    className="ump-absolute-md mr-3 text-muted d-none d-md-block"
-                    style={{ right: 0 }}>
-                    League Calendar
-                </h4>
+
+                <Loader dep={isManager}>
+                    <SyncButton
+                        week_start={week_start}
+                        league={league}
+                        user={user}
+                        handleGames={handleGames} />
+                </Loader>
             </div>
         </div >
     )
@@ -69,7 +81,7 @@ const ArrowButton = ({ dir, path, week, handleGames }) => (
 const WeekRange = ({ week_start }) => {
 
     const week_end = week_start.endOf("week")
-    
+
     const range = week_start.format("MMM D") + " - " +
         week_end.format(week_start.month() === week_end.month() ? "D" : "MMM D")
 

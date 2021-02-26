@@ -5,11 +5,14 @@ import { Nav } from "react-bootstrap"
 
 const SettingsNav = ({ active, subjects, toPath }) => (
     subjects.map(subject => {
+
         const subject_caps = subject.charAt(0).toUpperCase() + subject.slice(1)
         const isActive = active === subject ? "active" : null
         
         return (
-            <Nav.Item key={subject}>
+            <Nav.Item 
+            key={subject}
+            className = {subject === "umpires" ? " d-none d-lg-block" : null}>
                 <Nav.Link
                     as={Link}
                     to={toPath(subject)}

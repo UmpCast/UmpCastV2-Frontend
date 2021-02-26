@@ -8,7 +8,7 @@ import { Row, Col } from "react-bootstrap"
 export default function UpdatePfp({ src, handlePfpSubmit }) {
     return (
         <Fragment>
-            <Row className="mr-0">
+            <Row>
                 <Col className="d-inline-flex">
                     <h5 className="mb-3 mr-auto">
                         <strong>Profile Picture</strong>
@@ -17,10 +17,10 @@ export default function UpdatePfp({ src, handlePfpSubmit }) {
                         handleSubmit={handlePfpSubmit} />
                 </Col>
             </Row>
-            <Row className="mr-0">
-                <Col>
+            <Row>
+                <Col className="text-center">
                     <ProfilePicture
-                        className="img-thumbnail rounded-circle"
+                        className="img-fluid img-thumbnail rounded-circle"
                         src={src}
                         alt={primaryBaseball} />
                 </Col>

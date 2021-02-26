@@ -12,7 +12,7 @@ import { ListGroup } from "react-bootstrap"
 export default function Upcoming() {
 
     const { user } = useUser()
-    const Api = useApi(fetchGames, fetchLeagues)
+    const Api = useApi(requests)
 
     const [games, setGames] = useState()
     const [leagues, setLeagues] = useState()
@@ -59,7 +59,7 @@ const ListGames = ({ games, leagues }) => {
             )
         }
 
-        const game_league = leagues.find(({pk}) =>
+        const game_league = leagues.find(({ pk }) =>
             pk === game.league
         )
 
@@ -74,26 +74,27 @@ const ListGames = ({ games, leagues }) => {
     return game_list
 }
 
-const fetchGames = (user_pk) => [
-    "api/games/",
-    {
-        params: {
-            user: user_pk,
-            date_time_after: dayjs().toISOString(),
-            page_size: 100
-        }
-    },
-    "GET",
-    false
-]
-
-const fetchLeagues = (user_pk) => [
-    "api/leagues/",
-    {
-        params: {
-            user: user_pk,
-        }
-    },
-    "GET",
-    false
-]
+const requests = {
+    fetchGames: (user_pk) => [
+        "api/games/",
+        {
+            params: {
+                user: user_pk,
+                date_time_after: dayjs().toISOString(),
+                page_size: 100
+            }
+        },
+        "GET",
+        false
+    ],
+    fetchLeagues: (user_pk) => [
+        "api/leagues/",
+        {
+            params: {
+                user: user_pk,
+            }
+        },
+        "GET",
+        false
+    ]
+}

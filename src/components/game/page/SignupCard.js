@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 import useUser, { useApi } from "common/hooks"
 
 import { ProfilePicture } from "common/components"
-import { BasicConfirm } from "common/Forms"
+import { BasicConfirm } from "common/forms"
 import { GameSignupConseq } from "components/game/Text"
 
 import { Card } from "react-bootstrap";
@@ -17,7 +17,7 @@ const SignupCard = (props) => {
     const apps = post.applications
     const [game, setGame] = useGame
 
-    const Api = useApi(gameSignup)
+    const Api = useApi(requests)
     const { user } = useUser()
 
     const useShow = useState(false)
@@ -58,7 +58,7 @@ const SignupCard = (props) => {
                         <ProfilePicture
                             src={user.profile_picture}
                             alt={PrimaryBaseball}
-                            className="rounded-circle img-thumbnail mt-2 mb-3" />
+                            className="rounded-circle img-thumbnail border-0 mt-2 mb-3 p-4" />
 
                         <Card.Text>
                             You
@@ -80,15 +80,17 @@ const SignupCard = (props) => {
     )
 }
 
-const gameSignup = (user_pk, post_pk) => [
-    "api/applications/",
-    {
-        data: {
-            user: user_pk,
-            post: post_pk
-        }
-    },
-    "POST"
-]
+const requests = {
+    gameSignup: (user_pk, post_pk) => [
+        "api/applications/",
+        {
+            data: {
+                user: user_pk,
+                post: post_pk
+            }
+        },
+        "POST"
+    ]
+}
 
 export default SignupCard;

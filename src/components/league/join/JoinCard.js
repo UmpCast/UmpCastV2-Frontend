@@ -11,7 +11,7 @@ export default function JoinCard(props) {
 
     const { useUls, league } = props
 
-    const Api = useApi(joinLeague)
+    const Api = useApi(requests)
 
     const { user } = useUser()
     const [, setUls] = useUls
@@ -53,13 +53,15 @@ const JoinButton = ({ league, onClick }) => (
     </Button>
 )
 
-const joinLeague = (user_pk, league_pk) => [
-    "api/user-league-status/",
-    {
-        data: {
-            user: user_pk,
-            league: league_pk
-        }
-    },
-    "POST"
-]
+const requests = {
+    joinLeague: (user_pk, league_pk) => [
+        "api/user-league-status/",
+        {
+            data: {
+                user: user_pk,
+                league: league_pk
+            }
+        },
+        "POST"
+    ]
+}

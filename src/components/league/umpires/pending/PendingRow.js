@@ -16,7 +16,7 @@ export default function PendingRow(props) {
     const { pk, user, date_pending } = status
     const [pending, setPending] = usePending
 
-    const Api = useApi(decideUls)
+    const Api = useApi(requests)
 
     const onClick = (status) => {
         Api.Submit(() =>
@@ -112,13 +112,15 @@ const RejectButton = ({ onClick }) => (
     </Button>
 )
 
-const decideUls = (league_pk, status) => [
-    "api/user-league-status/",
-    {
-        pk: league_pk,
-        data: {
-            request_status: status
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    decideUls: (league_pk, status) => [
+        "api/user-league-status/",
+        {
+            pk: league_pk,
+            data: {
+                request_status: status
+            }
+        },
+        "PATCH"
+    ]
+}

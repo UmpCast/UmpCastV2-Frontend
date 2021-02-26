@@ -25,16 +25,18 @@ export default function Announcements() {
 
     const [, setShow] = useShow
 
-    const fetchNotifs = page => [
-        "api/league-notifications/",
-        {
-            params: {
-                league: pk,
-                page: page,
-                page_size: 1
+    const fetchNotifs = {
+        fetchNotifs: page => [
+            "api/league-notifications/",
+            {
+                params: {
+                    league: pk,
+                    page: page,
+                    page_size: 1
+                }
             }
-        }
-    ]
+        ]
+    }
 
     return (
         <Loader dep={league}>

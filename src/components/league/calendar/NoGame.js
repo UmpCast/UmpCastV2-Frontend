@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 
 import { Card } from "react-bootstrap"
 
-export default function NoGame({date}) {
+export default function NoGame({date, children}) {
     const day_over = dayjs(date).endOf("day") < dayjs()
 
     const style = {opacity: day_over ? .75 : 1}
@@ -13,7 +13,7 @@ export default function NoGame({date}) {
             <Card.Body className="p-2">
                 <Card.Text
                     className="mb-0 text-muted text-center">
-                    No games
+                    {children}
                     </Card.Text>
             </Card.Body>
         </Card>

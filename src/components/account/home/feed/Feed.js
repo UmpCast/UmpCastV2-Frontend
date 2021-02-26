@@ -9,16 +9,18 @@ export default function Feed() {
 
     const { pk } = useUser().user
 
-    const fetchNotifs = page => [
-        "api/notifications/",
-        {
-            pk: pk,
-            params: {
-                page,
-                page_size: 1
-            }
-        },
-    ]
+    const fetchNotifs = {
+        fetchNotifs: page => [
+            "api/notifications/",
+            {
+                pk: pk,
+                params: {
+                    page,
+                    page_size: 10
+                }
+            },
+        ]
+    }
 
     return (
         <NotifsPage

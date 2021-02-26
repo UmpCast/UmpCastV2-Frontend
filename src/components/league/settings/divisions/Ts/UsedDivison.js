@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useApi } from "common/hooks"
 
-import { InputConfirm } from "common/Forms"
+import { InputConfirm } from "common/forms"
 
 import { ListGroup } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,7 +10,7 @@ import { UnsyncDivisionConseq } from 'components/league/settings/Text'
 
 export default function UsedDivison({ division, useLeague }) {
 
-    const Api = useApi(deleteDivision)
+    const Api = useApi(requests)
 
     const { title, ts_id, pk } = division
     const [league, setLeague] = useLeague
@@ -22,17 +22,17 @@ export default function UsedDivison({ division, useLeague }) {
         Api.Submit(() =>
             Api.deleteDivision(pk)
         )
-        .then(() => {
-            const new_divisions = league.divisions.filter(
-                div => div.pk !== pk
-            )
+            .then(() => {
+                const new_divisions = league.divisions.filter(
+                    div => div.pk !== pk
+                )
 
-            setLeague({
-                ...league,
-                divisions: new_divisions
+                setLeague({
+                    ...league,
+                    divisions: new_divisions
+                })
             })
-        })
-        .finally(() => setShow(false))
+            .finally(() => setShow(false))
     }
 
     return (
@@ -61,10 +61,12 @@ export default function UsedDivison({ division, useLeague }) {
     )
 }
 
-const deleteDivision = (division_pk) => [
-    "api/divisions/",
-    {
-        pk: division_pk
-    },
-    "DELETE"
-]
+const requests = {
+    deleteDivision: (division_pk) => [
+        "api/divisions/",
+        {
+            pk: division_pk
+        },
+        "DELETE"
+    ]
+}

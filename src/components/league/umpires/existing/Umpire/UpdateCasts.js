@@ -5,7 +5,7 @@ import { useApi } from "common/hooks"
 import { Form } from "react-bootstrap"
 export default function UpdateCasts(props) {
 
-    const Api = useApi(adjustMaxScheduling)
+    const Api = useApi(requests)
 
     const { status, type, onChange } = props
     const [max, setMax] = useState(status[`max_${type}`])
@@ -38,13 +38,15 @@ export default function UpdateCasts(props) {
     )
 }
 
-const adjustMaxScheduling = (status_pk, type, new_max) => [
-    "api/user-league-status/",
-    {
-        pk: status_pk,
-        data: {
-            [`max_${type}`]: new_max
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    adjustMaxScheduling: (status_pk, type, new_max) => [
+        "api/user-league-status/",
+        {
+            pk: status_pk,
+            data: {
+                [`max_${type}`]: new_max
+            }
+        },
+        "PATCH"
+    ]
+}

@@ -1,5 +1,6 @@
 import React from "react"
 
+import useUser from "common/hooks"
 import Loader from "common/components"
 
 import SignupCard from "./SignupCard";
@@ -13,6 +14,10 @@ export default function Post(props) {
 
     const apps = post.applications
 
+    const { user } = useUser()
+    const { account_type } = user
+    const isUmpire = account_type === "umpire"
+
     return (
         <div className="px-1 pt-4 no-select">
             <Row className="px-2">
@@ -24,7 +29,7 @@ export default function Post(props) {
                 </Col>
             </Row>
             <Row className="pt-2">
-                <Loader dep={game_status.status === "signups_open"}>
+                <Loader dep={game_status.status === "signups_open" && isUmpire}>
                     <Col xs={6} md={4} lg={3} xl={2} className="p-2">
                         <SignupCard
                             post={post}

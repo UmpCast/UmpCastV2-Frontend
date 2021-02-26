@@ -28,7 +28,7 @@ export default function LeagueBanner(props) {
         ])
 
     return (
-        <div className="px-3 pt-1 bg-light border-bottom">
+        <div className="px-0 px-md-3 pt-1 bg-light border-bottom">
             <Container className="px-5">
                 <Loader dep={[!noDetails]}>
                     <Row className="my-3">

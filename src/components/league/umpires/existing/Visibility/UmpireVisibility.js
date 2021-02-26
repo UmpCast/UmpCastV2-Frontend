@@ -17,7 +17,7 @@ export default function UmpireVisibility(props) {
     )
 
     return (
-        <div className={`d-inline-flex ${props.className}`}>
+        <div className={props.className}>
             {division_visibilities}
         </div>
     )

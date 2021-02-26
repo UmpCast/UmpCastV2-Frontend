@@ -16,7 +16,7 @@ export default function UmpireLevels(props) {
 
     const { divisions } = league
 
-    const Api = useApi(reorderLevel)
+    const Api = useApi(requests)
     const useShow = useState(false)
     const useLevels = useState(league.levels)
 
@@ -33,6 +33,8 @@ export default function UmpireLevels(props) {
 
     const onDragEnd = result => {
         const { destination, source } = result
+
+        if (!destination || !source) return
 
         const start = source.index
         const end = destination.index
@@ -58,9 +60,15 @@ export default function UmpireLevels(props) {
                     <Button
                         variant="success rounded p-1 px-3"
                         onClick={() => setShow(true)}>
-                        <FontAwesomeIcon icon="layer-group" className="mr-1" />New
+                        <FontAwesomeIcon
+                            icon="layer-group"
+                            className="mr-1" />
+                        New
                     </Button>
-                    <CreateLevel useShow={useShow} useLevels={useLevels} league_pk={league.pk} />
+                    <CreateLevel
+                        useShow={useShow}
+                        useLevels={useLevels}
+                        league_pk={league.pk} />
                 </Card.Header>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="umpire-levels">
@@ -100,12 +108,14 @@ const ListLevels = props => {
     )
 }
 
-const reorderLevel = (level_pk, end) => [
-    `api/levels/${level_pk}/move/`,
-    {
-        data: {
-            order: end
-        }
-    },
-    "PATCH"
-]
+const requests = {
+    reorderLevel: (level_pk, end) => [
+        `api/levels/${level_pk}/move/`,
+        {
+            data: {
+                order: end
+            }
+        },
+        "PATCH"
+    ]
+}
