@@ -10,9 +10,6 @@ export default function useLeague(useFilters) {
     const Api = useApi(requests)
     const User = useUser()
 
-    const { account_type } = User.user
-    const isManager = account_type === "manager"
-
     const retLeague = useState(User.user.accepted_leagues[0].pk)
     const [league] = retLeague
 
@@ -22,6 +19,8 @@ export default function useLeague(useFilters) {
             Api.fetchLeague(league),
             Api.fetchUls(User.user.pk, league)
         ]).then(res => {
+            const isManager = User.user.account_type === "manager"
+
             const { divisions } =res[0].data
 
             const uls = res[1].data.results[0]

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Formik, Form as FormikForm } from "formik"
-import * as Yup from "yup"
 
 import useUser, { useApi } from "common/hooks"
 import { ToggleInput } from "common/Input"

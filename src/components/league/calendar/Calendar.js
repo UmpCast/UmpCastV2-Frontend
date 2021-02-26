@@ -33,6 +33,17 @@ export default function Calendar() {
         () => basicHandleGames(Api, setGames)
     )
 
+    const handleNewGame = (game) => {
+        const game_time = dayjs(game.date_time)
+        if (week_start < game_time  && game_time < week_start.add(7, "days")){
+            setGames(games.concat(game))
+        }
+    }
+
+    const handleDeleteGame = ({pk}) => {
+        setGames(games.filter(game => game.pk !== pk))
+    }
+
     useMountEffect(() => {
 
         const myLeague = Api.fetchLeague(pk)
@@ -64,6 +75,7 @@ export default function Calendar() {
                 <Header
                     week_start={week_start}
                     handleGames={handleGames}
+                    handleNewGame={handleNewGame}
                     league={league} />
             </Loader>
             <Loader dep={[league, games]}>
@@ -71,7 +83,8 @@ export default function Calendar() {
                     <Week
                         start={week_start}
                         games={games}
-                        league={league} />
+                        league={league}
+                        handleDeleteGame={handleDeleteGame} />
                 </div>
             </Loader >
         </Fragment>

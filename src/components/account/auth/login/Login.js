@@ -8,7 +8,7 @@ import { useTokenLogin, useApi } from "common/hooks"
 import { FocusContainer } from "common/components"
 import { OauthUserValidate } from "common/Api"
 
-import Social from "./Social"
+// import Social from "./Social"
 import LoginForm from "./LoginForm"
 
 import { Card } from "react-bootstrap"
@@ -52,7 +52,7 @@ export default function Login() {
 
                     {/* <Social /> */}
 
-                    <HorizontalOr />
+                    {/* <HorizontalOr /> */}
 
                     <Formik
                         initialValues={initialValues}

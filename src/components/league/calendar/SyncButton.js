@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Loader, { ToolTip } from "common/components"
-import useUser, { useApi } from "common/hooks"
+import { ToolTip } from "common/components"
+import { useApi } from "common/hooks"
 
 import { Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -31,7 +31,7 @@ export default function SyncButton({ week_start, league, handleGames }) {
         <ToolTip tip={syncTip} show={400} hide={250}>
             <Button
                 variant="primary rounded"
-                className="ump-absolute-md mr-3 d-none d-md-block px-2 py-1"
+                className= "mx-2 px-2 py-1"
                 style={{ right: 0}}
                 onClick={onClick}
                 disabled={!hasTsApi}>

@@ -6,8 +6,8 @@ import { useApi } from "common/hooks"
 
 import { TextInput } from "common/Input"
 
-import Social from "../login/Social"
-import { HorizontalOr } from "../login/Login"
+// import Social from "../login/Social"
+// import { HorizontalOr } from "../login/Login"
 
 import { Button } from "react-bootstrap";
 
@@ -36,8 +36,8 @@ export default function RegisterEmail(props) {
 
     return (
         <Fragment>
-            <Social action="Signup" />
-            <HorizontalOr />
+            {/* <Social action="Signup" />
+            <HorizontalOr /> */}
             <Formik
                 {...{
                     initialValues,

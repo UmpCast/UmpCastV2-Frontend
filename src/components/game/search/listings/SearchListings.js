@@ -58,7 +58,6 @@ const GamesFound = ({ games }) => (
 const ListGames = ({ history, games, league }) => {
 
     const all_games = history.concat(games.results)
-    const { divisions } = league
 
     return (
         all_games.map(game =>

@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useApi, useMountEffect } from "common/hooks"
 import { TsRedirect } from "common/Api"
 
-import Loader, { TimerAlert } from "common/components"
+import Loader from "common/components"
 import SettingsContainer from "../SettingsContainer"
 
 import TsDivisions from "./ts/TsDivisions"
 import DivisionsCol from "./divisions/SortDivisions"
+import AddDivisionButton from "./divisions/AddDivisionButton"
 
 import { Row, Col, Button } from "react-bootstrap"
-import { LeagueSyncFeatures } from 'components/league/settings/Text'
+import { LeagueSyncFeatures } from "components/league/settings/Text"
 
 export default function DivisionsSettings() {
-
     const { pk } = useParams()
     const Api = useApi(requests)
 
@@ -23,11 +23,22 @@ export default function DivisionsSettings() {
     const [league, setLeague] = useLeague
 
     useMountEffect(() => {
-        Api.fetchLeague(pk)
-            .then(res =>
-                setLeague(res.data)
-            )
+        Api.fetchLeague(pk).then((res) => setLeague(res.data))
     })
+
+    const handleNewDivision = (division) => {
+        setLeague({
+            ...league,
+            divisions: [...league.divisions, division]
+        })
+    }
+
+    const handleDeleteDivision = ({ pk }) => {
+        setLeague({
+            ...league,
+            divisions: league.divisions.filter((division) => division.pk !== pk)
+        })
+    }
 
     return (
         <Loader dep={league}>
@@ -43,17 +54,25 @@ export default function DivisionsSettings() {
                         </h5>
                         <Button
                             variant="success rounded my-2 font-weight-bold"
-                            href={TsRedirect(pk)}>
+                            href={TsRedirect(pk)}
+                        >
                             Sync
                         </Button>
                         <small className="form-text text-muted mb-3 mb-md-4">
                             <LeagueSyncFeatures />
                         </small>
-                        <TsDivisions
-                            useLeague={useLeague} />
+                        <TsDivisions useLeague={useLeague} />
                     </Col>
-                    <DivisionsCol
-                        useLeague={useLeague} />
+                    <Col>
+                        <AddDivisionButton
+                            league={league}
+                            handleNewDivision={handleNewDivision}
+                        />
+                        <DivisionsCol
+                            useLeague={useLeague}
+                            handleDeleteDivision={handleDeleteDivision}
+                        />
+                    </Col>
                 </Row>
             </SettingsContainer>
         </Loader>

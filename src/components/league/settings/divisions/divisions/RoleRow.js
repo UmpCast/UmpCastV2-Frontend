@@ -115,13 +115,3 @@ const requests = {
         "DELETE"
     ]
 }
-
-const renameRequest = {
-    rename: (role_pk, data) => [
-        "api/roles/",
-        {
-            pk: role_pk
-        },
-
-    ]
-}

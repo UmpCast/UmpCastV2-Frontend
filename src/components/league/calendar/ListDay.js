@@ -8,7 +8,7 @@ import NoGame from "./NoGame"
 
 import { Row } from "react-bootstrap"
 
-export default function ListDay({ games, date }) {
+export default function ListDay({ games, date, handleDeleteGame }) {
 
     const today = dayjs().startOf("day")
 
@@ -18,6 +18,12 @@ export default function ListDay({ games, date }) {
         return null
     }
 
+    const renderedGames = games.map(game =>
+        <Row key={game.pk} className="mb-2">
+            <CalendarGame game={game} handleDeleteGame={handleDeleteGame}/>
+        </Row>
+    )
+
     return (
         <div className="mb-4">
             <Row>
@@ -26,8 +32,7 @@ export default function ListDay({ games, date }) {
                     <span className="h4">{date.format("MMM DD")}</span>
                 </h3>
             </Row>
-            <ListGames
-                games={games} />
+            {renderedGames}
             <Loader dep={isToday && games.length === 0}>
                 <NoGame date={date}>
                     No Games Today
@@ -36,11 +41,3 @@ export default function ListDay({ games, date }) {
         </div>
     )
 }
-
-const ListGames = ({ games }) => (
-    games.map(game =>
-        <Row key={game.pk} className="mb-2">
-            <CalendarGame game={game} />
-        </Row>
-    )
-)

@@ -16,7 +16,7 @@ dayjs.extend(localizedFormat)
 
 export default function Week(props) {
 
-    const { league, start, games } = props
+    const { league, start, games, handleDeleteGame } = props
 
     const { divisions } = league
 
@@ -29,7 +29,8 @@ export default function Week(props) {
                 {
                     games: day_games,
                     date: start.add(index, "day"),
-                    key: index
+                    key: index,
+                    handleDeleteGame: handleDeleteGame
                 }
             )
         )

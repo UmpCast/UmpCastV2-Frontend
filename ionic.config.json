@@ -1,7 +1,0 @@
-{
-    "name": "UmpCast",
-    "integrations": {
-      "capacitor": {}
-    },
-    "type": "react"
-  }

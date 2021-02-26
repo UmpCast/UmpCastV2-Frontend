@@ -16,7 +16,7 @@ export default function SettingsContainer(props) {
     const subjects = [
         "profile",
         "security",
-        "notifications",
+        // "notifications",
         "leagues"
     ]
 

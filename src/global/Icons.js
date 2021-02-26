@@ -41,7 +41,8 @@ export {
     faBell,
     faBullhorn,
     faSync,
-    faSearch
+    faSearch,
+    faEllipsisH
 } from "@fortawesome/free-solid-svg-icons"
 
 export {

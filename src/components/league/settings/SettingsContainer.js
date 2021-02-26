@@ -34,7 +34,7 @@ export default function SettingsContainer({ league, active, children }) {
                                         size={25}
                                         className="rounded mr-2 my-auto" />
                                 }
-                                title="Palo Alto Little League"
+                                title={league.title}
                                 footer="League Settings"
                             />
                             <SettingsNav

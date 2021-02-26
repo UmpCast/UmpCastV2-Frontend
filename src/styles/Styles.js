@@ -5,6 +5,7 @@ import "styles/lists.css"
 import "styles/sizing.css"
 import "styles/misc.css"
 import "styles/alignment.css"
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
+import "react-date-range/dist/styles.css"
+import "react-date-range/dist/theme/default.css"
 import "bootswatch/dist/cosmo/bootstrap.min.css"
+import 'react-widgets/dist/css/react-widgets.css'

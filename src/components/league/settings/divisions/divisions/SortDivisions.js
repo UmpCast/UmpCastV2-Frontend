@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import arrayMove from "array-move"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
@@ -7,14 +7,13 @@ import DivisionCard from "./DivisionCard"
 
 import { Col } from "react-bootstrap"
 
-export default function Divisions({ useLeague }) {
-
+export default function Divisions({ useLeague, handleDeleteDivision }) {
     const [league, setLeague] = useLeague
     const { divisions } = league
 
     const Api = useApi(requests)
 
-    const onDragEnd = result => {
+    const onDragEnd = (result) => {
         const { destination, source } = result
 
         if (!destination || !source) return
@@ -24,9 +23,7 @@ export default function Divisions({ useLeague }) {
 
         if (start === end) return
 
-        Api.Submit(() =>
-            Api.reorderDivision(league.divisions[start].pk, end)
-        )
+        Api.Submit(() => Api.reorderDivision(league.divisions[start].pk, end))
 
         setLeague({
             ...league,
@@ -37,11 +34,16 @@ export default function Divisions({ useLeague }) {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="league-divisions">
-                {provided => (
+                {(provided) => (
                     <Col
+                        className="mt-3"
                         ref={provided.innerRef}
-                        {...provided.droppableProps}>
-                        <ListDivisions league={league} />
+                        {...provided.droppableProps}
+                    >
+                        <ListDivisions
+                            league={league}
+                            handleDeleteDivision={handleDeleteDivision}
+                        />
                         {provided.placeholder}
                     </Col>
                 )}
@@ -50,15 +52,15 @@ export default function Divisions({ useLeague }) {
     )
 }
 
-const ListDivisions = ({ league }) => (
-    league.divisions.map((division, index) =>
+const ListDivisions = ({ league, handleDeleteDivision }) =>
+    league.divisions.map((division, index) => (
         <DivisionCard
+            handleDeleteDivision={handleDeleteDivision}
             division={division}
             index={index}
             key={division.pk}
         />
-    )
-)
+    ))
 
 const requests = {
     reorderDivision: (division_pk, end) => [
