@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 import useUser from "common/hooks"
 
@@ -6,11 +6,10 @@ import { NotifsPage } from "common/components"
 import Message from "./Message"
 
 export default function Feed() {
-
     const { pk } = useUser().user
 
     const fetchNotifs = {
-        fetchNotifs: page => [
+        fetchNotifs: (page) => [
             "api/notifications/",
             {
                 pk: pk,
@@ -18,13 +17,13 @@ export default function Feed() {
                     page,
                     page_size: 10
                 }
-            },
+            }
         ]
-    }
+}
 
     return (
-        <NotifsPage
-            fetchNotifs={fetchNotifs}
-            msgTemplate={Message} />
+        <div className="mt-3">
+            <NotifsPage fetchNotifs={fetchNotifs} msgTemplate={Message} />
+        </div>
     )
 }

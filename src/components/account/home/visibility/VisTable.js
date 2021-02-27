@@ -27,7 +27,7 @@ export default function VisTable({ status }) {
 const DivisionRow = ({ division, vis }) => {
     const { roles } = division
     const list_rows = roles.map(role =>
-        <span className={`${vis.includes(role.pk) && "text-muted"} mx-2`} key={role.pk}>
+        <span className={`${!vis.includes(role.pk) && "text-muted"} mx-2`} key={role.pk}>
             {role.title}
         </span>
     )

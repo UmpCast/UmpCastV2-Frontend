@@ -56,14 +56,18 @@ export default function CalendarHeader(props) {
 
                 <Loader dep={isManager}>
                     <div className="ump-absolute-md ump-absolute-right mr-3 d-none d-md-block">
-                        
-                        <SyncButton
-                            week_start={week_start}
+                        {league.api_key !== "" ? (
+                            <SyncButton
+                                week_start={week_start}
+                                league={league}
+                                user={user}
+                                handleGames={handleGames}
+                            />
+                        ) : null}
+                        <AddGameButton
                             league={league}
-                            user={user}
-                            handleGames={handleGames}
+                            handleNewGame={handleNewGame}
                         />
-                        <AddGameButton league={league} handleNewGame={handleNewGame}/>
                     </div>
                 </Loader>
             </div>

@@ -19,7 +19,6 @@ export default function RegisterEmail(props) {
 
     const onSubmit = (values, { setSubmitting, setErrors }) => {
 
-        console.log(Api)
         Api.validateEmail(values.email)
             .catch(err => {
                 setSubmitting(false)

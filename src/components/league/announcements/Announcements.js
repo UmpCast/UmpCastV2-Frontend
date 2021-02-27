@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import { useParams } from "react-router-dom"
 
 import useUser, { useFetchLeague } from "common/hooks"
@@ -13,7 +13,6 @@ import { Row, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export default function Announcements() {
-
     const { pk } = useParams()
 
     const isManager = useUser().user.account_type === "manager"
@@ -26,7 +25,7 @@ export default function Announcements() {
     const [, setShow] = useShow
 
     const fetchNotifs = {
-        fetchNotifs: page => [
+        fetchNotifs: (page) => [
             "api/league-notifications/",
             {
                 params: {
@@ -45,24 +44,24 @@ export default function Announcements() {
                     <Loader dep={isManager}>
                         <Button
                             variant="primary rounded ml-auto"
-                            onClick={() => setShow(true)}>
+                            onClick={() => setShow(true)}
+                        >
                             Add New
-                        <FontAwesomeIcon
-                                icon="bullhorn"
-                                className="ml-2" />
+                            <FontAwesomeIcon icon="bullhorn" className="ml-2" />
                         </Button>
                     </Loader>
                 </Row>
                 <Row className="mx-0">
-                    <NewMessage
-                        useShow={useShow}
-                        useReset={useReset} />
+                    <NewMessage useShow={useShow} useReset={useReset} />
                 </Row>
-                <NotifsPage
-                    fetchNotifs={fetchNotifs}
-                    msgTemplate={Message}
-                    useReset={useReset} />
+                <Row className="mt-3">
+                    <NotifsPage
+                        fetchNotifs={fetchNotifs}
+                        msgTemplate={Message}
+                        useReset={useReset}
+                    />
+                </Row>
             </LeagueContainer>
-        </Loader >
+        </Loader>
     )
 }

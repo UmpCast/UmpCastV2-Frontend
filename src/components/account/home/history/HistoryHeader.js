@@ -1,23 +1,29 @@
-import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faBan, faCheckCircle, faSortDown} from "@fortawesome/free-solid-svg-icons";
-import {Dropdown} from "react-bootstrap";
+import React from "react"
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+// import {
+//     faBan,
+//     faCheckCircle,
+//     faSortDown
+// } from "@fortawesome/free-solid-svg-icons"
+// import { Dropdown } from "react-bootstrap"
 
-export const CustomToggle = React.forwardRef(({children, onClick}, ref) => (
-    <p ref={ref}
-       onClick={(e) => {
-           e.preventDefault();
-           onClick(e);
-       }}
-       className="mb-0 text-muted"
+export const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <p
+        ref={ref}
+        onClick={(e) => {
+            e.preventDefault()
+            onClick(e)
+        }}
+        className="mb-0 text-muted"
     >
         {children}
     </p>
-));
+))
 
 const HistoryHeader = (props) => (
     <h6 className="d-inline card-header border p-3">
-        <strong>
+        History
+        {/* <strong>
             <span className="mr-3 text-success">
                 <FontAwesomeIcon className="mr-2" icon={faCheckCircle}/>
                 {props.completed} Completed
@@ -40,8 +46,8 @@ const HistoryHeader = (props) => (
                 <Dropdown.Item href="#/action-1">Short Notice</Dropdown.Item>
                 <Dropdown.Item href="#/action-3">Canceled</Dropdown.Item>
             </Dropdown.Menu>
-        </Dropdown>
+        </Dropdown> */}
     </h6>
 )
 
-export default HistoryHeader;
+export default HistoryHeader

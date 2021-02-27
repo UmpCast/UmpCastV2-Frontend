@@ -49,7 +49,7 @@ const ListGames = ({ games, leagues }) => {
     for (const game of games) {
         const game_week = dayjs(game.date_time).startOf("week")
 
-        if (curr_week !== game_week) {
+        if (!game_week.isSame(curr_week)) {
             curr_week = game_week
 
             game_list.push(

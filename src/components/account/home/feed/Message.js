@@ -12,21 +12,22 @@ import darkMeteor from "assets/dark_meteor.png"
 
 dayjs.extend(relativeTime)
 
-export default function Message({ msg, noIcon }) {
+export default function Message({ msg }) {
 
     const {
         subject,
         message,
         notification_date_time
     } = msg
-
+    
     const relative_date = dayjs(notification_date_time).fromNow()
+    const messageIcon = MessageIcon(msg)
 
     return (
         <Row className="mx-auto mb-4">
-            <Loader dep={!noIcon}>
+            <Loader dep={messageIcon !== null}>
                 <Col xs={1} className="px-0 d-flex">
-                    <MessageIcon msg={msg} />
+                    {messageIcon}
                 </Col>
             </Loader>
             <Col>
@@ -47,7 +48,7 @@ export default function Message({ msg, noIcon }) {
     )
 }
 
-const MessageIcon = ({ msg }) => {
+const MessageIcon = ( msg ) => {
     const { scope, related_object } = msg
 
     switch (scope) {

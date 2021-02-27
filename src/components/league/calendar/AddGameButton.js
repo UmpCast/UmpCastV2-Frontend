@@ -74,7 +74,7 @@ export default function AddGameButton({ handleNewGame, league }) {
                                     name="division"
                                     className="rounded"
                                 >
-                                    <option placeholder>Select Division</option>
+                                    <option>Select Division</option>
                                     {divisionOptions}
                                 </SelectionInput>
                                 <DateTimeInput
