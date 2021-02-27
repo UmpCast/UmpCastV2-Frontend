@@ -19,7 +19,7 @@
     "@testing-library/user-event": "^7.2.1",
     "ajv-keywords": "^3.5.2",
     "array-move": "^3.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.1",
     "bootswatch": "^4.5.0",
     "date-fns": "^2.15.0",
