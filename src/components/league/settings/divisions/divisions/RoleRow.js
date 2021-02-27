@@ -35,7 +35,6 @@ export default function RoleRow(props) {
 
     return (
         <ListGroup.Item className="d-inline-flex w-100 justify-content-between border-0">
-
             <div className="d-inline-flex">
                 <RoleProfile
                     role={role} />
@@ -67,7 +66,7 @@ export default function RoleRow(props) {
 const RoleProfile = ({ role }) => (
     <div>
         <Badge variant="primary mr-3">
-            {role.num_umpires}
+            {/* {role.num_umpires} */}
             <FontAwesomeIcon
                 icon={'user'}
                 className="ml-1" />

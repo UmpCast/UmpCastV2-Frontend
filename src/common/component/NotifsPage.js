@@ -69,7 +69,7 @@ export const NextPage = ({ notifs, onNext }) => {
     return (
         <Col>
             {atEnd ? (
-                <p className="text-muted text-center">End of Messages</p>
+                <p className="text-muted text-center">End of List</p>
             ) : (
                 <p
                     className="text-primary text-center"

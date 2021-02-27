@@ -6,7 +6,7 @@ import { Name } from "common/Utils"
 import CastsBar from "./CastsBar"
 import UmpireVisibility from "../Visibility/UmpireVisibility"
 
-import { Badge } from "react-bootstrap"
+// import { Badge } from "react-bootstrap"
 import DarkBaseball from "assets/dark_baseball.png"
 
 export default function UmpireRow(props) {
@@ -34,7 +34,7 @@ export default function UmpireRow(props) {
                         alt={DarkBaseball}
                         size={30}
                         className={`rounded border mt-1 mr-2`} />
-                    <Badge
+                    {/* <Badge
                         className="text-white bg-info mr-auto ml-2 my-auto"
                         style={{ backgroundColor: "#B793CF", position: "absolute", left: 0 }}>
                         <small>
@@ -42,7 +42,7 @@ export default function UmpireRow(props) {
                                 L3
                             </strong>
                         </small>
-                    </Badge>
+                    </Badge> */}
                     <div className="my-auto flex-shrink-0">
                         <h5 className="mb-0">
                             <strong>

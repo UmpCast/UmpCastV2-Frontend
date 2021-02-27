@@ -51,7 +51,7 @@ export default function Level(props) {
                                 useShowRename={useShowRename} />
                         </div>
 
-                        <UmpiresBadge />
+                        {/* <UmpiresBadge /> */}
 
                         <LevelVis
                             level={level}
